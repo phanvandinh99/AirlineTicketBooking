@@ -123,8 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Customer\Views\web.config" />
-    <Content Include="Areas\Customer\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Customer\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Customer\Views\Home\Index.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
@@ -136,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Customer\Views\Shared\" />
     <Folder Include="Assets\" />
     <Folder Include="Common\Constants\" />
     <Folder Include="Common\Utilities\" />
