@@ -61,6 +61,8 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -119,6 +121,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChuyenBay.cs" />
+    <Compile Include="Models\DataAirline.cs" />
+    <Compile Include="Models\HangHangKhong.cs" />
+    <Compile Include="Models\HangVe.cs" />
+    <Compile Include="Models\HangVeHoaDon.cs" />
+    <Compile Include="Models\HoaDon.cs" />
+    <Compile Include="Models\KhachHang.cs" />
+    <Compile Include="Models\LichBay.cs" />
+    <Compile Include="Models\LoaiMayBay.cs" />
+    <Compile Include="Models\MayBay.cs" />
+    <Compile Include="Models\NhanVien.cs" />
+    <Compile Include="Models\PhieuDatVe.cs" />
+    <Compile Include="Models\SanBay.cs" />
+    <Compile Include="Models\ThongKe.cs" />
+    <Compile Include="Models\TuyenBay.cs" />
+    <Compile Include="Models\VeChuyenBay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -139,7 +157,6 @@
     <Folder Include="Common\Constants\" />
     <Folder Include="Common\Utilities\" />
     <Folder Include="Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Repositories\" />
     <Folder Include="Services\" />
   </ItemGroup>
