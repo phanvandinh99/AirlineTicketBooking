@@ -81,11 +81,9 @@
 /*============================
   1.variables
 ============================*/
-@import url("../../../css2");
 /*============================
   2.mixins
 ============================*/
-@import url("../../../css2");
 header {
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;

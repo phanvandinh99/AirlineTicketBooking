@@ -279,8 +279,9 @@
                                                 <div class="form-item dropdown">
                                                     <div data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" role="menu">
                                                         <label class="form-label fs-14 text-default mb-1">Bay Từ</label>
-                                                        <input type="text" class="form-control" value="Newyork">
-                                                        <p class="fs-12 mb-0">Ken International Airport</p>
+                                                        <select class="form-control" id="from-airport" name="from_airport">
+                                                            <option value="">Chọn sân bay đi</option>
+                                                        </select>
                                                     </div>
                                                     <div class="dropdown-menu dropdown-md p-0">
                                                         <div class="input-search p-3 border-bottom">
@@ -326,11 +327,9 @@
                                                 <div class="form-item dropdown ps-2 ps-sm-3">
                                                     <div data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" role="menu">
                                                         <label class="form-label fs-14 text-default mb-1">Bay Đến</label>
-                                                        <h5>Las Vegas</h5>
-                                                        <p class="fs-12 mb-0">Martini International Airport</p>
-                                                        <span class="way-icon badge badge-primary rounded-pill translate-middle">
-                                                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                                                        </span>
+                                                        <select class="form-control" id="to-airport" name="to_airport">
+                                                            <option value="">Chọn sân bay đến</option>
+                                                        </select>
                                                     </div>
                                                     <div class="dropdown-menu dropdown-md p-0">
                                                         <div class="input-search p-3 border-bottom">
@@ -548,7 +547,7 @@
                                                 <div class="form-item dropdown ps-2 ps-sm-3">
                                                     <div data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" role="menu">
                                                         <label class="form-label fs-14 text-default mb-1">To</label>
-                                                        <h5>Las Vegas</h5>
+                                                        <input type="text" class="form-control" value="Newyork">
                                                         <p class="fs-12 mb-0">Martini International Airport</p>
                                                         <span class="way-icon badge badge-primary rounded-pill translate-middle">
                                                             <i class="fa-solid fa-arrow-right-arrow-left"></i>
@@ -2011,7 +2010,7 @@
                                 <div class="form-check d-flex align-items-center mb-2">
                                     <input class="form-check-input mt-0" type="checkbox" value="" id="agree">
                                     <label class="form-check-label ms-2 text-gray-9 fs-14" for="agree">
-                                        I agree with the <a href="javascript:void(0);" class="link-primary fw-medium">Terms Of Service.</a>
+                                        I agree with the <a href="javascript:void(0);" class="link-primary fw-medium">Terms Of Service.</a>
                                     </label>
                                 </div>
                             </div>
@@ -2135,39 +2134,72 @@
     </div>
 
     <!-- Jquery JS -->
-    <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="~/Assets/Customer/js/jquery-3.7.1.min.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
+    <script src="~/Assets/Customer/js/jquery-3.7.1.min.js"></script>
 
     <!-- Bootstrap JS -->
-    <script src="~/Assets/Customer/js/bootstrap.bundle.min.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
+    <script src="~/Assets/Customer/js/bootstrap.bundle.min.js"></script>
 
     <!-- Wow JS -->
-    <script src="~/Assets/Customer/js/wow.min.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
+    <script src="~/Assets/Customer/js/wow.min.js"></script>
 
     <!-- MeanMenu Js -->
-    <script src="~/Assets/Customer/js/jquery.meanmenu.min.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
+    <script src="~/Assets/Customer/js/jquery.meanmenu.min.js"></script>
 
     <!-- Swiper Js -->
-    <script src="~/Assets/Customer/plugins/owlcarousel/owl.carousel.min.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
+    <script src="~/Assets/Customer/plugins/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Fancybox JS -->
-    <script src="~/Assets/Customer/plugins/fancybox/jquery.fancybox.min.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
+    <script src="~/Assets/Customer/plugins/fancybox/jquery.fancybox.min.js"></script>
 
     <!-- Counter JS -->
-    <script src="~/Assets/Customer/js/jquery.counterup.min.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
-    <script src="~/Assets/Customer/js/jquery.waypoints.min.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
+    <script src="~/Assets/Customer/js/jquery.counterup.min.js"></script>
+    <script src="~/Assets/Customer/js/jquery.waypoints.min.js"></script>
 
     <!-- Datepicker Core JS -->
-    <script src="~/Assets/Customer/plugins/moment/moment.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
-    <script src="~/Assets/Customer/js/bootstrap-datetimepicker.min.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
+    <script src="~/Assets/Customer/plugins/moment/moment.js"></script>
+    <script src="~/Assets/Customer/js/bootstrap-datetimepicker.min.js"></script>
 
     <!-- cursor JS -->
-    <script src="~/Assets/Customer/js/cursor.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
+    <script src="~/Assets/Customer/js/cursor.js"></script>
 
     <!-- Script JS -->
-    <script src="~/Assets/Customer/js/script.js" type="f00c73e93d90f59487e50659-text/javascript"></script>
+    <script src="~/Assets/Customer/js/script.js"></script>
 
-    <script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="f00c73e93d90f59487e50659-|49" defer=""></script>
+    <script>
+        $(document).ready(function () {
+            // Gọi API lấy danh sách sân bay Việt Nam
+            $.ajax({
+                url: 'http://api.aviationstack.com/v1/airports?access_key=286e11ed7b883393992bd80bb14a0f37&country_iso2=VN',
+                method: 'GET',
+                success: function (res) {
+                    if (res && res.data) {
+                        var options = '';
+                        res.data.forEach(function (airport) {
+                            // Hiển thị thêm tên thành phố nếu có
+                            var city = airport.city_iata_code ? airport.city_iata_code + ' - ' : '';
+                            options += '<option value="' + airport.iata_code + '">' + city + airport.airport_name + ' (' + airport.iata_code + ')</option>';
+                        });
+                        $('#from-airport').append(options);
+                        $('#to-airport').append(options);
+                        console.log(options);
+                        alert(options);
+                    }
+                }
+            });
+            // ... script ẩn/hiện ngày về ...
+            function toggleReturnDate() {
+                if ($('#roundtrip').is(':checked')) {
+                    $('#return-date-group').show();
+                } else {
+                    $('#return-date-group').hide();
+                }
+            }
+            toggleReturnDate();
+            $('input[name="Radio"]').change(function () {
+                toggleReturnDate();
+            });
+        });
+    </script>
 </body>
 
 </html>
