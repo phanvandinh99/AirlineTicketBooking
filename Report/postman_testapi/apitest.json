@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "ce7d837e-1f8e-47b8-befa-9a5ada54ade2",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46839473"
+	},
+	"item": [
+		{
+			"name": "List_Plane",
+			"item": [
+				{
+					"name": "Danh Sách Chuyến bay",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://api.aviationstack.com/v1/flights?access_key=286e11ed7b883393992bd80bb14a0f37&dep_iata=SGN",
+							"protocol": "http",
+							"host": [
+								"api",
+								"aviationstack",
+								"com"
+							],
+							"path": [
+								"v1",
+								"flights"
+							],
+							"query": [
+								{
+									"key": "access_key",
+									"value": "286e11ed7b883393992bd80bb14a0f37"
+								},
+								{
+									"key": "dep_iata",
+									"value": "SGN"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sân Bay",
+			"item": [
+				{
+					"name": "Tất Cả",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://api.aviationstack.com/v1/airports?access_key=286e11ed7b883393992bd80bb14a0f37",
+							"protocol": "http",
+							"host": [
+								"api",
+								"aviationstack",
+								"com"
+							],
+							"path": [
+								"v1",
+								"airports"
+							],
+							"query": [
+								{
+									"key": "access_key",
+									"value": "286e11ed7b883393992bd80bb14a0f37"
+								},
+								{
+									"key": "dep_iata",
+									"value": "SGN",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sân Bay Việt Nam",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.aviationstack.com/v1/airports?access_key=286e11ed7b883393992bd80bb14a0f37&country_iso2=VN",
+							"protocol": "https",
+							"host": [
+								"api",
+								"aviationstack",
+								"com"
+							],
+							"path": [
+								"v1",
+								"airports"
+							],
+							"query": [
+								{
+									"key": "access_key",
+									"value": "286e11ed7b883393992bd80bb14a0f37"
+								},
+								{
+									"key": "country_iso2",
+									"value": "VN"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

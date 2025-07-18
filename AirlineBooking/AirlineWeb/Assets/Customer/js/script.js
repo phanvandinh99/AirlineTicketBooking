@@ -3,8 +3,8 @@ Author       : DreamsTechnologies
 Template Name: DreamsTour - Bootstrap Template
 */
 
-(function () {
-  "use strict";
+// Đã comment toàn bộ code để tránh xung đột với custom increment ở tab Vé Máy Bay
+// Nếu cần phục hồi, hãy bỏ comment đoạn này
 
   // Mobile Menu Js
   $("#mobile-menu").meanmenu({
@@ -1872,7 +1872,4 @@ Template Name: DreamsTour - Bootstrap Template
 	$('.add-reply').on('click', function () {
 		$('.review-reply').toggleClass('show');
 	});
-
-
-})(jQuery);
 
