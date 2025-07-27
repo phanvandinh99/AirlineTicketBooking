@@ -8,19 +8,18 @@ BEGIN
 END
 GO
 
--- Tạo cơ sở dữ liệu mới để lưu thông tin kế hoạch chuyến bay
+-- Tạo cơ sở dữ liệu mới
 CREATE DATABASE DatabasePlane;
 GO
 USE DatabasePlane;
 GO
 
--- Bảng SanBay: Lưu thông tin sân bay (khởi hành/đến)
--- Ánh xạ với AviationStack API: MaSanBay tương ứng departure.iata/arrival.iata, TenSanBay tương ứng departure.airport/arrival.airport
+-- Tạo và chèn dữ liệu cho bảng SanBay
 CREATE TABLE SanBay (
-    MaSanBay NVARCHAR(10) PRIMARY KEY,				-- Mã IATA của sân bay (SGN, HAN, ...)
-    TenSanBay NVARCHAR(100) NOT NULL,				-- Tên sân bay (Tân Sơn Nhất, Nội Bài, ...)
-    ThanhPho NVARCHAR(50),							-- Thành phố của sân bay (TP.HCM, Hà Nội, ...)
-    QuocGia NVARCHAR(50) DEFAULT N'Việt Nam'		-- Quốc gia, mặc định là Việt Nam cho chuyến bay nội địa
+    MaSanBay NVARCHAR(10) PRIMARY KEY,
+    TenSanBay NVARCHAR(100) NOT NULL,
+    ThanhPho NVARCHAR(50),
+    QuocGia NVARCHAR(50) DEFAULT N'Việt Nam'
 );
 GO
 INSERT INTO SanBay(MaSanBay, TenSanBay, ThanhPho, QuocGia) VALUES
@@ -46,13 +45,12 @@ INSERT INTO SanBay(MaSanBay, TenSanBay, ThanhPho, QuocGia) VALUES
 ('TBB', N'Sân Bay Tuy Hòa', N'Phú Yên', N'Việt Nam'),
 ('VDO', N'Sân Bay Quốc Tế Vân Đồn', N'Quảng Ninh', N'Việt Nam'),
 ('VII', N'Sân Bay Quốc Tế Vinh', N'Nghệ An', N'Việt Nam');
-
 GO
--- Bảng HangHangKhong: Lưu thông tin hãng hàng không (Vietnam Airlines, VietJet, ...)
--- Ánh xạ với API: MaHangHangKhong tương ứng airline.iata, TenHang tương ứng airline.name
+
+-- Tạo và chèn dữ liệu cho bảng HangHangKhong
 CREATE TABLE HangHangKhong (
-    MaHangHangKhong NVARCHAR(10) PRIMARY KEY,		-- Mã IATA của hãng (VN, VJ, ...)
-    TenHang NVARCHAR(100) NOT NULL					-- Tên hãng hàng không (Vietnam Airlines, VietJet Air, ...)
+    MaHangHangKhong NVARCHAR(10) PRIMARY KEY,
+    TenHang NVARCHAR(100) NOT NULL
 );
 GO
 INSERT INTO HangHangKhong(MaHangHangKhong, TenHang) VALUES
@@ -61,15 +59,14 @@ INSERT INTO HangHangKhong(MaHangHangKhong, TenHang) VALUES
 ('QH', N'Bamboo Airways'),
 ('BL', N'Pacific Airline'),
 ('VU', N'Vietravel Airlines'),
-('OV', N'VASCO');
+('0V', N'VASCO');
 GO
 
--- Bảng LoaiMayBay: Lưu thông tin loại máy bay (A321, B787, ...)
--- Ánh xạ với API: MaLoaiMayBay tương ứng aircraft.iata
+-- Tạo và chèn dữ liệu cho bảng LoaiMayBay
 CREATE TABLE LoaiMayBay (
-    MaLoaiMayBay NVARCHAR(10) PRIMARY KEY,			-- Mã IATA của loại máy bay (A321, B787, ...)
-    TenLoaiMayBay NVARCHAR(50) NOT NULL,			-- Tên loại máy bay (Airbus A321, Boeing 787, ...)
-    SoGheToiDa INT NOT NULL							-- Số ghế tối đa, dùng để giả định số ghế khi API không cung cấp
+    MaLoaiMayBay NVARCHAR(10) PRIMARY KEY,
+    TenLoaiMayBay NVARCHAR(50) NOT NULL,
+    SoGheToiDa INT NOT NULL
 );
 GO
 INSERT INTO LoaiMayBay (MaLoaiMayBay, TenLoaiMayBay, SoGheToiDa) VALUES
@@ -86,12 +83,11 @@ INSERT INTO LoaiMayBay (MaLoaiMayBay, TenLoaiMayBay, SoGheToiDa) VALUES
 ('B738', 'Boeing 737-800', 189);
 GO
 
--- Bảng HangVe: Lưu thông tin hạng vé (thương gia, phổ thông, ...)
--- Không ánh xạ trực tiếp với API, dùng để quản lý vé
+-- Tạo và chèn dữ liệu cho bảng HangVe
 CREATE TABLE HangVe (
-    MaHangVe NVARCHAR(10) PRIMARY KEY,				-- Mã hạng vé (HV01, HV02, ...)
-    TenHangVe NVARCHAR(50) NOT NULL,				-- Tên hạng vé (Thương gia, Phổ thông, ...)
-    TyLeGia DECIMAL(5, 2) NOT NULL					-- Tỷ lệ giá so với giá gốc (1.5 cho thương gia, 1.0 cho phổ thông)
+    MaHangVe NVARCHAR(10) PRIMARY KEY,
+    TenHangVe NVARCHAR(50) NOT NULL,
+    TyLeGia DECIMAL(5, 2) NOT NULL
 );
 GO
 INSERT INTO HangVe (MaHangVe, TenHangVe, TyLeGia) VALUES
@@ -104,130 +100,182 @@ INSERT INTO HangVe (MaHangVe, TenHangVe, TyLeGia) VALUES
 ('HV07', 'Promo', 0.80),
 ('HV08', 'Starter Max', 1.20),
 ('HV09', 'Starter Plus', 1.10);
-Go
+GO
 
--- Bảng NhanVien: Lưu thông tin nhân viên
+-- Tạo và chèn dữ liệu cho bảng NhanVien
 CREATE TABLE NhanVien (
-    MaNhanVien NVARCHAR(10) PRIMARY KEY,			-- Mã nhân viên (NV01, NV02, ...)
-    TenNhanVien NVARCHAR(50) NOT NULL,				-- Tên nhân viên
-    SoDienThoai NVARCHAR(15),						-- Số điện thoại
-    Email NVARCHAR(50)								-- Email
+    MaNhanVien NVARCHAR(10) PRIMARY KEY,
+    TenNhanVien NVARCHAR(50) NOT NULL,
+    SoDienThoai NVARCHAR(15),
+    Email NVARCHAR(50)
 );
 GO
--- Chèn dữ liệu mẫu cho NhanVien
 INSERT INTO NhanVien (MaNhanVien, TenNhanVien, SoDienThoai, Email) VALUES
-(N'Admin', N'Nhân Viên Quản Trị', N'0909876543', N'admin@gmail.com'),
-(N'NVVNAirLine', N'VietNamAirline', N'0918765432', N'airline@gmail.com');
+('Admin', N'Nhân Viên Quản Trị', N'0909876543', N'admin@gmail.com'),
+('VNAL', N'VietNamAirline', N'0918765432', N'airline@gmail.com');
 GO
 
--- Bảng KhachHang: Lưu thông tin khách hàng
+-- Tạo và chèn dữ liệu cho bảng KhachHang
 CREATE TABLE KhachHang (
-    MaKhachHang NVARCHAR(10) PRIMARY KEY,			-- Mã khách hàng (KH01, KH02, ...)
-    TenKhachHang NVARCHAR(50) NOT NULL,				-- Tên khách hàng
-    DiaChi NVARCHAR(100),							-- Địa chỉ
-    GioiTinh NVARCHAR(10),							-- Giới tính (Nam, Nữ)
-    SoDienThoai NVARCHAR(15),						-- Số điện thoại
-    Email NVARCHAR(50)								-- Email
+    MaKhachHang NVARCHAR(10) PRIMARY KEY,
+    TenKhachHang NVARCHAR(50) NOT NULL,
+    DiaChi NVARCHAR(100),
+    GioiTinh NVARCHAR(10),
+    SoDienThoai NVARCHAR(15),
+    Email NVARCHAR(50)
 );
 GO
--- Chèn dữ liệu mẫu cho KhachHang
 INSERT INTO KhachHang (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, SoDienThoai, Email) VALUES
-(N'KH01', N'Nguyễn Văn An', N'123 Đường Láng, TP. Hồ Chí Minh', N'Nam', N'0901234567', N'nva@gmail.com'),
-(N'KH02', N'Trần Thị Bình', N'456 Đường Giải Phóng, Hà Nội', N'Nữ', N'0912345678', N'ttb@gmail.com');
+('KH01', N'Nguyễn Văn An', N'123 Đường Láng, TP. Hồ Chí Minh', N'Nam', N'0901234567', N'nva@gmail.com'),
+('KH02', N'Trần Thị Bình', N'456 Đường Giải Phóng, Hà Nội', N'Nữ', N'0912345678', N'ttb@gmail.com');
 GO
 
--- Bảng MayBay: Lưu thông tin cụ thể về từng máy bay
--- Ánh xạ với API: MaMayBay tương ứng aircraft.registration
+-- Tạo và chèn dữ liệu cho bảng MayBay
 CREATE TABLE MayBay (
-    MaMayBay NVARCHAR(10) PRIMARY KEY,														-- Mã đăng ký máy bay (VN-A123, ...)
-    MaLoaiMayBay NVARCHAR(10) FOREIGN KEY REFERENCES LoaiMayBay(MaLoaiMayBay),				-- Liên kết với LoaiMayBay
-    MaHangHangKhong NVARCHAR(10) FOREIGN KEY REFERENCES HangHangKhong(MaHangHangKhong)		-- Hãng sở hữu máy bay
+    MaMayBay NVARCHAR(10) PRIMARY KEY,
+    MaLoaiMayBay NVARCHAR(10) FOREIGN KEY REFERENCES LoaiMayBay(MaLoaiMayBay),
+    MaHangHangKhong NVARCHAR(10) FOREIGN KEY REFERENCES HangHangKhong(MaHangHangKhong)
 );
 GO
+INSERT INTO MayBay (MaMayBay, MaLoaiMayBay, MaHangHangKhong) VALUES
+('VN-A123', 'A321', 'VN'),
+('VN-A456', 'B789', 'VN'),
+('VJ-A789', 'A320', 'VJ'),
+('VJ-A012', 'A333', 'VJ'),
+('QH-B345', 'B789', 'QH'),
+('QH-A678', 'A21N', 'QH'),
+('BL-A901', 'A320', 'BL'),
+('VU-A234', 'A321', 'VU'),
+('0V-A567', 'AT75', '0V'); -- Đảm bảo mã 0V khớp với HangHangKhong
+GO
 
--- Bảng TuyenBay: Lưu thông tin tuyến bay (SGN → HAN, ...)
--- Ánh xạ với API: MaSanBayCatCanh tương ứng departure.iata, MaSanBayHaCanh tương ứng arrival.iata
+-- Tạo và chèn dữ liệu cho bảng TuyenBay
 CREATE TABLE TuyenBay (
-    MaTuyenBay NVARCHAR(10) PRIMARY KEY,													-- Mã tuyến bay (TB01, TB02, ...)
-    MaSanBayCatCanh NVARCHAR(10) FOREIGN KEY REFERENCES SanBay(MaSanBay),					-- Sân bay khởi hành
-    MaSanBayHaCanh NVARCHAR(10) FOREIGN KEY REFERENCES SanBay(MaSanBay),					-- Sân bay đến
-    KhoangCach INT																			-- Khoảng cách (km), dùng để tính giá vé nếu cần
+    MaTuyenBay NVARCHAR(10) PRIMARY KEY,
+    MaSanBayCatCanh NVARCHAR(10) FOREIGN KEY REFERENCES SanBay(MaSanBay),
+    MaSanBayHaCanh NVARCHAR(10) FOREIGN KEY REFERENCES SanBay(MaSanBay),
+    KhoangCach INT
 );
 GO
+INSERT INTO TuyenBay (MaTuyenBay, MaSanBayCatCanh, MaSanBayHaCanh, KhoangCach) VALUES
+('TB01', 'SGN', 'HAN', 1160),
+('TB02', 'HAN', 'DAD', 630),
+('TB03', 'SGN', 'PQC', 300),
+('TB04', 'SGN', 'CXR', 310),
+('TB05', 'HAN', 'VCS', 1350),
+('TB06', 'SGN', 'CAH', 250),
+('TB07', 'DAD', 'HPH', 600);
+GO
 
--- Bảng ChuyenBay: Lưu thông tin chuyến bay
--- Ánh xạ với API: SoHieuChuyenBay tương ứng flight.number, TrangThai tương ứng flight_status
+-- Tạo và chèn dữ liệu cho bảng ChuyenBay
 CREATE TABLE ChuyenBay (
-    MaChuyenBay NVARCHAR(10) PRIMARY KEY,													-- Mã chuyến bay (CBVN123, ...)
-    MaTuyenBay NVARCHAR(10) FOREIGN KEY REFERENCES TuyenBay(MaTuyenBay),					-- Tuyến bay
-    MaMayBay NVARCHAR(10) FOREIGN KEY REFERENCES MayBay(MaMayBay),							-- Máy bay
-    MaHangHangKhong NVARCHAR(10) FOREIGN KEY REFERENCES HangHangKhong(MaHangHangKhong),		-- Hãng hàng không
-    TrangThai NVARCHAR(20),																	-- Trạng thái chuyến bay (Đã lên lịch, Bị trễ, Hủy)
-    SoHieuChuyenBay NVARCHAR(20) NOT NULL													-- Số hiệu chuyến bay (VN123, VJ456, ...)
+    MaChuyenBay NVARCHAR(10) PRIMARY KEY,
+    MaTuyenBay NVARCHAR(10) FOREIGN KEY REFERENCES TuyenBay(MaTuyenBay),
+    MaMayBay NVARCHAR(10) FOREIGN KEY REFERENCES MayBay(MaMayBay),
+    MaHangHangKhong NVARCHAR(10) FOREIGN KEY REFERENCES HangHangKhong(MaHangHangKhong),
+    TrangThai NVARCHAR(20),
+    SoHieuChuyenBay NVARCHAR(20) NOT NULL
 );
 GO
+INSERT INTO ChuyenBay (MaChuyenBay, MaTuyenBay, MaMayBay, MaHangHangKhong, TrangThai, SoHieuChuyenBay) VALUES
+('CBVN001', 'TB01', 'VN-A123', 'VN', 'Đã lên lịch', 'VN123'),
+('CBVJ002', 'TB02', 'VJ-A789', 'VJ', 'Đã lên lịch', 'VJ456'),
+('CBQH003', 'TB03', 'QH-A678', 'QH', 'Đã lên lịch', 'QH789'),
+('CBBL004', 'TB04', 'BL-A901', 'BL', 'Đã lên lịch', 'BL234'),
+('CBVU005', 'TB01', 'VU-A234', 'VU', 'Đã lên lịch', 'VU567'),
+('CB0V006', 'TB05', '0V-A567', '0V', 'Đã lên lịch', '0V890');
+GO
 
--- Bảng LichBay: Lưu lịch trình cụ thể của chuyến bay
--- Ánh xạ với API: NgayGioKhoiHanh tương ứng departure.scheduled, NgayGioHaCanh tương ứng arrival.scheduled, NgayBay tương ứng flight_date
+-- Tạo và chèn dữ liệu cho bảng LichBay
 CREATE TABLE LichBay (
-    MaLichBay NVARCHAR(10) PRIMARY KEY,														-- Mã lịch bay (LBVN123, ...)
-    MaChuyenBay NVARCHAR(10) FOREIGN KEY REFERENCES ChuyenBay(MaChuyenBay),					-- Chuyến bay
-    NgayGioKhoiHanh DATETIME NOT NULL,														-- Thời gian khởi hành
-    NgayGioHaCanh DATETIME NOT NULL,														-- Thời gian hạ cánh
-    NgayBay DATE NOT NULL																	-- Ngày bay
+    MaLichBay NVARCHAR(10) PRIMARY KEY,
+    MaChuyenBay NVARCHAR(10) FOREIGN KEY REFERENCES ChuyenBay(MaChuyenBay),
+    NgayGioKhoiHanh DATETIME NOT NULL,
+    NgayGioHaCanh DATETIME NOT NULL,
+    NgayBay DATE NOT NULL
 );
 GO
+INSERT INTO LichBay (MaLichBay, MaChuyenBay, NgayGioKhoiHanh, NgayGioHaCanh, NgayBay) VALUES
+('LBVN001', 'CBVN001', '2025-07-28 07:00:00', '2025-07-28 09:00:00', '2025-07-28'),
+('LBVJ002', 'CBVJ002', '2025-07-28 10:00:00', '2025-07-28 11:15:00', '2025-07-28'),
+('LBQH003', 'CBQH003', '2025-07-28 14:00:00', '2025-07-28 14:45:00', '2025-07-28'),
+('LBBL004', 'CBBL004', '2025-07-28 16:00:00', '2025-07-28 16:50:00', '2025-07-28'),
+('LBVU005', 'CBVU005', '2025-07-29 08:00:00', '2025-07-29 10:00:00', '2025-07-29'),
+('LB0V006', 'CB0V006', '2025-07-29 09:00:00', '2025-07-29 11:30:00', '2025-07-29');
+GO
 
--- Bảng VeChuyenBay: Lưu thông tin vé của chuyến bay
--- Không ánh xạ trực tiếp với API, dùng để quản lý vé
+-- Tạo và chèn dữ liệu cho bảng VeChuyenBay
 CREATE TABLE VeChuyenBay (
-    MaVe NVARCHAR(10) PRIMARY KEY, -- Mã vé (VVN1231A, ...)
-    MaChuyenBay NVARCHAR(10) FOREIGN KEY REFERENCES ChuyenBay(MaChuyenBay),					-- Chuyến bay
-    MaHangVe NVARCHAR(10) FOREIGN KEY REFERENCES HangVe(MaHangVe),							-- Hạng vé
-    SoGhe NVARCHAR(10),																		-- Mã ghế (1A, 2B, ...)
-    TrangThai NVARCHAR(20),																	-- Trạng thái vé (Có sẵn, Đã đặt, Đã bán)
-    GiaVND DECIMAL(10, 2),																	-- Giá vé (VND)
-    GiaUSD DECIMAL(10, 2)																	-- Giá vé (USD, tùy chọn)
+    MaVe NVARCHAR(10) PRIMARY KEY,
+    MaChuyenBay NVARCHAR(10) FOREIGN KEY REFERENCES ChuyenBay(MaChuyenBay),
+    MaHangVe NVARCHAR(10) FOREIGN KEY REFERENCES HangVe(MaHangVe),
+    SoGhe NVARCHAR(10),
+    TrangThai NVARCHAR(20),
+    GiaVND DECIMAL(10, 2),
+    GiaUSD DECIMAL(10, 2)
 );
 GO
+INSERT INTO VeChuyenBay (MaVe, MaChuyenBay, MaHangVe, SoGhe, TrangThai, GiaVND, GiaUSD) VALUES
+('VVN1231A', 'CBVN001', 'HV01', '1A', 'Đã bán', 4000000, 160.00),
+('VVN1231B', 'CBVN001', 'HV03', '10C', 'Có sẵn', 2000000, 80.00),
+('VVJ4562A', 'CBVJ002', 'HV04', '2B', 'Đã bán', 1800000, 72.00),
+('VVJ4562C', 'CBVJ002', 'HV07', '15D', 'Có sẵn', 800000, 32.00),
+('VQH7893A', 'CBQH003', 'HV05', '1C', 'Đã bán', 2500000, 100.00),
+('VBL2344B', 'CBBL004', 'HV08', '5A', 'Đã đặt', 1200000, 48.00);
+GO
 
--- Bảng PhieuDatVe: Lưu thông tin đặt vé
+-- Tạo và chèn dữ liệu cho bảng PhieuDatVe
 CREATE TABLE PhieuDatVe (
-    MaPhieuDatVe NVARCHAR(10) PRIMARY KEY,													-- Mã phiếu đặt vé (PDV01, PDV02, ...)
-    MaKhachHang NVARCHAR(10) FOREIGN KEY REFERENCES KhachHang(MaKhachHang),					-- Khách hàng
-    MaVe NVARCHAR(10) FOREIGN KEY REFERENCES VeChuyenBay(MaVe),								-- Vé
-    NgayDat DATE NOT NULL,																	-- Ngày đặt vé
-    TrangThai NVARCHAR(20)																	-- Trạng thái đặt vé (Chờ xác nhận, Đã xác nhận, Đã hủy)
+    MaPhieuDatVe NVARCHAR(10) PRIMARY KEY,
+    MaKhachHang NVARCHAR(10) FOREIGN KEY REFERENCES KhachHang(MaKhachHang),
+    MaVe NVARCHAR(10) FOREIGN KEY REFERENCES VeChuyenBay(MaVe),
+    NgayDat DATE NOT NULL,
+    TrangThai NVARCHAR(20)
 );
 GO
+INSERT INTO PhieuDatVe (MaPhieuDatVe, MaKhachHang, MaVe, NgayDat, TrangThai) VALUES
+('PDV01', 'KH01', 'VVN1231A', '2025-07-27', 'Đã xác nhận'),
+('PDV02', 'KH02', 'VVJ4562A', '2025-07-27', 'Đã xác nhận'),
+('PDV03', 'KH01', 'VQH7893A', '2025-07-27', 'Chờ xác nhận');
+GO
 
--- Bảng HoaDon: Lưu thông tin hóa đơn
+-- Tạo và chèn dữ liệu cho bảng HoaDon
 CREATE TABLE HoaDon (
-    MaHoaDon NVARCHAR(10) PRIMARY KEY,														-- Mã hóa đơn (HD01, HD02, ...)
-    MaPhieuDatVe NVARCHAR(10) FOREIGN KEY REFERENCES PhieuDatVe(MaPhieuDatVe),				-- Phiếu đặt vé
-    NgayLapHoaDon DATE NOT NULL,															-- Ngày lập hóa đơn
-    TongTienVND DECIMAL(10, 2),																-- Tổng tiền (VND)
-    TongTienUSD DECIMAL(10, 2),																-- Tổng tiền (USD, tùy chọn)
-    TrangThaiThanhToan NVARCHAR(20),														-- Trạng thái thanh toán (Đã thanh toán, Chưa thanh toán)
-    MaNhanVien NVARCHAR(10) FOREIGN KEY REFERENCES NhanVien(MaNhanVien)						-- Nhân viên
+    MaHoaDon NVARCHAR(10) PRIMARY KEY,
+    MaPhieuDatVe NVARCHAR(10) FOREIGN KEY REFERENCES PhieuDatVe(MaPhieuDatVe),
+    NgayLapHoaDon DATE NOT NULL,
+    TongTienVND DECIMAL(10, 2),
+    TongTienUSD DECIMAL(10, 2),
+    TrangThaiThanhToan NVARCHAR(20),
+    MaNhanVien NVARCHAR(10) FOREIGN KEY REFERENCES NhanVien(MaNhanVien)
 );
 GO
+INSERT INTO HoaDon (MaHoaDon, MaPhieuDatVe, NgayLapHoaDon, TongTienVND, TongTienUSD, TrangThaiThanhToan, MaNhanVien) VALUES
+('HD01', 'PDV01', '2025-07-27', 4000000, 160.00, 'Đã thanh toán', 'Admin'),
+('HD02', 'PDV02', '2025-07-27', 1800000, 72.00, 'Đã thanh toán', 'VNAL');
+GO
 
--- Bảng ThongKe: Lưu thông tin thống kê doanh thu và số vé
+-- Tạo và chèn dữ liệu cho bảng ThongKe
 CREATE TABLE ThongKe (
-    MaThongKe NVARCHAR(10) PRIMARY KEY,														-- Mã thống kê (TK01, TK02, ...)
-    ThangNam NVARCHAR(7) NOT NULL,															-- Tháng và năm (MM-YYYY, ví dụ: 06-2025)
-    SoLuongVe INT NOT NULL,																	-- Số lượng vé bán
-    DoanhThuVND DECIMAL(15, 2),																-- Doanh thu (VND)
-    DoanhThuUSD DECIMAL(15, 2)																-- Doanh thu (USD, tùy chọn)
+    MaThongKe NVARCHAR(10) PRIMARY KEY,
+    ThangNam NVARCHAR(7) NOT NULL,
+    SoLuongVe INT NOT NULL,
+    DoanhThuVND DECIMAL(15, 2),
+    DoanhThuUSD DECIMAL(15, 2)
 );
 GO
+INSERT INTO ThongKe (MaThongKe, ThangNam, SoLuongVe, DoanhThuVND, DoanhThuUSD) VALUES
+('TK01', '07-2025', 3, 8300000, 332.00);
+GO
 
--- Bảng HangVeHoaDon: Quan hệ n-n giữa HangVe và HoaDon
--- Sử dụng ID làm khóa chính, MaHangVe và MaHoaDon là khóa ngoại
+-- Tạo và chèn dữ liệu cho bảng HangVeHoaDon
 CREATE TABLE HangVeHoaDon (
-    ID INT IDENTITY(1,1) PRIMARY KEY,														-- Khóa chính tự tăng
-    MaHangVe NVARCHAR(10) FOREIGN KEY REFERENCES HangVe(MaHangVe),							-- Khóa ngoại đến HangVe
-    MaHoaDon NVARCHAR(10) FOREIGN KEY REFERENCES HoaDon(MaHoaDon)							-- Khóa ngoại đến HoaDon
+    ID INT IDENTITY(1,1) PRIMARY KEY,
+    MaHangVe NVARCHAR(10) FOREIGN KEY REFERENCES HangVe(MaHangVe),
+    MaHoaDon NVARCHAR(10) FOREIGN KEY REFERENCES HoaDon(MaHoaDon)
 );
+GO
+INSERT INTO HangVeHoaDon (MaHangVe, MaHoaDon) VALUES
+('HV01', 'HD01'),
+('HV04', 'HD02');
 GO
