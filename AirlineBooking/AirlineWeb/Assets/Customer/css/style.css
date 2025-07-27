@@ -9220,11 +9220,6 @@ header .main-menu-wrapper .main-nav > li .submenu > li .submenu {
     left: 0;
   }
 }
-header .main-menu-wrapper .main-nav > li .submenu > li ul li.has-submenu:hover .submenu {
-  /*display: block;*/
-  top: 0;
-  position: relative;
-}
 header .main-menu-wrapper .main-nav > li .submenu > li.has-submenu > a::after {
   content: "\f054";
   font-family: "Font Awesome 5 Free";
@@ -11058,8 +11053,8 @@ footer.footer-three .footer-bottom .policy-links li a:hover {
   }
 }
 .banner-form .form-info .form-item .form-control {
-  font-size: 20px;
-  font-weight: 600;
+/*  font-size: 20px;
+  font-weight: 600;*/
   padding: 0;
   background: transparent;
   border-color: transparent;
@@ -18049,6 +18044,10 @@ footer.footer-three .footer-bottom .policy-links li a:hover {
 .dark-mode body .banner-form .form-info .form-item {
   border-color: #17222C;
 }
+.dark-mode body .banner-form .form-info .form-item select {
+  background-color: #0D0D0D;
+  color: #FAFCFF;
+}
 .dark-mode body .banner-form .nav li .nav-link {
   color: #FAFCFF;
 }
@@ -19365,3 +19364,141 @@ table.table.dataTable > thead > tr th {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+/* Flight List Section Styles */
+.flight-list-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.flight-card {
+    transition: all 0.3s ease;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.flight-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.flight-card .card-body {
+    padding: 1.5rem;
+}
+
+.airline-info h6 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.airline-info p {
+    color: #6c757d;
+    font-size: 0.75rem;
+}
+
+.flight-status .badge {
+    font-size: 0.7rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+}
+
+.flight-route {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.flight-arrow {
+    color: #007bff;
+    font-size: 1.25rem;
+}
+
+.departure h6, .arrival h6 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.departure p, .arrival p {
+    color: #6c757d;
+    font-size: 0.75rem;
+    margin-bottom: 0;
+}
+
+.flight-details {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.flight-details .col-4 {
+    border-right: 1px solid #dee2e6;
+}
+
+.flight-details .col-4:last-child {
+    border-right: none;
+}
+
+.flight-details p {
+    color: #6c757d;
+    font-size: 0.7rem;
+    margin-bottom: 0.25rem;
+}
+
+.flight-details h6 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.empty-state {
+    padding: 3rem 0;
+}
+
+.empty-state i {
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.empty-state h5 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .flight-list-section {
+        padding: 40px 0;
+    }
+    
+    .flight-card .card-body {
+        padding: 1rem;
+    }
+    
+    .flight-route {
+        padding: 0.75rem;
+    }
+    
+    .flight-details {
+        padding: 0.75rem;
+    }
+    
+    .flight-details .col-4 {
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 0.5rem;
+    }
+    
+    .flight-details .col-4:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+}

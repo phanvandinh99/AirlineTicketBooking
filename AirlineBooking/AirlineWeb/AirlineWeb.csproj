@@ -715,6 +715,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Customer\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Common\Const.cs" />
     <Compile Include="Common\Logger.cs" />
@@ -771,6 +772,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Customer\Views\Notification\" />
     <Folder Include="Areas\Customer\Views\Shared\" />
   </ItemGroup>
   <PropertyGroup>

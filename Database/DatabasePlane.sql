@@ -91,15 +91,10 @@ CREATE TABLE HangVe (
 );
 GO
 INSERT INTO HangVe (MaHangVe, TenHangVe, TyLeGia) VALUES
-('HV01', 'Thương gia', 2.00),
-('HV02', 'Phổ thông đặc biệt', 1.50),
-('HV03', 'Phổ thông', 1.00),
-('HV04', 'SkyBoss', 1.80),
-('HV05', 'Bamboo First Class', 2.50),
-('HV06', 'Bamboo Plus', 1.30),
-('HV07', 'Promo', 0.80),
-('HV08', 'Starter Max', 1.20),
-('HV09', 'Starter Plus', 1.10);
+('HV01', 'Phổ Thông', 1.00),
+('HV02', 'Phổ Thông Cao Cấp', 1.50),
+('HV03', 'Thương Gia', 2.00),
+('HV04', 'Hạng Nhất', 2.50);
 GO
 
 -- Tạo và chèn dữ liệu cho bảng NhanVien

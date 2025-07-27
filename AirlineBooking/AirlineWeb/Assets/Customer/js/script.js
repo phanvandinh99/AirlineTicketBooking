@@ -660,6 +660,7 @@ Template Name: DreamsTour - Bootstrap Template
   if ($(".datetimepicker").length > 0) {
     $(".datetimepicker").datetimepicker({
       format: "DD-MM-YYYY",
+      minDate: moment(), // Chỉ cho chọn từ hôm nay trở đi
       icons: {
         up: "fas fa-angle-up",
         down: "fas fa-angle-down",

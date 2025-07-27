@@ -257,7 +257,7 @@ namespace AirlineWeb.Common
                 var today = now.ToString("yyyy-MM-dd");
                 var logFile = Path.Combine(_logDirectory, $"log_{today}.txt");
 
-                await File.AppendAllTextAsync(logFile, _logBuffer.ToString());
+                await Task.Run(() => File.AppendAllText(logFile, _logBuffer.ToString()));
                 _logBuffer.Clear();
             }
             catch
