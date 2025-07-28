@@ -47,6 +47,37 @@ namespace AirlineWeb.Areas.Customer.Controllers
         }
         #endregion
 
+        #region Chi tiết chuyến bay
+        public async Task<ActionResult> ChiTiet(int id)
+        {
+            try
+            {
+                var chuyenBay = await Task.Run(() =>
+                    db.ChuyenBay
+                        .Include(cb => cb.HangHangKhong)
+                        .Include(cb => cb.MayBay)
+                        .Include(cb => cb.MayBay.LoaiMayBay)
+                        .Include(cb => cb.TuyenBay)
+                        .Include(cb => cb.TuyenBay.SanBay)
+                        .Include(cb => cb.TuyenBay.SanBay1)
+                        .Include(cb => cb.LichBay)
+                        .FirstOrDefault(cb => cb.MaChuyenBay == id)
+                );
+                if (chuyenBay == null)
+                    return HttpNotFound();
+                return View(chuyenBay);
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi
+                await Logger.ErrorAsync(ex);
+
+                // Trả về trang 404
+                return RedirectToAction("NotFound", "Notification", new { area = "Customer" });
+            }
+        }
+        #endregion
+
         #region Giải phóng tài nguyên
         protected override void Dispose(bool disposing)
         {
