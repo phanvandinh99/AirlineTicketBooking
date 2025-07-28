@@ -1,0 +1,51 @@
+﻿@using AirlineWeb.Models
+@model List<TuyenBay>
+
+@{
+    ViewBag.Title = "Danh Sách Tuyến Bay";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<article class="content items-list-page">
+    <div class="title-search-block">
+        <div class="title-block">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="title">
+                        Danh Sách Tuyến Bay <a href="/Admin/TuyenBay/Create" class="btn btn-primary btn-sm rounded-s"> Thêm Mới </a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card items">
+        <ul class="item-list striped" id="tuyenbay-list">
+            <li class="item item-list-header">
+                <div class="item-row">
+                    <div class="item-col" style="width: 15%"><span>Mã Tuyến Bay</span></div>
+                    <div class="item-col" style="width: 25%"><span>Sân Bay Cất Cánh</span></div>
+                    <div class="item-col" style="width: 25%"><span>Sân Bay Hạ Cánh</span></div>
+                    <div class="item-col" style="width: 15%"><span>Khoảng Cách (km)</span></div>
+                    <div class="item-col" style="width: 20%"><span>Thao Tác</span></div>
+                </div>
+            </li>
+            @foreach (var tb in Model)
+            {
+                <li class="item">
+                    <div class="item-row">
+                        <div class="item-col" style="width: 15%">@tb.MaTuyenBay</div>
+                        <div class="item-col" style="width: 25%">@tb.SanBay.TenSanBay</div>
+                        <div class="item-col" style="width: 25%">@tb.SanBay1.TenSanBay</div>
+                        <div class="item-col" style="width: 15%">@tb.KhoangCach</div>
+                        <div class="item-col" style="width: 20%">
+                            <a href="@Url.Action("Details", "TuyenBay", new { area = "Admin", id = tb.MaTuyenBay })" class="btn btn-info btn-sm">Chi tiết</a>
+                            <a href="@Url.Action("Edit", "TuyenBay", new { area = "Admin", id = tb.MaTuyenBay })" class="btn btn-warning btn-sm">Sửa</a>
+                            <a href="@Url.Action("Delete", "TuyenBay", new { area = "Admin", id = tb.MaTuyenBay })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</a>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</article>
+

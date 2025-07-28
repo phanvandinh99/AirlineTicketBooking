@@ -29,7 +29,12 @@ namespace AirlineWeb.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.MaMayBay = new SelectList(db.MayBay.Select(mb => new { mb.MaMayBay, Display = mb.MaMayBay }), "MaMayBay", "Display");
-            ViewBag.MaTuyenBay = new SelectList(db.TuyenBay.Select(tb => new { tb.MaTuyenBay, Display = tb.MaTuyenBay }), "MaTuyenBay", "Display");
+            ViewBag.MaTuyenBay = new SelectList(
+                db.TuyenBay.Select(tb => new {
+                    tb.MaTuyenBay,
+                    Display = "Từ: " + tb.SanBay.TenSanBay + " - Đến: " + tb.SanBay1.TenSanBay
+                }),
+                "MaTuyenBay", "Display");
             return View();
         }
         [HttpPost]
@@ -43,7 +48,12 @@ namespace AirlineWeb.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.MaMayBay = new SelectList(db.MayBay.Select(mb => new { mb.MaMayBay, Display = mb.MaMayBay }), "MaMayBay", "Display", chuyenbay.MaMayBay);
-            ViewBag.MaTuyenBay = new SelectList(db.TuyenBay.Select(tb => new { tb.MaTuyenBay, Display = tb.MaTuyenBay }), "MaTuyenBay", "Display", chuyenbay.MaTuyenBay);
+            ViewBag.MaTuyenBay = new SelectList(
+                db.TuyenBay.Select(tb => new {
+                    tb.MaTuyenBay,
+                    Display = "Từ: " + tb.SanBay.TenSanBay + " - Đến: " + tb.SanBay1.TenSanBay
+                }),
+                "MaTuyenBay", "Display", chuyenbay.MaTuyenBay);
             return View(chuyenbay);
         }
 
@@ -53,7 +63,12 @@ namespace AirlineWeb.Areas.Admin.Controllers
             var chuyenbay = await db.ChuyenBay.FindAsync(id);
             if (chuyenbay == null) return HttpNotFound();
             ViewBag.MaMayBay = new SelectList(db.MayBay.Select(mb => new { mb.MaMayBay, Display = mb.MaMayBay }), "MaMayBay", "Display", chuyenbay.MaMayBay);
-            ViewBag.MaTuyenBay = new SelectList(db.TuyenBay.Select(tb => new { tb.MaTuyenBay, Display = tb.MaTuyenBay }), "MaTuyenBay", "Display", chuyenbay.MaTuyenBay);
+            ViewBag.MaTuyenBay = new SelectList(
+                db.TuyenBay.Select(tb => new {
+                    tb.MaTuyenBay,
+                    Display = "Từ: " + tb.SanBay.TenSanBay + " - Đến: " + tb.SanBay1.TenSanBay
+                }),
+                "MaTuyenBay", "Display", chuyenbay.MaTuyenBay);
             return View(chuyenbay);
         }
         [HttpPost]
@@ -67,7 +82,12 @@ namespace AirlineWeb.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.MaMayBay = new SelectList(db.MayBay.Select(mb => new { mb.MaMayBay, Display = mb.MaMayBay }), "MaMayBay", "Display", chuyenbay.MaMayBay);
-            ViewBag.MaTuyenBay = new SelectList(db.TuyenBay.Select(tb => new { tb.MaTuyenBay, Display = tb.MaTuyenBay }), "MaTuyenBay", "Display", chuyenbay.MaTuyenBay);
+            ViewBag.MaTuyenBay = new SelectList(
+                db.TuyenBay.Select(tb => new {
+                    tb.MaTuyenBay,
+                    Display = "Từ: " + tb.SanBay.TenSanBay + " - Đến: " + tb.SanBay1.TenSanBay
+                }),
+                "MaTuyenBay", "Display", chuyenbay.MaTuyenBay);
             return View(chuyenbay);
         }
 
