@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@model AirlineWeb.Models.ChuyenBay
+@{
+    var lichList = Model.LichBay != null ? Model.LichBay.ToList() : new List<AirlineWeb.Models.LichBay>();
+    var lichSomNhat = lichList.OrderBy(l => l.NgayGioKhoiHanh).FirstOrDefault();
+}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -537,22 +542,24 @@
                             <div class="d-flex align-items-center justify-content-between flex-wrap mb-2">
                                 <div class="mb-2">
                                     <h4 class="mb-1 d-flex align-items-center flex-wrap">
-                                        VietNam Airline
+                                        @Model.HangHangKhong.TenHang
                                     </h4>
                                     <div class="d-flex align-items-center flex-wrap">
                                         <p class="fs-14 mb-2 me-3 pe-3 border-end d-flex align-items-center">
-                                            <img src="~/Assets/Customer/img/icons/airindia.svg" class="me-2" alt="Img"> VN Airline
-                                            <span class="bg-primary divide-point mx-2"></span> Số 1 Việt Nam
+                                            <img src="~/Assets/Customer/img/icons/airindia.svg" class="me-2" alt="Img"> @Model.HangHangKhong.TenHang
+                                            <span class="bg-primary divide-point mx-2"></span> @Model.HangHangKhong.MaHangHangKhong
                                         </p>
                                         <p class="fs-14 mb-2 me-3 pe-3 border-end">
-                                            <i class="isax isax-location5 me-2"></i>TP. Ho Chi Minh, VietNam
-                                            <a href="#location" class="link-primary text-decoration-underline fw-medium ms-2">Địa chỉ</a>
+                                            <i class="isax isax-location5 me-2"></i>@Model.TuyenBay.SanBay.ThanhPho, @Model.TuyenBay.SanBay.QuocGia
+                                            <a href="#location" class="link-primary text-decoration-underline fw-medium ms-2">@Model.TuyenBay.SanBay.TenSanBay</a>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center mb-3">
                                     <a href="javascript:void(0);" class="btn btn-outline-light btn-icon btn-sm d-flex align-items-center justify-content-center me-2"><i class="isax isax-share"></i></a>
-                                    <a href="javascript:void(0);" class="btn btn-outline-light btn-sm d-inline-flex align-items-center"><i class="isax isax-heart5 text-danger me-1"></i>Save</a>
+                                    <a href="javascript:void(0);" class="btn btn-outline-light btn-sm d-inline-flex align-items-center">
+                                        <i class="isax isax-heart5 text-danger me-1"></i>Yêu thích
+                                    </a>
                                 </div>
                             </div>
                             <div class="service-wrap mb-4">
@@ -602,31 +609,31 @@
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <div class="mb-3">
                                         <h6 class="mb-1">Ngày khởi hành</h6>
-                                        <p>25 May 2025 </p>
+                                        <p>@(lichSomNhat != null ? lichSomNhat.NgayBay.ToString("dd/MM/yyyy") : "")</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <div class="mb-3">
                                         <h6 class="mb-1">Thời gian bay</h6>
-                                        <p>35 M</p>
+                                        <p>@(lichSomNhat != null ? (lichSomNhat.NgayGioHaCanh - lichSomNhat.NgayGioKhoiHanh).ToString(@"hh\:mm") : "")</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <div class="mb-3">
                                         <h6 class="mb-1">Số hiệu</h6>
-                                        <p>200</p>
+                                        <p>@Model.SoHieuChuyenBay</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <div class="mb-3">
-                                        <h6 class="mb-1">From</h6>
-                                        <p>200 ft</p>
+                                        <h6 class="mb-1">Bay từ</h6>
+                                        <p>@Model.TuyenBay.SanBay.TenSanBay</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <div class="mb-3">
-                                        <h6 class="mb-1">To</h6>
-                                        <p>8000 grt</p>
+                                        <h6 class="mb-1">Bay đến</h6>
+                                        <p>@Model.TuyenBay.SanBay1.TenSanBay</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -644,6 +651,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="accordion custom-accordion accordion-shadow-none">
                         <div class="accordion-item border-0 mb-4">
                             <div class="accordion-header">
@@ -676,70 +684,68 @@
                                 </button>
                             </div>
                             <div id="accordion_collapse_eight" class="accordion-collapse collapse show">
-                                <div class="accordion-body pt-0">
-                                    <div class="accordion faq-accordion" id="accordionFaq">
-                                        <div class="accordion-item show mb-2">
-                                            <div class="accordion-header">
-                                                <button class="accordion-button fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapseOne" aria-expanded="false" aria-controls="faq-collapseOne">
-                                                    Làm thế nào để đặt vé máy bay trực tuyến?
-                                                </button>
-                                            </div>
-                                            <div id="faq-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFaq">
-                                                <div class="accordion-body">
-                                                    <p class="mb-0">
-                                                        Bạn có thể đặt vé máy bay trực tuyến qua website của chúng tôi hoặc ứng dụng di động. Chọn điểm đi, điểm đến, ngày bay, hạng vé (Phổ Thông, Thương Gia, Hạng Nhất), sau đó nhập thông tin hành khách và thanh toán. Vé sẽ được gửi qua email hoặc lưu trong tài khoản của bạn.
-                                                    </p>
-                                                </div>
+                                <div class="accordion faq-accordion" id="accordionFaq">
+                                    <div class="accordion-item show mb-2">
+                                        <div class="accordion-header">
+                                            <button class="accordion-button fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapseOne" aria-expanded="false" aria-controls="faq-collapseOne">
+                                                Làm thế nào để đặt vé máy bay trực tuyến?
+                                            </button>
+                                        </div>
+                                        <div id="faq-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFaq">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">
+                                                    Bạn có thể đặt vé máy bay trực tuyến qua website của chúng tôi hoặc ứng dụng di động. Chọn điểm đi, điểm đến, ngày bay, hạng vé (Phổ Thông, Thương Gia, Hạng Nhất), sau đó nhập thông tin hành khách và thanh toán. Vé sẽ được gửi qua email hoặc lưu trong tài khoản của bạn.
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="accordion-item mb-2">
-                                            <div class="accordion-header">
-                                                <button class="accordion-button fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-two" aria-expanded="false" aria-controls="faq-two">
-                                                    Hành lý ký gửi và hành lý xách tay được quy định như thế nào?
-                                                </button>
-                                            </div>
-                                            <div id="faq-two" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
-                                                <div class="accordion-body">
-                                                    <p class="mb-0">
-                                                        Hành lý xách tay tối đa 7kg (kích thước không quá 56x36x23cm). Hành lý ký gửi phụ thuộc vào hạng vé: Phổ Thông (20-23kg), Phổ Thông Cao Cấp (30kg), Thương Gia/Hạng Nhất (40kg). Vui lòng kiểm tra quy định cụ thể của hãng hàng không (Vietnam Airlines, Vietjet Air, Bamboo Airways, v.v.) khi đặt vé.
-                                                    </p>
-                                                </div>
+                                    </div>
+                                    <div class="accordion-item mb-2">
+                                        <div class="accordion-header">
+                                            <button class="accordion-button fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-two" aria-expanded="false" aria-controls="faq-two">
+                                                Hành lý ký gửi và hành lý xách tay được quy định như thế nào?
+                                            </button>
+                                        </div>
+                                        <div id="faq-two" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">
+                                                    Hành lý xách tay tối đa 7kg (kích thước không quá 56x36x23cm). Hành lý ký gửi phụ thuộc vào hạng vé: Phổ Thông (20-23kg), Phổ Thông Cao Cấp (30kg), Thương Gia/Hạng Nhất (40kg). Vui lòng kiểm tra quy định cụ thể của hãng hàng không (Vietnam Airlines, Vietjet Air, Bamboo Airways, v.v.) khi đặt vé.
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="accordion-item mb-2">
-                                            <div class="accordion-header">
-                                                <button class="accordion-button fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-three" aria-expanded="false" aria-controls="faq-three">
-                                                    Tôi cần làm gì để làm thủ tục check-in?
-                                                </button>
-                                            </div>
-                                            <div id="faq-three" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
-                                                <div class="accordion-body">
-                                                    <p class="mb-0">
-                                                        Bạn có thể check-in trực tuyến qua website hoặc ứng dụng từ 24-48 giờ trước giờ bay, hoặc tại quầy check-in ở sân bay (HAN, SGN, DAD, v.v.) ít nhất 45 phút trước chuyến bay nội địa và 60 phút trước chuyến bay quốc tế. Mang theo giấy tờ tùy thân (CCCD hoặc hộ chiếu).
-                                                    </p>
-                                                </div>
+                                    </div>
+                                    <div class="accordion-item mb-2">
+                                        <div class="accordion-header">
+                                            <button class="accordion-button fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-three" aria-expanded="false" aria-controls="faq-three">
+                                                Tôi cần làm gì để làm thủ tục check-in?
+                                            </button>
+                                        </div>
+                                        <div id="faq-three" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">
+                                                    Bạn có thể check-in trực tuyến qua website hoặc ứng dụng từ 24-48 giờ trước giờ bay, hoặc tại quầy check-in ở sân bay (HAN, SGN, DAD, v.v.) ít nhất 45 phút trước chuyến bay nội địa và 60 phút trước chuyến bay quốc tế. Mang theo giấy tờ tùy thân (CCCD hoặc hộ chiếu).
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="accordion-item">
-                                            <div class="accordion-header">
-                                                <button class="accordion-button fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-four" aria-expanded="false" aria-controls="faq-four">
-                                                    Nếu chuyến bay bị hủy, tôi sẽ được xử lý như thế nào?
-                                                </button>
-                                            </div>
-                                            <div id="faq-four" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
-                                                <div class="accordion-body">
-                                                    <p class="mb-0">
-                                                        Nếu chuyến bay bị hủy, bạn sẽ được hãng hàng không (Vietnam Airlines, Vietjet Air, Bamboo Airways, v.v.) sắp xếp chuyến bay thay thế hoặc hoàn tiền theo chính sách. Liên hệ qua email hoặc số điện thoại hỗ trợ của chúng tôi để được hỗ trợ nhanh chóng.
-                                                    </p>
-                                                </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <div class="accordion-header">
+                                            <button class="accordion-button fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-four" aria-expanded="false" aria-controls="faq-four">
+                                                Nếu chuyến bay bị hủy, tôi sẽ được xử lý như thế nào?
+                                            </button>
+                                        </div>
+                                        <div id="faq-four" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
+                                            <div class="accordion-body">
+                                                <p class="mb-0">
+                                                    Nếu chuyến bay bị hủy, bạn sẽ được hãng hàng không (Vietnam Airlines, Vietjet Air, Bamboo Airways, v.v.) sắp xếp chuyến bay thay thế hoặc hoàn tiền theo chính sách. Liên hệ qua email hoặc số điện thoại hỗ trợ của chúng tôi để được hỗ trợ nhanh chóng.
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- #endregion Câu hỏi thường gặp -->
                     </div>
+                    <!-- #endregion Câu hỏi thường gặp -->
                 </div>
                 <div class="col-xl-4 theiaStickySidebar">
                     <div class="card shadow-none">
@@ -1002,7 +1008,7 @@
                                             <i class="isax isax-message-search5"></i>
                                         </span>
                                         <p>
-                                            <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="10597e767f507568717d607c753e737f7d">HoangNam@gmail.com</a>
+                                            <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c0a9aea6af80a5b8a1adb0aca5eea3afad">[email&#160;protected]</a>
                                         </p>
                                     </div>
                                     <div class="d-flex align-items-center">
