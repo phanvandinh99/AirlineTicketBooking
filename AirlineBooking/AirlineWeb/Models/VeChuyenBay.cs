@@ -14,11 +14,9 @@ namespace AirlineWeb.Models
         }
 
         [Key]
-        [StringLength(10)]
-        public string MaVe { get; set; }
+        public int MaVe { get; set; }
 
-        [StringLength(10)]
-        public string MaChuyenBay { get; set; }
+        public int? MaChuyenBay { get; set; }
 
         [StringLength(10)]
         public string MaHangVe { get; set; }
@@ -26,12 +24,9 @@ namespace AirlineWeb.Models
         [StringLength(10)]
         public string SoGhe { get; set; }
 
-        [StringLength(20)]
-        public string TrangThai { get; set; }
+        public int? TrangThai { get; set; }
 
         public decimal? GiaVND { get; set; }
-
-        public decimal? GiaUSD { get; set; }
 
         public virtual ChuyenBay ChuyenBay { get; set; }
 

@@ -15,11 +15,9 @@ namespace AirlineWeb.Models
         }
 
         [Key]
-        [StringLength(10)]
-        public string MaChuyenBay { get; set; }
+        public int MaChuyenBay { get; set; }
 
-        [StringLength(10)]
-        public string MaTuyenBay { get; set; }
+        public int? MaTuyenBay { get; set; }
 
         [StringLength(10)]
         public string MaMayBay { get; set; }

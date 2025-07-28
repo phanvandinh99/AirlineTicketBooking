@@ -8,11 +8,9 @@ namespace AirlineWeb.Models
     public partial class LichBay
     {
         [Key]
-        [StringLength(10)]
-        public string MaLichBay { get; set; }
+        public int MaLichBay { get; set; }
 
-        [StringLength(10)]
-        public string MaChuyenBay { get; set; }
+        public int? MaChuyenBay { get; set; }
 
         public DateTime NgayGioKhoiHanh { get; set; }
 

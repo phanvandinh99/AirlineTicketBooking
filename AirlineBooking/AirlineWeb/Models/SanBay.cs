@@ -11,7 +11,7 @@ namespace AirlineWeb.Models
         public SanBay()
         {
             TuyenBay = new HashSet<TuyenBay>();
-            TuyenBays1 = new HashSet<TuyenBay>();
+            TuyenBay1 = new HashSet<TuyenBay>();
         }
 
         [Key]
@@ -32,6 +32,6 @@ namespace AirlineWeb.Models
         public virtual ICollection<TuyenBay> TuyenBay { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TuyenBay> TuyenBays1 { get; set; }
+        public virtual ICollection<TuyenBay> TuyenBay1 { get; set; }
     }
 }

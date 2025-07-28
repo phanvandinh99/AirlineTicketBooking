@@ -15,21 +15,18 @@ namespace AirlineWeb.Models
         }
 
         [Key]
-        [StringLength(10)]
-        public string MaHoaDon { get; set; }
+        public int MaHoaDon { get; set; }
 
-        [StringLength(10)]
-        public string MaPhieuDatVe { get; set; }
+        public int? MaPhieuDatVe { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime NgayLapHoaDon { get; set; }
 
-        public decimal? TongTienVND { get; set; }
+        public decimal? TraTruoc { get; set; }
 
-        public decimal? TongTienUSD { get; set; }
+        public decimal? TongTien { get; set; }
 
-        [StringLength(20)]
-        public string TrangThaiThanhToan { get; set; }
+        public int? TrangThaiThanhToan { get; set; }
 
         [StringLength(10)]
         public string MaNhanVien { get; set; }

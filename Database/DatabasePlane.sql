@@ -100,19 +100,21 @@ GO
 -- Tạo và chèn dữ liệu cho bảng NhanVien
 CREATE TABLE NhanVien (
     MaNhanVien NVARCHAR(10) PRIMARY KEY,
+    MatKhau VARCHAR(50) NOT NULL,
     TenNhanVien NVARCHAR(50) NOT NULL,
     SoDienThoai NVARCHAR(15),
     Email NVARCHAR(50)
 );
 GO
-INSERT INTO NhanVien (MaNhanVien, TenNhanVien, SoDienThoai, Email) VALUES
-('Admin', N'Nhân Viên Quản Trị', N'0909876543', N'admin@gmail.com'),
-('VNAL', N'VietNamAirline', N'0918765432', N'airline@gmail.com');
+INSERT INTO NhanVien (MaNhanVien, MatKhau, TenNhanVien, SoDienThoai, Email) VALUES
+('Admin', 'admin123', N'Nhân Viên Quản Trị', N'0909876543', N'admin@gmail.com'),
+('VNAL', 'vnal123', N'VietNamAirline', N'0918765432', N'airline@gmail.com');
 GO
 
 -- Tạo và chèn dữ liệu cho bảng KhachHang
 CREATE TABLE KhachHang (
     MaKhachHang NVARCHAR(10) PRIMARY KEY,
+    MatKhau VARCHAR(50) NOT NULL,
     TenKhachHang NVARCHAR(50) NOT NULL,
     DiaChi NVARCHAR(100),
     GioiTinh NVARCHAR(10),
@@ -120,9 +122,9 @@ CREATE TABLE KhachHang (
     Email NVARCHAR(50)
 );
 GO
-INSERT INTO KhachHang (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, SoDienThoai, Email) VALUES
-('KH01', N'Nguyễn Văn An', N'123 Đường Láng, TP. Hồ Chí Minh', N'Nam', N'0901234567', N'nva@gmail.com'),
-('KH02', N'Trần Thị Bình', N'456 Đường Giải Phóng, Hà Nội', N'Nữ', N'0912345678', N'ttb@gmail.com');
+INSERT INTO KhachHang (MaKhachHang, MatKhau, TenKhachHang, DiaChi, GioiTinh, SoDienThoai, Email) VALUES
+('KH01', 'kh01pass', N'Nguyễn Văn An', N'123 Đường Láng, TP. Hồ Chí Minh', N'Nam', N'0901234567', N'nva@gmail.com'),
+('KH02', 'kh02pass', N'Trần Thị Bình', N'456 Đường Giải Phóng, Hà Nội', N'Nữ', N'0912345678', N'ttb@gmail.com');
 GO
 
 -- Tạo và chèn dữ liệu cho bảng MayBay
@@ -141,136 +143,125 @@ INSERT INTO MayBay (MaMayBay, MaLoaiMayBay, MaHangHangKhong) VALUES
 ('QH-A678', 'A21N', 'QH'),
 ('BL-A901', 'A320', 'BL'),
 ('VU-A234', 'A321', 'VU'),
-('0V-A567', 'AT75', '0V'); -- Đảm bảo mã 0V khớp với HangHangKhong
+('0V-A567', 'AT75', '0V');
 GO
 
 -- Tạo và chèn dữ liệu cho bảng TuyenBay
 CREATE TABLE TuyenBay (
-    MaTuyenBay NVARCHAR(10) PRIMARY KEY,
+    MaTuyenBay INT IDENTITY(1,1) PRIMARY KEY,
     MaSanBayCatCanh NVARCHAR(10) FOREIGN KEY REFERENCES SanBay(MaSanBay),
     MaSanBayHaCanh NVARCHAR(10) FOREIGN KEY REFERENCES SanBay(MaSanBay),
     KhoangCach INT
 );
 GO
-INSERT INTO TuyenBay (MaTuyenBay, MaSanBayCatCanh, MaSanBayHaCanh, KhoangCach) VALUES
-('TB01', 'SGN', 'HAN', 1160),
-('TB02', 'HAN', 'DAD', 630),
-('TB03', 'SGN', 'PQC', 300),
-('TB04', 'SGN', 'CXR', 310),
-('TB05', 'HAN', 'VCS', 1350),
-('TB06', 'SGN', 'CAH', 250),
-('TB07', 'DAD', 'HPH', 600);
+INSERT INTO TuyenBay (MaSanBayCatCanh, MaSanBayHaCanh, KhoangCach) VALUES
+('SGN', 'HAN', 1160),
+('HAN', 'DAD', 630),
+('SGN', 'PQC', 300),
+('SGN', 'CXR', 310),
+('HAN', 'VCS', 1350),
+('SGN', 'CAH', 250),
+('DAD', 'HPH', 600);
 GO
 
 -- Tạo và chèn dữ liệu cho bảng ChuyenBay
 CREATE TABLE ChuyenBay (
-    MaChuyenBay NVARCHAR(10) PRIMARY KEY,
-    MaTuyenBay NVARCHAR(10) FOREIGN KEY REFERENCES TuyenBay(MaTuyenBay),
+    MaChuyenBay INT IDENTITY(1,1) PRIMARY KEY,
+    MaTuyenBay INT FOREIGN KEY REFERENCES TuyenBay(MaTuyenBay),
     MaMayBay NVARCHAR(10) FOREIGN KEY REFERENCES MayBay(MaMayBay),
     MaHangHangKhong NVARCHAR(10) FOREIGN KEY REFERENCES HangHangKhong(MaHangHangKhong),
     TrangThai NVARCHAR(20),
     SoHieuChuyenBay NVARCHAR(20) NOT NULL
 );
 GO
-INSERT INTO ChuyenBay (MaChuyenBay, MaTuyenBay, MaMayBay, MaHangHangKhong, TrangThai, SoHieuChuyenBay) VALUES
-('CBVN001', 'TB01', 'VN-A123', 'VN', 'Đã lên lịch', 'VN123'),
-('CBVJ002', 'TB02', 'VJ-A789', 'VJ', 'Đã lên lịch', 'VJ456'),
-('CBQH003', 'TB03', 'QH-A678', 'QH', 'Đã lên lịch', 'QH789'),
-('CBBL004', 'TB04', 'BL-A901', 'BL', 'Đã lên lịch', 'BL234'),
-('CBVU005', 'TB01', 'VU-A234', 'VU', 'Đã lên lịch', 'VU567'),
-('CB0V006', 'TB05', '0V-A567', '0V', 'Đã lên lịch', '0V890');
+INSERT INTO ChuyenBay (MaTuyenBay, MaMayBay, MaHangHangKhong, TrangThai, SoHieuChuyenBay) VALUES
+(1, 'VN-A123', 'VN', 'Hoạt động', 'VN123'),
+(2, 'VJ-A789', 'VJ', 'Hoạt động', 'VJ456'),
+(3, 'QH-A678', 'QH', 'Hoạt động', 'QH789'),
+(4, 'BL-A901', 'BL', 'Hoạt động', 'BL234'),
+(1, 'VU-A234', 'VU', 'Hoạt động', 'VU567'),
+(5, '0V-A567', '0V', 'Hoạt động', '0V890');
 GO
 
 -- Tạo và chèn dữ liệu cho bảng LichBay
 CREATE TABLE LichBay (
-    MaLichBay NVARCHAR(10) PRIMARY KEY,
-    MaChuyenBay NVARCHAR(10) FOREIGN KEY REFERENCES ChuyenBay(MaChuyenBay),
+    MaLichBay INT IDENTITY(1,1) PRIMARY KEY,
+    MaChuyenBay INT FOREIGN KEY REFERENCES ChuyenBay(MaChuyenBay),
     NgayGioKhoiHanh DATETIME NOT NULL,
     NgayGioHaCanh DATETIME NOT NULL,
     NgayBay DATE NOT NULL
 );
 GO
-INSERT INTO LichBay (MaLichBay, MaChuyenBay, NgayGioKhoiHanh, NgayGioHaCanh, NgayBay) VALUES
-('LBVN001', 'CBVN001', '2025-07-28 07:00:00', '2025-07-28 09:00:00', '2025-07-28'),
-('LBVJ002', 'CBVJ002', '2025-07-28 10:00:00', '2025-07-28 11:15:00', '2025-07-28'),
-('LBQH003', 'CBQH003', '2025-07-28 14:00:00', '2025-07-28 14:45:00', '2025-07-28'),
-('LBBL004', 'CBBL004', '2025-07-28 16:00:00', '2025-07-28 16:50:00', '2025-07-28'),
-('LBVU005', 'CBVU005', '2025-07-29 08:00:00', '2025-07-29 10:00:00', '2025-07-29'),
-('LB0V006', 'CB0V006', '2025-07-29 09:00:00', '2025-07-29 11:30:00', '2025-07-29');
+INSERT INTO LichBay (MaChuyenBay, NgayGioKhoiHanh, NgayGioHaCanh, NgayBay) VALUES
+(1, '2025-07-28 07:00:00', '2025-07-28 09:00:00', '2025-07-28'),
+(2, '2025-07-28 10:00:00', '2025-07-28 11:15:00', '2025-07-28'),
+(3, '2025-07-28 14:00:00', '2025-07-28 14:45:00', '2025-07-28'),
+(4, '2025-07-28 16:00:00', '2025-07-28 16:50:00', '2025-07-28'),
+(5, '2025-07-29 08:00:00', '2025-07-29 10:00:00', '2025-07-29'),
+(6, '2025-07-29 09:00:00', '2025-07-29 11:30:00', '2025-07-29');
 GO
 
 -- Tạo và chèn dữ liệu cho bảng VeChuyenBay
 CREATE TABLE VeChuyenBay (
-    MaVe NVARCHAR(10) PRIMARY KEY,
-    MaChuyenBay NVARCHAR(10) FOREIGN KEY REFERENCES ChuyenBay(MaChuyenBay),
+    MaVe INT IDENTITY(1,1) PRIMARY KEY,
+    MaChuyenBay INT FOREIGN KEY REFERENCES ChuyenBay(MaChuyenBay),
     MaHangVe NVARCHAR(10) FOREIGN KEY REFERENCES HangVe(MaHangVe),
     SoGhe NVARCHAR(10),
-    TrangThai NVARCHAR(20),
-    GiaVND DECIMAL(10, 2),
-    GiaUSD DECIMAL(10, 2)
+    TrangThai INT, -- 0: Còn trống, 1: Đang Giữ, 2: Đã Đặt
+    GiaVND DECIMAL(10, 2)
 );
 GO
-INSERT INTO VeChuyenBay (MaVe, MaChuyenBay, MaHangVe, SoGhe, TrangThai, GiaVND, GiaUSD) VALUES
-('VVN1231A', 'CBVN001', 'HV01', '1A', 'Đã bán', 4000000, 160.00),
-('VVN1231B', 'CBVN001', 'HV03', '10C', 'Có sẵn', 2000000, 80.00),
-('VVJ4562A', 'CBVJ002', 'HV04', '2B', 'Đã bán', 1800000, 72.00),
-('VVJ4562C', 'CBVJ002', 'HV07', '15D', 'Có sẵn', 800000, 32.00),
-('VQH7893A', 'CBQH003', 'HV05', '1C', 'Đã bán', 2500000, 100.00),
-('VBL2344B', 'CBBL004', 'HV08', '5A', 'Đã đặt', 1200000, 48.00);
+INSERT INTO VeChuyenBay (MaChuyenBay, MaHangVe, SoGhe, TrangThai, GiaVND) VALUES
+(1, 'HV01', '1A', 2, 4000000),
+(1, 'HV03', '10C', 0, 2000000),
+(2, 'HV04', '2B', 2, 1800000),
+(2, 'HV01', '15D', 0, 800000),
+(3, 'HV02', '1C', 2, 2500000),
+(4, 'HV03', '5A', 2, 1200000);
 GO
 
 -- Tạo và chèn dữ liệu cho bảng PhieuDatVe
 CREATE TABLE PhieuDatVe (
-    MaPhieuDatVe NVARCHAR(10) PRIMARY KEY,
+    MaPhieuDatVe INT IDENTITY(1,1) PRIMARY KEY,
     MaKhachHang NVARCHAR(10) FOREIGN KEY REFERENCES KhachHang(MaKhachHang),
-    MaVe NVARCHAR(10) FOREIGN KEY REFERENCES VeChuyenBay(MaVe),
+    MaVe INT FOREIGN KEY REFERENCES VeChuyenBay(MaVe),
+    HoTenHanhKhach NVARCHAR(100) NOT NULL,
+    NgaySinh VARCHAR(20) NOT NULL,
+    CanCuoc VARCHAR(20) NULL, -- Dưới 16 tuổi không có căn cước
     NgayDat DATE NOT NULL,
-    TrangThai NVARCHAR(20)
+    TrangThai INT -- 0: Đã thanh toán, 1: Chưa thanh toán, 2: Đã đặt cọc
 );
 GO
-INSERT INTO PhieuDatVe (MaPhieuDatVe, MaKhachHang, MaVe, NgayDat, TrangThai) VALUES
-('PDV01', 'KH01', 'VVN1231A', '2025-07-27', 'Đã xác nhận'),
-('PDV02', 'KH02', 'VVJ4562A', '2025-07-27', 'Đã xác nhận'),
-('PDV03', 'KH01', 'VQH7893A', '2025-07-27', 'Chờ xác nhận');
+INSERT INTO PhieuDatVe (MaKhachHang, MaVe, HoTenHanhKhach, NgaySinh, CanCuoc, NgayDat, TrangThai) VALUES
+('KH01', 1, N'Nguyễn Văn An', '1990-05-15', '123456789012', '2025-07-27', 0),
+('KH02', 3, N'Trần Thị Bình', '1992-08-20', '987654321098', '2025-07-27', 0),
+('KH01', 5, N'Nguyễn Văn An', '1990-05-15', '123456789012', '2025-07-27', 1);
 GO
 
 -- Tạo và chèn dữ liệu cho bảng HoaDon
 CREATE TABLE HoaDon (
-    MaHoaDon NVARCHAR(10) PRIMARY KEY,
-    MaPhieuDatVe NVARCHAR(10) FOREIGN KEY REFERENCES PhieuDatVe(MaPhieuDatVe),
+    MaHoaDon INT IDENTITY(1,1) PRIMARY KEY,
+    MaPhieuDatVe INT FOREIGN KEY REFERENCES PhieuDatVe(MaPhieuDatVe),
     NgayLapHoaDon DATE NOT NULL,
-    TongTienVND DECIMAL(10, 2),
-    TongTienUSD DECIMAL(10, 2),
-    TrangThaiThanhToan NVARCHAR(20),
+    TraTruoc DECIMAL(10, 2),
+    TongTien DECIMAL(10, 2),
+    TrangThaiThanhToan INT, -- 0: Đã Thanh Toán, 1: Chưa Thanh Toán, 2: Đang giữ (Đã cọc 40% tổng tiền)
     MaNhanVien NVARCHAR(10) FOREIGN KEY REFERENCES NhanVien(MaNhanVien)
 );
 GO
-INSERT INTO HoaDon (MaHoaDon, MaPhieuDatVe, NgayLapHoaDon, TongTienVND, TongTienUSD, TrangThaiThanhToan, MaNhanVien) VALUES
-('HD01', 'PDV01', '2025-07-27', 4000000, 160.00, 'Đã thanh toán', 'Admin'),
-('HD02', 'PDV02', '2025-07-27', 1800000, 72.00, 'Đã thanh toán', 'VNAL');
-GO
-
--- Tạo và chèn dữ liệu cho bảng ThongKe
-CREATE TABLE ThongKe (
-    MaThongKe NVARCHAR(10) PRIMARY KEY,
-    ThangNam NVARCHAR(7) NOT NULL,
-    SoLuongVe INT NOT NULL,
-    DoanhThuVND DECIMAL(15, 2),
-    DoanhThuUSD DECIMAL(15, 2)
-);
-GO
-INSERT INTO ThongKe (MaThongKe, ThangNam, SoLuongVe, DoanhThuVND, DoanhThuUSD) VALUES
-('TK01', '07-2025', 3, 8300000, 332.00);
+INSERT INTO HoaDon (MaPhieuDatVe, NgayLapHoaDon, TraTruoc, TongTien, TrangThaiThanhToan, MaNhanVien) VALUES
+(1, '2025-07-27', 0, 4000000, 0, 'Admin'),
+(2, '2025-07-27', 0, 1800000, 0, 'VNAL');
 GO
 
 -- Tạo và chèn dữ liệu cho bảng HangVeHoaDon
 CREATE TABLE HangVeHoaDon (
     ID INT IDENTITY(1,1) PRIMARY KEY,
     MaHangVe NVARCHAR(10) FOREIGN KEY REFERENCES HangVe(MaHangVe),
-    MaHoaDon NVARCHAR(10) FOREIGN KEY REFERENCES HoaDon(MaHoaDon)
+    MaHoaDon INT FOREIGN KEY REFERENCES HoaDon(MaHoaDon)
 );
 GO
 INSERT INTO HangVeHoaDon (MaHangVe, MaHoaDon) VALUES
-('HV01', 'HD01'),
-('HV04', 'HD02');
+('HV01', 1),
+('HV04', 2);
 GO

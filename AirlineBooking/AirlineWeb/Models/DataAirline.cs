@@ -21,7 +21,6 @@ namespace AirlineWeb.Models
         public virtual DbSet<NhanVien> NhanVien { get; set; }
         public virtual DbSet<PhieuDatVe> PhieuDatVe { get; set; }
         public virtual DbSet<SanBay> SanBay { get; set; }
-        public virtual DbSet<ThongKe> ThongKe { get; set; }
         public virtual DbSet<TuyenBay> TuyenBay { get; set; }
         public virtual DbSet<VeChuyenBay> VeChuyenBay { get; set; }
 
@@ -32,12 +31,28 @@ namespace AirlineWeb.Models
                 .HasPrecision(5, 2);
 
             modelBuilder.Entity<HoaDon>()
-                .Property(e => e.TongTienVND)
+                .Property(e => e.TraTruoc)
                 .HasPrecision(10, 2);
 
             modelBuilder.Entity<HoaDon>()
-                .Property(e => e.TongTienUSD)
+                .Property(e => e.TongTien)
                 .HasPrecision(10, 2);
+
+            modelBuilder.Entity<KhachHang>()
+                .Property(e => e.MatKhau)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<NhanVien>()
+                .Property(e => e.MatKhau)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PhieuDatVe>()
+                .Property(e => e.NgaySinh)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PhieuDatVe>()
+                .Property(e => e.CanCuoc)
+                .IsUnicode(false);
 
             modelBuilder.Entity<SanBay>()
                 .HasMany(e => e.TuyenBay)
@@ -45,24 +60,12 @@ namespace AirlineWeb.Models
                 .HasForeignKey(e => e.MaSanBayCatCanh);
 
             modelBuilder.Entity<SanBay>()
-                .HasMany(e => e.TuyenBays1)
+                .HasMany(e => e.TuyenBay1)
                 .WithOptional(e => e.SanBay1)
                 .HasForeignKey(e => e.MaSanBayHaCanh);
 
-            modelBuilder.Entity<ThongKe>()
-                .Property(e => e.DoanhThuVND)
-                .HasPrecision(15, 2);
-
-            modelBuilder.Entity<ThongKe>()
-                .Property(e => e.DoanhThuUSD)
-                .HasPrecision(15, 2);
-
             modelBuilder.Entity<VeChuyenBay>()
                 .Property(e => e.GiaVND)
-                .HasPrecision(10, 2);
-
-            modelBuilder.Entity<VeChuyenBay>()
-                .Property(e => e.GiaUSD)
                 .HasPrecision(10, 2);
         }
     }

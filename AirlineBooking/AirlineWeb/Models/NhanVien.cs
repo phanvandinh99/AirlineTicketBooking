@@ -19,6 +19,10 @@ namespace AirlineWeb.Models
 
         [Required]
         [StringLength(50)]
+        public string MatKhau { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string TenNhanVien { get; set; }
 
         [StringLength(15)]

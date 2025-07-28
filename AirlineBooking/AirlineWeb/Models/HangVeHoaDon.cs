@@ -11,8 +11,7 @@ namespace AirlineWeb.Models
         [StringLength(10)]
         public string MaHangVe { get; set; }
 
-        [StringLength(10)]
-        public string MaHoaDon { get; set; }
+        public int? MaHoaDon { get; set; }
 
         public virtual HangVe HangVe { get; set; }
 
