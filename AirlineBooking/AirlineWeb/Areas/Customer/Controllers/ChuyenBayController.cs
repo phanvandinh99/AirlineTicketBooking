@@ -26,10 +26,12 @@ namespace AirlineWeb.Areas.Customer.Controllers
                         .Include(cb => cb.TuyenBay)
                         .Include(cb => cb.TuyenBay.SanBay) // Sân bay cất cánh
                         .Include(cb => cb.TuyenBay.SanBay1) // Sân bay hạ cánh
-                        .Where(cb => cb.TrangThai == "Hoạt động")
+                        .Include(cb => cb.LichBay) // Lấy lịch bay
+                        .Where(cb => cb.TrangThai == Const.TrangThai_HoatDong)
                         .OrderBy(cb => cb.SoHieuChuyenBay)
                         .ToList()
                 );
+
 
                 // Truyền danh sách chuyến bay sang view
                 return View(danhSachChuyenBay);

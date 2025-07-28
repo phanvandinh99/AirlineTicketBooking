@@ -25,8 +25,7 @@ namespace AirlineWeb.Models
         [StringLength(10)]
         public string MaHangHangKhong { get; set; }
 
-        [StringLength(20)]
-        public string TrangThai { get; set; }
+        public int? TrangThai { get; set; }
 
         [Required]
         [StringLength(20)]

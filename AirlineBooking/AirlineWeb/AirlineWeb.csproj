@@ -736,7 +736,6 @@
     <Compile Include="Models\NhanVien.cs" />
     <Compile Include="Models\PhieuDatVe.cs" />
     <Compile Include="Models\SanBay.cs" />
-    <Compile Include="Models\ThongKe.cs" />
     <Compile Include="Models\TuyenBay.cs" />
     <Compile Include="Models\VeChuyenBay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

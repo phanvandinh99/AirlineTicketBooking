@@ -170,17 +170,17 @@ CREATE TABLE ChuyenBay (
     MaTuyenBay INT FOREIGN KEY REFERENCES TuyenBay(MaTuyenBay),
     MaMayBay NVARCHAR(10) FOREIGN KEY REFERENCES MayBay(MaMayBay),
     MaHangHangKhong NVARCHAR(10) FOREIGN KEY REFERENCES HangHangKhong(MaHangHangKhong),
-    TrangThai NVARCHAR(20),
+    TrangThai INT, -- 0: Hoạt động, 1: Tạm ngưng
     SoHieuChuyenBay NVARCHAR(20) NOT NULL
 );
 GO
 INSERT INTO ChuyenBay (MaTuyenBay, MaMayBay, MaHangHangKhong, TrangThai, SoHieuChuyenBay) VALUES
-(1, 'VN-A123', 'VN', 'Hoạt động', 'VN123'),
-(2, 'VJ-A789', 'VJ', 'Hoạt động', 'VJ456'),
-(3, 'QH-A678', 'QH', 'Hoạt động', 'QH789'),
-(4, 'BL-A901', 'BL', 'Hoạt động', 'BL234'),
-(1, 'VU-A234', 'VU', 'Hoạt động', 'VU567'),
-(5, '0V-A567', '0V', 'Hoạt động', '0V890');
+(1, 'VN-A123', 'VN', 0, 'VN123'),
+(2, 'VJ-A789', 'VJ', 0, 'VJ456'),
+(3, 'QH-A678', 'QH', 0, 'QH789'),
+(4, 'BL-A901', 'BL', 0, 'BL234'),
+(1, 'VU-A234', 'VU', 0, 'VU567'),
+(5, '0V-A567', '0V', 0, '0V890');
 GO
 
 -- Tạo và chèn dữ liệu cho bảng LichBay
@@ -198,7 +198,11 @@ INSERT INTO LichBay (MaChuyenBay, NgayGioKhoiHanh, NgayGioHaCanh, NgayBay) VALUE
 (3, '2025-07-28 14:00:00', '2025-07-28 14:45:00', '2025-07-28'),
 (4, '2025-07-28 16:00:00', '2025-07-28 16:50:00', '2025-07-28'),
 (5, '2025-07-29 08:00:00', '2025-07-29 10:00:00', '2025-07-29'),
-(6, '2025-07-29 09:00:00', '2025-07-29 11:30:00', '2025-07-29');
+(6, '2025-07-29 09:00:00', '2025-07-29 11:30:00', '2025-07-29'),
+(7, '2025-08-03 09:00:00', '2025-08-03 11:30:00', '2025-08-03'),
+(8, '2025-08-03 09:00:00', '2025-08-03 11:30:00', '2025-08-03'),
+(9, '2025-08-03 09:00:00', '2025-08-03 11:30:00', '2025-08-03'),
+(10, '2025-08-03 09:00:00', '2025-08-03 11:30:00', '2025-08-03');
 GO
 
 -- Tạo và chèn dữ liệu cho bảng VeChuyenBay

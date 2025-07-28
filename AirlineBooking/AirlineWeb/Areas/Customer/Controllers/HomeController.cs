@@ -26,7 +26,7 @@ namespace AirlineWeb.Areas.Customer.Controllers
                         .Include(cb => cb.TuyenBay)
                         .Include(cb => cb.TuyenBay.SanBay) // Sân bay cất cánh
                         .Include(cb => cb.TuyenBay.SanBay1) // Sân bay hạ cánh
-                        .Where(cb => cb.TrangThai == "Hoạt động")
+                        .Where(cb => cb.TrangThai == Const.TrangThai_HoatDong)
                         .OrderBy(cb => cb.SoHieuChuyenBay)
                         .ToList()
                 );
