@@ -1,11 +1,10 @@
-﻿using System.Web.Mvc;
-using System;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Data.Entity;
-using AirlineWeb.Common;
+﻿using AirlineWeb.Common;
 using AirlineWeb.Models;
-using System.Collections.Generic;
+using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace AirlineWeb.Areas.Customer.Controllers
 {

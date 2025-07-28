@@ -714,6 +714,7 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Customer\Controllers\ChuyenBayController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
@@ -762,6 +763,7 @@
     <Content Include="Assets\Customer\plugins\tabler-icons\fonts\tabler-icons.ttf" />
     <Content Include="Assets\Customer\plugins\tabler-icons\fonts\tabler-icons.woff" />
     <Content Include="Assets\Customer\plugins\tabler-icons\fonts\tabler-icons.woff2" />
+    <Content Include="Areas\Customer\Views\ChuyenBay\Index.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
