@@ -260,7 +260,7 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <a href="#" class="btn btn-primary btn-sm w-100">
+                                        <a href="@Url.Action("ChiTiet", "ChuyenBay", new { id = chuyenBay.MaChuyenBay, area = "Customer" })" class="btn btn-primary btn-sm w-100">
                                             <i class="isax isax-ticket me-2"></i>Đặt Vé
                                         </a>
                                     </div>
@@ -271,7 +271,7 @@
                 </div>
 
                 <div class="text-center mt-4 wow fadeInUp" data-wow-delay="0.3s">
-                    <a href="#" class="btn btn-dark">
+                    <a href="@Url.Action("Index", "ChuyenBay", new { area = "Customer" })" class="btn btn-dark">
                         Xem Tất Cả Chuyến Bay <i class="isax isax-arrow-right-3 ms-2"></i>
                     </a>
                 </div>
