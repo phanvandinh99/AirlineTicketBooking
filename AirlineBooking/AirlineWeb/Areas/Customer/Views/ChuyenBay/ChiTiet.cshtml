@@ -15,13 +15,13 @@
             .ToList();
     }
 
-    // Định nghĩa số dãy ghế cho từng hạng vé
+        // Định nghĩa số cột cho từng hạng vé (theo MaHangVe trong CSDL)
     var hangVeConfig = new Dictionary<string, int>
-{
-        { "HangNhat", 1 },      // Hạng nhất: 1 dãy
-        { "ThuongGia", 2 },     // Thương gia: 2 dãy
-        { "PhoThongCaoCap", 4 }, // Phổ thông cao cấp: 4 dãy
-        { "PhoThong", 6 }       // Phổ thông: 6 dãy
+    {
+        { "HV04", 1 },      // Hạng nhất: 1 cột (A)
+        { "HV03", 2 },      // Thương gia: 2 cột (A, B)
+        { "HV02", 4 },      // Phổ thông cao cấp: 4 cột (A, B, C, D)
+        { "HV01", 6 }       // Phổ thông: 6 cột (A, B, C, D, E, F)
     };
 
     int currentRow = 1;
@@ -565,12 +565,12 @@
                             <div class="d-flex align-items-center justify-content-between flex-wrap mb-2">
                                 <div class="mb-2">
                                     <h4 class="mb-1 d-flex align-items-center flex-wrap">
-                                        @Model.HangHangKhong?.TenHang
+                                        @Model.HangHangKhong.TenHang
                                     </h4>
                                     <div class="d-flex align-items-center flex-wrap">
                                         <p class="fs-14 mb-2 me-3 pe-3 border-end d-flex align-items-center">
-                                            <img src="~/Assets/Customer/img/icons/airindia.svg" class="me-2" alt="Img"> @Model.HangHangKhong?.TenHang
-                                            <span class="bg-primary divide-point mx-2"></span> @Model.HangHangKhong?.MaHangHangKhong
+                                            <img src="~/Assets/Customer/img/icons/airindia.svg" class="me-2" alt="Img"> @Model.HangHangKhong.TenHang
+                                            <span class="bg-primary divide-point mx-2"></span> @Model.HangHangKhong.MaHangHangKhong
                                         </p>
                                         <p class="fs-14 mb-2 me-3 pe-3 border-end">
                                             <i class="isax isax-location5 me-2"></i>@Model.TuyenBay.SanBay.ThanhPho, @Model.TuyenBay.SanBay.QuocGia
@@ -881,40 +881,47 @@
                                 <div class="plane-wing-right"></div>
                             </div>
                             <form id="seatForm" method="get" action="@Url.Action("DatVe", "ChuyenBay", new { area = "Customer" })">
-                                <div class="seat-map">
+                                                                <div class="seat-map">
                                     @foreach (var hangVe in hangVeList)
                                     {
                                         var tenHangVe = hangVe.TenHangVe;
-                                        var soDayGhe = hangVeConfig.ContainsKey(hangVe.MaHangVe) ? hangVeConfig[hangVe.MaHangVe] : 6;
-                                        var soCot = hangVe.MaHangVe == "HangNhat" ? 4 : 6; // Hạng nhất 4 cột, còn lại 6 cột
+                                        var soCot = hangVeConfig.ContainsKey(hangVe.MaHangVe) ? hangVeConfig[hangVe.MaHangVe] : 6;
+                                        
+                                        // Lấy tất cả vé của hạng vé này
+                                        var veCuaHangVe = lichSomNhat != null ? 
+                                            lichSomNhat.VeChuyenBay.Where(v => v.HangVe.MaHangVe == hangVe.MaHangVe).ToList() : 
+                                            new List<AirlineWeb.Models.VeChuyenBay>();
+                                        
+                                        // Tính số dãy cần thiết (lấy số dãy lớn nhất từ các vé)
+                                        var soDayGhe = veCuaHangVe.Any() ? 
+                                            veCuaHangVe.Max(v => int.Parse(v.SoGhe.Substring(0, v.SoGhe.Length - 1))) : 1;
 
                                         <div class="seat-class-label">@tenHangVe</div>
 
-                                        for (int row = currentRow; row < currentRow + soDayGhe; row++)
+                                        for (int row = 1; row <= soDayGhe; row++)
                                         {
                                             <div class="seat-row">
                                                 <span class="seat-row-label">@row</span>
-                                                @if (hangVe.MaHangVe != "HangNhat" && row >= 5 && row <= 11)
-                                                {
-                                                    <span class="wing-left"></span>
+                                                @{
+                                                    // Tạo danh sách cột theo số cột của hạng vé
+                                                    var cols = new List<string>();
+                                                    if (soCot >= 1) { cols.Add("A"); }
+                                                    if (soCot >= 2) { cols.Add("B"); }
+                                                    if (soCot >= 3) { cols.Add("C"); }
+                                                    if (soCot >= 4) { cols.Add("D"); }
+                                                    if (soCot >= 5) { cols.Add("E"); }
+                                                    if (soCot >= 6) { cols.Add("F"); }
                                                 }
-                                                @foreach (var col in (hangVe.MaHangVe == "HangNhat" ? new[] { "A", "B", "C", "D" } : new[] { "A", "B", "C", "D", "E", "F" }))
+                                                @foreach (var col in cols)
                                                 {
                                                     var seatCode = $"{row}{col}";
-                                                    var ve = lichSomNhat != null ? lichSomNhat.VeChuyenBay.FirstOrDefault(v => v.SoGhe == seatCode) : null;
+                                                    var ve = veCuaHangVe.FirstOrDefault(v => v.SoGhe == seatCode);
                                                     var booked = ve != null && ve.TrangThai != 0;
                                                     <label class="seat @(booked ? "booked" : "")">
                                                         <input type="radio" name="maVe" value="@(ve?.MaVe ?? 0)" style="display:none;" @(booked ? "disabled" : "") />@col
                                                     </label>
                                                 }
-                                                @if (hangVe.MaHangVe != "HangNhat" && row >= 5 && row <= 11)
-                                                {
-                                                    <span class="wing-right"></span>
-                                                }
                                             </div>
-                                        }
-                                        {
-                                            currentRow += soDayGhe;
                                         }
                                     }
                                 </div>
