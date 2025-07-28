@@ -154,10 +154,43 @@
                                 <i class="isax isax-lock me-2"></i>
                                 Thêm Chuyến Bay
                             </a>
-                            <a href="register.html.htm" class="btn btn-dark d-inline-flex align-items-center me-0">
-                                <i class="isax isax-lock me-2"></i>
-                                Đăng Nhập
-                            </a>
+                            @if (Session["MaKhachHang"] != null)
+                            {
+                                <div class="dropdown d-inline-block">
+                                    <a href="#" class="btn btn-dark d-inline-flex align-items-center me-0 dropdown-toggle" data-bs-toggle="dropdown">
+                                        <i class="isax isax-user me-2"></i>@Session["TenKhachHang"]
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item d-inline-flex align-items-center rounded fw-medium p-2" 
+                                               href="@Url.Action("QuanLyVe", "KhachHang", new { area = "Customer" })">
+                                                <i class="isax isax-list me-2"></i>Quản lý vé
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-inline-flex align-items-center rounded fw-medium p-2" 
+                                               href="@Url.Action("ThongTinCaNhan", "KhachHang", new { area = "Customer" })">
+                                                <i class="isax isax-user-circle me-2"></i>Thông tin cá nhân
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item d-inline-flex align-items-center rounded fw-medium p-2" 
+                                               href="@Url.Action("DangXuat", "DangNhap", new { area = "Customer" })"
+                                               onclick="return confirm('Bạn có chắc muốn đăng xuất?')">
+                                                <i class="isax isax-logout me-2"></i>Đăng xuất
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Index", "DangNhap", new { area = "Customer" })" class="btn btn-dark d-inline-flex align-items-center me-0">
+                                    <i class="isax isax-lock me-2"></i>
+                                    Đăng Nhập
+                                </a>
+                            }
                             <div class="header__hamburger d-xl-none my-auto">
                                 <div class="sidebar-menu">
                                     <i class="isax isax-menu5"></i>
