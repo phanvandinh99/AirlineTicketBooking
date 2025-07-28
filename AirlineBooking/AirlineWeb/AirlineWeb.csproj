@@ -110,6 +110,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Admin\assets\faces\3.jpg" />
+    <Content Include="Assets\Admin\assets\faces\5.jpg" />
+    <Content Include="Assets\Admin\assets\faces\8.jpg" />
+    <Content Include="Assets\Admin\assets\screenful\integration-asana.png" />
+    <Content Include="Assets\Admin\assets\screenful\integration-github.png" />
+    <Content Include="Assets\Admin\assets\screenful\integration-gitlab.png" />
+    <Content Include="Assets\Admin\assets\screenful\integration-jira.png" />
+    <Content Include="Assets\Admin\assets\screenful\integration-pivotal.png" />
+    <Content Include="Assets\Admin\assets\screenful\integration-trello.png" />
+    <Content Include="Assets\Admin\assets\screenful\logo.png" />
+    <Content Include="Assets\Admin\assets\screenful\screen-completed-tasks.png" />
+    <Content Include="Assets\Admin\assets\screenful\screen-custom-chart.png" />
+    <Content Include="Assets\Admin\assets\screenful\screen-milestone.png" />
+    <Content Include="Assets\Admin\assets\screenful\screen-open-tasks.png" />
+    <Content Include="Assets\Admin\assets\screenful\screen-sprint.png" />
+    <Content Include="Assets\Admin\assets\screenful\screen-task-status.png" />
+    <Content Include="Assets\Admin\assets\screenful\screen-team-status.png" />
+    <Content Include="Assets\Admin\assets\screenful\screen-timing.png" />
+    <Content Include="Assets\Admin\css\app.css" />
+    <Content Include="Assets\Admin\css\vendor.css" />
+    <Content Include="Assets\Admin\fonts\fontawesome-webfont3e6e.svg" />
+    <Content Include="Assets\Admin\js\app.js" />
+    <Content Include="Assets\Admin\js\vendor.js" />
     <Content Include="Assets\Customer\css\animate.css" />
     <Content Include="Assets\Customer\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Assets\Customer\css\bootstrap.min.css" />
@@ -714,6 +737,8 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\ChuyenBayController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\NotificationController.cs" />
@@ -765,6 +790,13 @@
     <Content Include="Areas\Customer\Views\ChuyenBay\Index.cshtml" />
     <Content Include="Areas\Customer\Views\Notification\NotFound.cshtml" />
     <Content Include="Areas\Customer\Views\ChuyenBay\ChiTiet.cshtml" />
+    <Content Include="Assets\Admin\fonts\fontawesome-webfont3e6e.eot" />
+    <Content Include="Assets\Admin\fonts\fontawesome-webfont3e6e.ttf" />
+    <Content Include="Assets\Admin\fonts\fontawesome-webfont3e6e.woff" />
+    <Content Include="Assets\Admin\fonts\fontawesome-webfont3e6e.woff2" />
+    <Content Include="Assets\Admin\fonts\fontawesome-webfontd41d.eot" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -775,6 +807,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Customer\Views\Shared\" />
   </ItemGroup>
   <PropertyGroup>
