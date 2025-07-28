@@ -1,0 +1,194 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+
+    <meta name="description" content="DreamsTour - A premium Bootstrap 5 template crafted for travel and tour booking. Tailored for travel agencies and booking platforms, it features flight, hotel, and tour reservations, and holiday packages.">
+    <meta name="keywords" content="travel booking template, tour booking, Bootstrap 5 travel template, DreamsTour, hotel booking, flights booking, holiday packages, tour agency website, travel agency template, travel HTML template, booking system, responsive travel template, Bootstrap travel website">
+    <meta name="author" content="Dreams Technologies">
+    <meta name="robots" content="index, follow">
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Assets/Customer/img/apple-touch-icon.png">
+    <!-- Favicon -->
+    <link rel="icon" href="~/Assets/Customer/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="~/Assets/Customer/img/favicon.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="~/Assets/Customer/css/bootstrap.min.css">
+
+    <!-- Main.css -->
+    <link rel="stylesheet" href="~/Assets/Customer/css/meanmenu.css">
+
+    <!-- Tabler Icon CSS -->
+    <link rel="stylesheet" href="~/Assets/Customer/plugins/tabler-icons/tabler-icons.css">
+
+    <!-- Fontawesome Icon CSS -->
+    <link rel="stylesheet" href="~/Assets/Customer/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="~/Assets/Customer/plugins/fontawesome/css/all.min.css">
+
+    <!-- Owlcarousel CSS -->
+    <link rel="stylesheet" href="~/Assets/Customer/plugins/owlcarousel/owl.carousel.min.css">
+
+    <!-- Rangeslider CSS -->
+    <link rel="stylesheet" href="~/Assets/Customer/plugins/ion-rangeslider/css/ion.rangeSlider.css">
+    <link rel="stylesheet" href="~/Assets/Customer/plugins/ion-rangeslider/css/ion.rangeSlider.min.css">
+
+    <!-- Iconsax CSS -->
+    <link rel="stylesheet" href="~/Assets/Customer/css/iconsax.css">
+
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" href="~/Assets/Customer/css/bootstrap-datetimepicker.min.css">
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="~/Assets/Customer/css/style.css">
+
+</head>
+
+<body class="bg-light-200">
+
+    <!-- Thông báo -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show position-fixed" style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;" role="alert">
+            <i class="isax isax-tick-circle me-2"></i>
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show position-fixed" style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;" role="alert">
+            <i class="isax isax-danger me-2"></i>
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper authentication-wrapper">
+        <div class="container-fuild">
+            <div class="w-100 overflow-hidden position-relative flex-wrap d-block vh-100">
+                <div class="row justify-content-center align-items-center vh-100 overflow-auto flex-wrap ">
+                    <div class="col-xxl-4 col-lg-6 col-md-6 col-11 mx-auto">
+                        <div class="p-4 text-center">
+                            <img src="~/Assets/Customer/img/logo-dark.svg" alt="logo" class="img-fluid">
+                        </div>
+                        <div class="card authentication-card">
+                            <div class="card-header">
+                                <div class="text-center">
+                                    <h5 class="mb-1">ĐĂNG NHẬP</h5>
+                                    <p>QUẢN LÝ VÉ ĐÃ ĐẶT</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                @using (Html.BeginForm("Index", "DangNhap", new { area = "Customer" }, FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Số căn cước công dân</label>
+                                        <div class="input-icon">
+                                            <span class="input-icon-addon">
+                                                <i class="isax isax-user"></i>
+                                            </span>
+                                            <input type="text" name="MaKhachHang" class="form-control form-control-lg" placeholder="Nhập số CCCD/CMND" maxlength="12" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Mật khẩu</label>
+                                        <div class="input-icon">
+                                            <span class="input-icon-addon">
+                                                <i class="isax isax-lock"></i>
+                                            </span>
+                                            <input type="password" name="MatKhau" class="form-control form-control-lg pass-input" placeholder="Nhập mật khẩu" required="required">
+                                            <span class="input-icon-addon toggle-password">
+                                                <i class="isax isax-eye-slash"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-info">
+                                        <i class="isax isax-info-circle me-2"></i>
+                                        <strong>Lưu ý:</strong> 
+                                        <ul class="mb-0 mt-2">
+                                            <li>Tài khoản là số căn cước công dân của bạn</li>
+                                            <li>Mật khẩu mặc định là số căn cước</li>
+                                            <li>Nếu chưa có tài khoản, hãy đặt vé trước</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button type="submit" class="btn btn-xl btn-primary d-flex align-items-center justify-content-center w-100">
+                                            Đăng nhập<i class="isax isax-arrow-right-3 ms-2"></i>
+                                        </button>
+                                    </div>
+                                    <div class="text-center">
+                                        <a href="@Url.Action("Index", "Home", new { area = "Customer" })" class="link-primary fw-medium fs-14">
+                                            <i class="isax isax-arrow-left me-1"></i>Quay về trang chủ
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="coprright-footer">
+            <p class="fs-14">Copyright &copy; 2025. All Rights Reserved, <a href="javascript:void(0);" class="text-primary fw-medium">DreamsTour</a></p>
+        </div>
+    </div>
+    <!-- /Main Wrapper -->
+    <!-- Cursor -->
+    <div class="xb-cursor tx-js-cursor">
+        <div class="xb-cursor-wrapper">
+            <div class="xb-cursor--follower xb-js-follower"></div>
+        </div>
+    </div>
+    <!-- /Cursor -->
+    <!-- Jquery JS -->
+    <script src="~/Assets/Customer/js/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="~/Assets/Customer/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Wow JS -->
+    <script src="~/Assets/Customer/js/wow.min.js"></script>
+
+    <!-- MeanMenu Js -->
+    <script src="~/Assets/Customer/js/jquery.meanmenu.min.js"></script>
+
+    <!-- Datepicker Core JS -->
+    <script src="~/Assets/Customer/plugins/moment/moment.js"></script>
+    <script src="~/Assets/Customer/js/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- cursor JS -->
+    <script src="~/Assets/Customer/js/cursor.js"></script>
+
+    <!-- Script JS -->
+    <script src="~/Assets/Customer/js/script.js"></script>
+
+    <script>
+        // Form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+</body>
+
+</html>

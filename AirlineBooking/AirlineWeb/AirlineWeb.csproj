@@ -747,7 +747,9 @@
     <Compile Include="Areas\Admin\Controllers\TuyenBayController.cs" />
     <Compile Include="Areas\Admin\Controllers\VeController.cs" />
     <Compile Include="Areas\Customer\Controllers\ChuyenBayController.cs" />
+    <Compile Include="Areas\Customer\Controllers\DangNhapController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Customer\Controllers\KhachHangController.cs" />
     <Compile Include="Areas\Customer\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Common\Const.cs" />
@@ -834,6 +836,10 @@
     <Content Include="Areas\Admin\Views\ThongKe\Index.cshtml" />
     <Content Include="Areas\Customer\Views\Shared\_LayoutDetailCustomer.cshtml" />
     <Content Include="Areas\Customer\Views\ChuyenBay\DatVe.cshtml" />
+    <Content Include="Areas\Customer\Views\DangNhap\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\KhachHang\QuanLyVe.cshtml" />
+    <Content Include="Areas\Customer\Views\KhachHang\ChiTietVe.cshtml" />
+    <Content Include="Areas\Customer\Views\KhachHang\ThongTinCaNhan.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

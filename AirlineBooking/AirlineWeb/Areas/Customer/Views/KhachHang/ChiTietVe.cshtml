@@ -1,0 +1,439 @@
+﻿@model AirlineWeb.Models.PhieuDatVe
+@{
+    ViewBag.Title = "Chi tiết vé";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutDetailCustomer.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap">
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home", new { area = "Customer" })">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("QuanLyVe", "KhachHang", new { area = "Customer" })">Quản lý vé</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Chi tiết vé</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Header -->
+                <div class="section-header text-center mb-5">
+                    <h2 class="section-title">Chi tiết vé máy bay</h2>
+                    <p class="section-subtitle">Thông tin chi tiết về vé đã đặt</p>
+                </div>
+
+                <!-- Thông báo -->
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="isax isax-tick-circle me-2"></i>
+                        @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="isax isax-danger me-2"></i>
+                        @TempData["ErrorMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                <!-- Navigation -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <a href="@Url.Action("QuanLyVe", "KhachHang", new { area = "Customer" })" class="btn btn-outline-primary">
+                            <i class="isax isax-arrow-left me-2"></i>Quay lại danh sách vé
+                        </a>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <span class="badge @(Model.TrangThai == 0 ? "bg-success" : "bg-warning") fs-6">
+                            @(Model.TrangThai == 0 ? "Đã thanh toán" : "Chưa thanh toán")
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Ticket Details -->
+                <div class="row">
+                    <!-- Main Ticket Info -->
+                    <div class="col-lg-8">
+                        <div class="card ticket-detail-card mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="isax isax-airplane me-3"></i>
+                                        <div>
+                                            <h4 class="mb-0">@Model.VeChuyenBay.LichBay.ChuyenBay.HangHangKhong.TenHang</h4>
+                                            <small>Chuyến bay @Model.VeChuyenBay.LichBay.ChuyenBay.MaChuyenBay</small>
+                                        </div>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="ticket-number">Vé #@Model.MaPhieuDatVe</div>
+                                        <small>Ngày đặt: @Model.NgayDat.ToString("dd/MM/yyyy")</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body">
+                                <!-- Flight Route -->
+                                <div class="flight-route mb-4">
+                                    <div class="row align-items-center">
+                                        <div class="col-4 text-center">
+                                            <div class="airport-info">
+                                                <div class="airport-code">@Model.VeChuyenBay.LichBay.ChuyenBay.TuyenBay.SanBay.MaSanBay</div>
+                                                <div class="airport-name">@Model.VeChuyenBay.LichBay.ChuyenBay.TuyenBay.SanBay.TenSanBay</div>
+                                                <div class="departure-time">@Model.VeChuyenBay.LichBay.NgayGioKhoiHanh.ToString("HH:mm")</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <div class="flight-arrow">
+                                                <i class="isax isax-arrow-right-3 text-primary"></i>
+                                                <div class="flight-duration">
+                                                    @{
+                                                        var thoiGianBay = Model.VeChuyenBay.LichBay.NgayGioKhoiHanh;
+                                                        var thoiGianDen = Model.VeChuyenBay.LichBay.NgayGioHaCanh;
+                                                        var thoiGianBayTinh = thoiGianDen - thoiGianBay;
+                                                    }
+                                                    @(thoiGianBayTinh.Hours)h @(thoiGianBayTinh.Minutes)m
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <div class="airport-info">
+                                                <div class="airport-code">@Model.VeChuyenBay.LichBay.ChuyenBay.TuyenBay.SanBay1.MaSanBay</div>
+                                                <div class="airport-name">@Model.VeChuyenBay.LichBay.ChuyenBay.TuyenBay.SanBay1.TenSanBay</div>
+                                                <div class="arrival-time">@Model.VeChuyenBay.LichBay.NgayGioHaCanh.ToString("HH:mm")</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Passenger Info -->
+                                <div class="passenger-info mb-4">
+                                    <h5 class="card-title">
+                                        <i class="isax isax-user me-2 text-primary"></i>Thông tin hành khách
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <span class="label">Họ và tên:</span>
+                                                <span class="value">@Model.HoTenHanhKhach</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <span class="label">Ngày sinh:</span>
+                                                <span class="value">@Model.NgaySinh</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <span class="label">Căn cước:</span>
+                                                <span class="value">@Model.CanCuoc</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <span class="label">Số ghế:</span>
+                                                <span class="value seat-number">@Model.VeChuyenBay.SoGhe</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Ticket Details -->
+                                <div class="ticket-details">
+                                    <h5 class="card-title">
+                                        <i class="isax isax-ticket me-2 text-primary"></i>Chi tiết vé
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <span class="label">Hạng vé:</span>
+                                                <span class="value">@Model.VeChuyenBay.HangVe.TenHangVe</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <span class="label">Ngày bay:</span>
+                                                <span class="value">@Model.VeChuyenBay.LichBay.NgayGioKhoiHanh.ToString("dd/MM/yyyy")</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <span class="label">Giờ bay:</span>
+                                                <span class="value">@Model.VeChuyenBay.LichBay.NgayGioKhoiHanh.ToString("HH:mm")</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <span class="label">Máy bay:</span>
+                                                <span class="value">@Model.VeChuyenBay.LichBay.ChuyenBay.HangHangKhong.TenHang</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="col-lg-4">
+                        <!-- Price Info -->
+                        <div class="card price-card mb-4">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="isax isax-dollar-circle me-2"></i>Thông tin giá
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="price-item">
+                                    <span class="label">Giá vé:</span>
+                                    <span class="value">@(Model.VeChuyenBay.GiaVND?.ToString("N0") ?? "0") VNĐ</span>
+                                </div>
+                                <div class="price-item">
+                                    <span class="label">Thuế:</span>
+                                    <span class="value">0 VNĐ</span>
+                                </div>
+                                <hr>
+                                <div class="price-item total">
+                                    <span class="label">Tổng cộng:</span>
+                                    <span class="value">@(Model.VeChuyenBay.GiaVND?.ToString("N0") ?? "0") VNĐ</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="card actions-card">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="isax isax-setting me-2"></i>Thao tác
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                @if (Model.TrangThai != 0)
+                                {
+                                    var thoiGianBay2 = Model.VeChuyenBay.LichBay.NgayGioKhoiHanh;
+                                    var khoangCach = thoiGianBay2 - DateTime.Now;
+                                    
+                                    if (khoangCach.TotalHours >= 24)
+                                    {
+                                        <button type="button" class="btn btn-danger w-100 mb-2" 
+                                                onclick="huyVe(@Model.MaPhieuDatVe)">
+                                            <i class="isax isax-close-circle me-2"></i>Hủy vé
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-secondary w-100 mb-2" disabled>
+                                            <i class="isax isax-clock me-2"></i>Không thể hủy vé
+                                        </button>
+                                        <small class="text-muted d-block text-center">
+                                            Chỉ có thể hủy vé trước 24h chuyến bay
+                                        </small>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="text-center">
+                                        <i class="isax isax-tick-circle text-success" style="font-size: 3rem;"></i>
+                                        <p class="mt-2 text-success">Vé đã thanh toán</p>
+                                    </div>
+                                }
+                                
+                                <a href="@Url.Action("QuanLyVe", "KhachHang", new { area = "Customer" })" 
+                                   class="btn btn-outline-primary w-100">
+                                    <i class="isax isax-arrow-left me-2"></i>Quay lại
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal xác nhận hủy vé -->
+<div class="modal fade" id="huyVeModal" tabindex="-1" aria-labelledby="huyVeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="huyVeModalLabel">
+                    <i class="isax isax-danger text-danger me-2"></i>Xác nhận hủy vé
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn hủy vé này không?</p>
+                <p class="text-muted small">Lưu ý: Vé đã hủy không thể khôi phục lại.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                <form id="huyVeForm" method="post" style="display: inline;">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="maPhieuDatVe" name="maPhieuDatVe" />
+                    <button type="submit" class="btn btn-danger">
+                        <i class="isax isax-close-circle me-2"></i>Xác nhận hủy
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .ticket-detail-card {
+        border: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .ticket-number {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    
+    .airport-code {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+    
+    .airport-name {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-bottom: 0.5rem;
+    }
+    
+    .departure-time, .arrival-time {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #495057;
+    }
+    
+    .flight-arrow {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .flight-duration {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f8f9fa;
+    }
+    
+    .info-item:last-child {
+        border-bottom: none;
+    }
+    
+    .label {
+        font-weight: 600;
+        color: #495057;
+    }
+    
+    .value {
+        color: #2c3e50;
+    }
+    
+    .seat-number {
+        background: #e3f2fd;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+    
+    .price-card, .actions-card {
+        border: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .price-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+    }
+    
+    .price-item.total {
+        font-weight: bold;
+        font-size: 1.1rem;
+        border-top: 2px solid #dee2e6;
+        margin-top: 0.5rem;
+        padding-top: 1rem;
+    }
+    
+    .breadcrumb-area {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+    
+    .breadcrumb {
+        background: transparent;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .breadcrumb-item a {
+        color: rgba(255,255,255,0.8);
+        text-decoration: none;
+    }
+    
+    .breadcrumb-item.active {
+        color: white;
+    }
+    
+    .section-header {
+        margin-bottom: 3rem;
+    }
+    
+    .section-title {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .section-subtitle {
+        color: #6c757d;
+        font-size: 1.1rem;
+    }
+</style>
+
+<script>
+    function huyVe(maPhieuDatVe) {
+        document.getElementById('maPhieuDatVe').value = maPhieuDatVe;
+        var modal = new bootstrap.Modal(document.getElementById('huyVeModal'));
+        modal.show();
+    }
+    
+    // Auto hide alerts after 5 seconds
+    setTimeout(function() {
+        var alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            var bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        });
+    }, 5000);
+</script>
+

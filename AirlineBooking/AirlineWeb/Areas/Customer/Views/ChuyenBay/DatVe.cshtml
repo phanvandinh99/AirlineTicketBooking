@@ -41,7 +41,7 @@
                                     <p class="mb-2"><strong>Chuyến bay:</strong> @Model.LichBay.ChuyenBay.SoHieuChuyenBay</p>
                                     <p class="mb-2"><strong>Hạng vé:</strong> @Model.HangVe.TenHangVe</p>
                                     <p class="mb-2"><strong>Số ghế:</strong> @Model.SoGhe</p>
-                                    <p class="mb-2"><strong>Giá vé:</strong> @Model.GiaVND VNĐ</p>
+                                    <p class="mb-2"><strong>Giá vé:</strong> @(Model.GiaVND?.ToString("N0") ?? "0") VNĐ</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -150,7 +150,7 @@
                         <div class="price-breakdown">
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Giá vé cơ bản:</span>
-                                <span>@Model.GiaVND VNĐ</span>
+                                <span>@(Model.GiaVND?.ToString("N0") ?? "0") VNĐ</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Thuế và phí:</span>
@@ -159,7 +159,7 @@
                             <hr>
                             <div class="d-flex justify-content-between mb-3">
                                 <strong>Tổng cộng:</strong>
-                                <strong class="text-primary fs-5">@Model.GiaVND VNĐ</strong>
+                                <strong class="text-primary fs-5">@(Model.GiaVND?.ToString("N0") ?? "0") VNĐ</strong>
                             </div>
                         </div>
 

@@ -1,0 +1,384 @@
+﻿@model AirlineWeb.Models.KhachHang
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutDetailCustomer.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap">
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home", new { area = "Customer" })">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("QuanLyVe", "KhachHang", new { area = "Customer" })">Quản lý vé</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Thông tin cá nhân</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Header -->
+                <div class="section-header text-center mb-5">
+                    <h2 class="section-title">Thông tin cá nhân</h2>
+                    <p class="section-subtitle">Quản lý thông tin tài khoản của bạn</p>
+                </div>
+
+                <!-- Thông báo -->
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="isax isax-tick-circle me-2"></i>
+                        @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="isax isax-danger me-2"></i>
+                        @TempData["ErrorMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                <!-- Navigation -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <a href="@Url.Action("QuanLyVe", "KhachHang", new { area = "Customer" })" class="btn btn-outline-primary">
+                            <i class="isax isax-arrow-left me-2"></i>Quay lại quản lý vé
+                        </a>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <span class="text-muted">
+                            <i class="isax isax-calendar me-1"></i>
+                            @DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Profile Card -->
+                <div class="card profile-card">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex align-items-center">
+                            <div class="profile-avatar me-3">
+                                <i class="isax isax-user text-white" style="font-size: 2rem;"></i>
+                            </div>
+                            <div>
+                                <h4 class="mb-0">@Model.TenKhachHang</h4>
+                                <small>Tài khoản khách hàng</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        @using (Html.BeginForm("CapNhatThongTin", "KhachHang", new { area = "Customer" }, FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            
+                            <!-- Account Info Section -->
+                            <div class="info-section mb-4">
+                                <h5 class="section-title">
+                                    <i class="isax isax-user-circle me-2 text-primary"></i>Thông tin tài khoản
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Mã khách hàng <span class="text-muted">(Không thể thay đổi)</span></label>
+                                        <input type="text" class="form-control" value="@Model.MaKhachHang" readonly>
+                                        <small class="form-text text-muted">Số căn cước công dân của bạn</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Mật khẩu <span class="text-muted">(Không thể thay đổi)</span></label>
+                                        <input type="password" class="form-control" value="@Model.MatKhau" readonly>
+                                        <small class="form-text text-muted">Mật khẩu mặc định là số căn cước</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Personal Info Section -->
+                            <div class="info-section mb-4">
+                                <h5 class="section-title">
+                                    <i class="isax isax-profile-circle me-2 text-primary"></i>Thông tin cá nhân
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="TenKhachHang" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                                        <input type="text" id="TenKhachHang" name="TenKhachHang" class="form-control" 
+                                               value="@Model.TenKhachHang" required="required" placeholder="Nhập họ và tên">
+                                        <div class="invalid-feedback">
+                                            Vui lòng nhập họ và tên.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="GioiTinh" class="form-label">Giới tính</label>
+                                        <select id="GioiTinh" name="GioiTinh" class="form-select">
+                                            <option value="">Chọn giới tính</option>
+                                            <option value="Nam" @(Model.GioiTinh == "Nam" ? "selected" : "")>Nam</option>
+                                            <option value="Nữ" @(Model.GioiTinh == "Nữ" ? "selected" : "")>Nữ</option>
+                                            <option value="Khác" @(Model.GioiTinh == "Khác" ? "selected" : "")>Khác</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Contact Info Section -->
+                            <div class="info-section mb-4">
+                                <h5 class="section-title">
+                                    <i class="isax isax-call me-2 text-primary"></i>Thông tin liên hệ
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="Email" class="form-label">Email</label>
+                                        <input type="email" id="Email" name="Email" class="form-control" 
+                                               value="@Model.Email" placeholder="Nhập email">
+                                        <div class="invalid-feedback">
+                                            Vui lòng nhập email hợp lệ.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="SoDienThoai" class="form-label">Số điện thoại</label>
+                                        <input type="tel" id="SoDienThoai" name="SoDienThoai" class="form-control" 
+                                               value="@Model.SoDienThoai" placeholder="Nhập số điện thoại">
+                                        <div class="invalid-feedback">
+                                            Vui lòng nhập số điện thoại hợp lệ.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <label for="DiaChi" class="form-label">Địa chỉ</label>
+                                        <textarea id="DiaChi" name="DiaChi" class="form-control" rows="3" 
+                                                  placeholder="Nhập địa chỉ">@Model.DiaChi</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Account Statistics -->
+                            <div class="info-section mb-4">
+                                <h5 class="section-title">
+                                    <i class="isax isax-chart me-2 text-primary"></i>Thống kê tài khoản
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="stat-card text-center">
+                                            <div class="stat-icon">
+                                                <i class="isax isax-calendar text-primary"></i>
+                                            </div>
+                                            <div class="stat-number">@ViewBag.TongVe</div>
+                                            <div class="stat-label">Tổng vé đã đặt</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="stat-card text-center">
+                                            <div class="stat-icon">
+                                                <i class="isax isax-tick-circle text-success"></i>
+                                            </div>
+                                            <div class="stat-number">@ViewBag.VeDaThanhToan</div>
+                                            <div class="stat-label">Vé đã thanh toán</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="stat-card text-center">
+                                            <div class="stat-icon">
+                                                <i class="isax isax-clock text-warning"></i>
+                                            </div>
+                                            <div class="stat-number">@ViewBag.VeChuaThanhToan</div>
+                                            <div class="stat-label">Vé chưa thanh toán</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="action-buttons">
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <button type="submit" class="btn btn-primary w-100">
+                                            <i class="isax isax-save me-2"></i>Cập nhật thông tin
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <a href="@Url.Action("QuanLyVe", "KhachHang", new { area = "Customer" })" 
+                                           class="btn btn-outline-secondary w-100">
+                                            <i class="isax isax-arrow-left me-2"></i>Quay lại
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Security Notice -->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start">
+                            <i class="isax isax-shield-tick text-primary me-3 mt-1"></i>
+                            <div>
+                                <h6 class="card-title">Bảo mật tài khoản</h6>
+                                <p class="card-text text-muted mb-2">
+                                    Để đảm bảo an toàn cho tài khoản của bạn:
+                                </p>
+                                <ul class="text-muted small mb-0">
+                                    <li>Không chia sẻ thông tin đăng nhập với người khác</li>
+                                    <li>Thường xuyên cập nhật thông tin liên hệ</li>
+                                    <li>Liên hệ hỗ trợ nếu phát hiện hoạt động bất thường</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-card {
+        border: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .profile-avatar {
+        width: 60px;
+        height: 60px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .info-section {
+        border-bottom: 1px solid #f8f9fa;
+        padding-bottom: 1.5rem;
+    }
+    
+    .info-section:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    
+    .section-title {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e9ecef;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+    
+    .stat-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 0.25rem;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    
+    .action-buttons {
+        border-top: 1px solid #e9ecef;
+        padding-top: 1.5rem;
+    }
+    
+    .breadcrumb-area {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+    
+    .breadcrumb {
+        background: transparent;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .breadcrumb-item a {
+        color: rgba(255,255,255,0.8);
+        text-decoration: none;
+    }
+    
+    .breadcrumb-item.active {
+        color: white;
+    }
+    
+    .section-header {
+        margin-bottom: 3rem;
+    }
+    
+    .section-title {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .section-subtitle {
+        color: #6c757d;
+        font-size: 1.1rem;
+    }
+    
+    .form-control:read-only {
+        background-color: #f8f9fa;
+        opacity: 1;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+</style>
+
+<script>
+    // Form validation
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+    
+    // Auto hide alerts after 5 seconds
+    setTimeout(function() {
+        var alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            var bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        });
+    }, 5000);
+</script>
+
