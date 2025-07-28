@@ -1,0 +1,49 @@
+﻿@using AirlineWeb.Models
+@model List<HangVe>
+
+@{
+    ViewBag.Title = "Danh Sách Hạng Vé";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<article class="content items-list-page">
+    <div class="title-search-block">
+        <div class="title-block">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="title">
+                        Danh Sách Hạng Vé <a href="/Admin/HangVe/Create" class="btn btn-primary btn-sm rounded-s"> Thêm Mới </a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card items">
+        <ul class="item-list striped" id="hangve-list">
+            <li class="item item-list-header">
+                <div class="item-row">
+                    <div class="item-col" style="width: 20%"><span>Mã Hạng Vé</span></div>
+                    <div class="item-col" style="width: 40%"><span>Tên Hạng Vé</span></div>
+                    <div class="item-col" style="width: 20%"><span>Tỷ Lệ Giá</span></div>
+                    <div class="item-col" style="width: 20%"><span>Thao Tác</span></div>
+                </div>
+            </li>
+            @foreach (var hv in Model)
+            {
+                <li class="item">
+                    <div class="item-row">
+                        <div class="item-col" style="width: 20%">@hv.MaHangVe</div>
+                        <div class="item-col" style="width: 40%">@hv.TenHangVe</div>
+                        <div class="item-col" style="width: 20%">@hv.TyLeGia.ToString("N2")</div>
+                        <div class="item-col" style="width: 20%">
+                            <a href="@Url.Action("Details", "HangVe", new { area = "Admin", id = hv.MaHangVe })" class="btn btn-info btn-sm">Chi tiết</a>
+                            <a href="@Url.Action("Edit", "HangVe", new { area = "Admin", id = hv.MaHangVe })" class="btn btn-warning btn-sm">Sửa</a>
+                            <a href="@Url.Action("Delete", "HangVe", new { area = "Admin", id = hv.MaHangVe })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</a>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</article>
+

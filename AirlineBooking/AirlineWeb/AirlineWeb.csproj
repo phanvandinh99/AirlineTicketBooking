@@ -738,7 +738,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\HangVeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LichBayController.cs" />
     <Compile Include="Areas\Admin\Controllers\SanBayController.cs" />
     <Compile Include="Areas\Customer\Controllers\ChuyenBayController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
@@ -804,6 +806,11 @@
     <Content Include="Areas\Admin\Views\SanBay\Create.cshtml" />
     <Content Include="Areas\Admin\Views\SanBay\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\SanBay\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\HangVe\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HangVe\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\HangVe\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\HangVe\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\HangVe\Delete.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -814,6 +821,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\LichBay\" />
     <Folder Include="Areas\Customer\Views\Shared\" />
   </ItemGroup>
   <PropertyGroup>
