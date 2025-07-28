@@ -832,6 +832,8 @@
     <Content Include="Areas\Admin\Views\TuyenBay\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\LichBay\VeChuyenBay.cshtml" />
     <Content Include="Areas\Admin\Views\ThongKe\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\Shared\_LayoutDetailCustomer.cshtml" />
+    <Content Include="Areas\Customer\Views\ChuyenBay\DatVe.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -844,7 +846,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Default\" />
     <Folder Include="Areas\Admin\Views\Ve\" />
-    <Folder Include="Areas\Customer\Views\Shared\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

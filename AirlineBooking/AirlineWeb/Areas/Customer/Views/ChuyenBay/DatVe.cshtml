@@ -1,0 +1,224 @@
+﻿@model AirlineWeb.Models.VeChuyenBay
+@{
+    ViewBag.Title = "Đặt vé";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutDetailCustomer.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-area breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-content">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home", new { area = "Customer" })">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("Index", "ChuyenBay", new { area = "Customer" })">Chuyến bay</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Đặt vé</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Đặt vé Section -->
+<div class="booking-section pt-120 pb-120">
+    <div class="container">
+        <div class="row">
+            <!-- Thông tin chuyến bay -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><i class="isax isax-airplane me-2"></i>Thông tin chuyến bay</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="flight-info">
+                                    <h5 class="text-primary">@Model.LichBay.ChuyenBay.HangHangKhong.TenHang</h5>
+                                    <p class="mb-2"><strong>Chuyến bay:</strong> @Model.LichBay.ChuyenBay.SoHieuChuyenBay</p>
+                                    <p class="mb-2"><strong>Hạng vé:</strong> @Model.HangVe.TenHangVe</p>
+                                    <p class="mb-2"><strong>Số ghế:</strong> @Model.SoGhe</p>
+                                    <p class="mb-2"><strong>Giá vé:</strong> @Model.GiaVND VNĐ</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="route-info">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="text-center me-3">
+                                            <h6 class="mb-1">@Model.LichBay.ChuyenBay.TuyenBay.SanBay.ThanhPho</h6>
+                                            <small class="text-muted">@Model.LichBay.ChuyenBay.TuyenBay.SanBay.TenSanBay</small>
+                                        </div>
+                                        <div class="flex-grow-1 text-center">
+                                            <i class="isax isax-airplane text-primary"></i>
+                                        </div>
+                                        <div class="text-center ms-3">
+                                            <h6 class="mb-1">@Model.LichBay.ChuyenBay.TuyenBay.SanBay1.ThanhPho</h6>
+                                            <small class="text-muted">@Model.LichBay.ChuyenBay.TuyenBay.SanBay1.TenSanBay</small>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center">
+                                        <div class="col-6">
+                                            <p class="mb-1"><strong>Giờ cất cánh</strong></p>
+                                            <p class="text-primary">@Model.LichBay.NgayGioKhoiHanh.ToString("HH:mm")</p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p class="mb-1"><strong>Giờ hạ cánh</strong></p>
+                                            <p class="text-primary">@Model.LichBay.NgayGioHaCanh.ToString("HH:mm")</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-center mb-0">
+                                        <small class="text-muted">Ngày bay: @Model.LichBay.NgayBay.ToString("dd/MM/yyyy")</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form đặt vé -->
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0"><i class="isax isax-user me-2"></i>Thông tin hành khách</h4>
+                    </div>
+                    <div class="card-body">
+                        @using (Html.BeginForm("DatVe", "ChuyenBay", new { area = "Customer", maVe = Model.MaVe }, FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="HoTenHanhKhach" class="form-label">Họ và tên hành khách <span class="text-danger">*</span></label>
+                                    <input type="text" name="HoTenHanhKhach" class="form-control" required="required" placeholder="Nhập họ và tên" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="NgaySinh" class="form-label">Ngày sinh <span class="text-danger">*</span></label>
+                                    <input type="date" name="NgaySinh" class="form-control" required="required" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="CanCuoc" class="form-label">Căn cước công dân <span class="text-danger">*</span></label>
+                                    <input type="text" name="CanCuoc" class="form-control" placeholder="Nhập số CCCD/CMND" maxlength="12" required="required" />
+                                    <small class="form-text text-muted">Số căn cước sẽ được sử dụng làm tài khoản đăng nhập</small>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="Email" class="form-label">Email</label>
+                                    <input type="email" name="Email" class="form-control" placeholder="Nhập email" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="SoDienThoai" class="form-label">Số điện thoại</label>
+                                    <input type="tel" name="SoDienThoai" class="form-control" placeholder="Nhập số điện thoại" />
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info">
+                                <i class="isax isax-info-circle me-2"></i>
+                                <strong>Lưu ý:</strong> 
+                                <ul class="mb-0 mt-2">
+                                    <li>Số căn cước công dân sẽ được sử dụng làm tài khoản đăng nhập</li>
+                                    <li>Mật khẩu mặc định là số căn cước của bạn</li>
+                                    <li>Sau khi đặt vé thành công, bạn cần thanh toán trong vòng 24 giờ</li>
+                                </ul>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="@Url.Action("ChiTiet", "ChuyenBay", new { area = "Customer", id = Model.LichBay.ChuyenBay.MaChuyenBay })" class="btn btn-secondary">
+                                    <i class="isax isax-arrow-left me-2"></i>Quay lại
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="isax isax-ticket me-2"></i>Xác nhận đặt vé
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông tin thanh toán -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0"><i class="isax isax-card me-2"></i>Tổng thanh toán</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="price-breakdown">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Giá vé cơ bản:</span>
+                                <span>@Model.GiaVND VNĐ</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Thuế và phí:</span>
+                                <span>0 VNĐ</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between mb-3">
+                                <strong>Tổng cộng:</strong>
+                                <strong class="text-primary fs-5">@Model.GiaVND VNĐ</strong>
+                            </div>
+                        </div>
+
+                        <div class="payment-methods mt-4">
+                            <h6 class="mb-3">Phương thức thanh toán:</h6>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bank" checked>
+                                <label class="form-check-label" for="bankTransfer">
+                                    <i class="isax isax-bank me-2"></i>Chuyển khoản ngân hàng
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" value="card">
+                                <label class="form-check-label" for="creditCard">
+                                    <i class="isax isax-card me-2"></i>Thẻ tín dụng/ghi nợ
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="cash" value="cash">
+                                <label class="form-check-label" for="cash">
+                                    <i class="isax isax-money me-2"></i>Tiền mặt tại văn phòng
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thông tin liên hệ -->
+                <div class="card shadow-sm mt-4">
+                    <div class="card-header bg-info text-white">
+                        <h6 class="mb-0"><i class="isax isax-call me-2"></i>Hỗ trợ</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-2"><i class="isax isax-call me-2"></i>Hotline: 1900-xxxx</p>
+                        <p class="mb-2"><i class="isax isax-message me-2"></i>Email: support@airline.com</p>
+                        <p class="mb-0"><i class="isax isax-clock me-2"></i>Giờ làm việc: 8:00 - 22:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        // Form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+

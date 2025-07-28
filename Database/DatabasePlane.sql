@@ -113,8 +113,8 @@ GO
 
 -- Tạo và chèn dữ liệu cho bảng KhachHang
 CREATE TABLE KhachHang (
-    MaKhachHang NVARCHAR(10) PRIMARY KEY,
-    MatKhau VARCHAR(50) NOT NULL,
+    MaKhachHang NVARCHAR(20) PRIMARY KEY,
+    MatKhau VARCHAR(20) NOT NULL,
     TenKhachHang NVARCHAR(50) NOT NULL,
     DiaChi NVARCHAR(100),
     GioiTinh NVARCHAR(10),

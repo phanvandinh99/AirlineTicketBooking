@@ -14,7 +14,7 @@ namespace AirlineWeb.Models
         }
 
         [Key]
-        [StringLength(10)]
+        [StringLength(20)] // Tăng độ dài để chứa căn cước
         public string MaKhachHang { get; set; }
 
         [Required]
