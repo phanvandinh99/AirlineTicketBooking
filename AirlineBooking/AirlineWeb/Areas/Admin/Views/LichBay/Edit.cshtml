@@ -38,6 +38,29 @@
                             @Html.TextBoxFor(m => m.NgayBay, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", required = "required" })
                             @Html.ValidationMessageFor(m => m.NgayBay, null, new { @class = "text-danger" })
                         </div>
+                        <hr />
+                        <h5 class="mb-3">Cấu hình ghế và giá cho từng hạng vé</h5>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Hạng vé</th>
+                                    <th>Số lượng ghế</th>
+                                    <th>Giá gốc (VND)</th>
+                                    <th>Tỷ lệ giá</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var hv in (IEnumerable<AirlineWeb.Models.HangVe>)ViewBag.HangVes)
+                                {
+                                    <tr>
+                                        <td>@hv.TenHangVe</td>
+                                        <td><input type="number" name="SoLuong_@hv.MaHangVe" min="0" class="form-control" value="0" required /></td>
+                                        <td><input type="number" name="Gia_@hv.MaHangVe" min="0" step="1000" class="form-control" value="0" required /></td>
+                                        <td>@hv.TyLeGia</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                         <div class="d-flex justify-content-between">
                             <a href="@Url.Action("Index", "LichBay", new { area = "Admin" })" class="btn btn-secondary">
                                 <i class="fa fa-arrow-left"></i> Quay lại
