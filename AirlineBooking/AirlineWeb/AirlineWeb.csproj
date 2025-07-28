@@ -800,6 +800,10 @@
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SanBay\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SanBay\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\SanBay\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\SanBay\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\SanBay\Delete.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

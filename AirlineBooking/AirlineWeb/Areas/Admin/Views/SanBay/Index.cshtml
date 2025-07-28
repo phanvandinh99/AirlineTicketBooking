@@ -78,14 +78,16 @@
                         <div class="item-col item-col-title" style="width: 25%; min-width: 180px;">
                             <div>@sb.TenSanBay</div>
                         </div>
-                        <div class="item-col item-col-title" style="width: 25%; min-width: 180px;">
+                        <div class="item-col item-col-sales" style="width: 25%; min-width: 180px;">
                             <div>@sb.ThanhPho</div>
                         </div>
                         <div class="item-col item-col-stats no-overflow" style="width: 20%; min-width: 140px;">
                             <div>@sb.QuocGia</div>
                         </div>
                         <div class="item-col item-col-date" style="width: 15%; min-width: 100px;">
-                            <!-- Thêm các nút thao tác nếu cần -->
+                            <a href="@Url.Action("Details", "SanBay", new { area = "Admin", id = sb.MaSanBay })" class="btn btn-info btn-sm">Chi tiết</a>
+                            <a href="@Url.Action("Edit", "SanBay", new { area = "Admin", id = sb.MaSanBay })" class="btn btn-warning btn-sm">Cập nhật</a>
+                            <a href="@Url.Action("Delete", "SanBay", new { area = "Admin", id = sb.MaSanBay })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</a>
                         </div>
                         <div class="item-col fixed item-col-actions-dropdown"></div>
                     </div>

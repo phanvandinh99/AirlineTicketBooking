@@ -1,0 +1,43 @@
+﻿@model AirlineWeb.Models.SanBay
+@{
+    ViewBag.Title = "Xóa Sân Bay";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Xác nhận xóa Sân Bay</h4>
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">Bạn có chắc chắn muốn xóa sân bay sau không?</p>
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Mã Sân Bay</dt>
+                        <dd class="col-sm-8">@Model.MaSanBay</dd>
+                        <dt class="col-sm-4">Tên Sân Bay</dt>
+                        <dd class="col-sm-8">@Model.TenSanBay</dd>
+                        <dt class="col-sm-4">Thành Phố</dt>
+                        <dd class="col-sm-8">@Model.ThanhPho</dd>
+                        <dt class="col-sm-4">Quốc Gia</dt>
+                        <dd class="col-sm-8">@Model.QuocGia</dd>
+                    </dl>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    @using (Html.BeginForm("Delete", "SanBay", FormMethod.Post, new { area = "Admin" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.MaSanBay)
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-trash"></i> Xóa
+                        </button>
+                    }
+                    <a href="@Url.Action("Index", "SanBay", new { area = "Admin" })" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left"></i> Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
