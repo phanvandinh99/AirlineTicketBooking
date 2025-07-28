@@ -243,7 +243,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
-                <form id="huyVeForm" method="post" style="display: inline;">
+                <form id="huyVeForm" method="post" action="@Url.Action("HuyVe", "KhachHang", new { area = "Customer" })" style="display: inline;">
                     @Html.AntiForgeryToken()
                     <input type="hidden" id="maPhieuDatVe" name="maPhieuDatVe" />
                     <button type="submit" class="btn btn-danger">

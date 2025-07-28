@@ -119,6 +119,7 @@ namespace AirlineWeb.Areas.Customer.Controllers
                 var phieuDatVe = await Task.Run(() =>
                     db.PhieuDatVe
                         .Include(pdv => pdv.VeChuyenBay)
+                        .Include(pdv => pdv.VeChuyenBay.LichBay)
                         .FirstOrDefault(pdv => pdv.MaPhieuDatVe == maPhieuDatVe && pdv.MaKhachHang == maKhachHang)
                 );
 
@@ -142,8 +143,15 @@ namespace AirlineWeb.Areas.Customer.Controllers
 
                 if (khoangCach.TotalHours < 24)
                 {
-                    TempData["ErrorMessage"] = "Không thể hủy vé trong vòng 24 giờ trước chuyến bay!";
+                    TempData["ErrorMessage"] = $"Không thể hủy vé trong vòng 24 giờ trước chuyến bay! (Còn {khoangCach.TotalHours:F1} giờ)";
                     return RedirectToAction("QuanLyVe");
+                }
+
+                // Xóa hóa đơn liên quan nếu có
+                var hoaDon = db.HoaDon.FirstOrDefault(hd => hd.MaPhieuDatVe == maPhieuDatVe);
+                if (hoaDon != null)
+                {
+                    db.HoaDon.Remove(hoaDon);
                 }
 
                 // Cập nhật trạng thái vé về còn trống
@@ -159,7 +167,75 @@ namespace AirlineWeb.Areas.Customer.Controllers
             catch (Exception ex)
             {
                 await Logger.ErrorAsync(ex);
-                TempData["ErrorMessage"] = "Có lỗi xảy ra khi hủy vé. Vui lòng thử lại!";
+                TempData["ErrorMessage"] = $"Có lỗi xảy ra khi hủy vé: {ex.Message}";
+                return RedirectToAction("QuanLyVe");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult HuyVeTest(int maPhieuDatVe)
+        {
+            try
+            {
+                // Kiểm tra đăng nhập
+                var maKhachHang = Session["MaKhachHang"] as string;
+                if (string.IsNullOrEmpty(maKhachHang))
+                {
+                    TempData["ErrorMessage"] = "Vui lòng đăng nhập để thực hiện thao tác này!";
+                    return RedirectToAction("Index", "DangNhap", new { area = "Customer" });
+                }
+
+                // Lấy phiếu đặt vé
+                var phieuDatVe = db.PhieuDatVe
+                    .Include(pdv => pdv.VeChuyenBay)
+                    .Include(pdv => pdv.VeChuyenBay.LichBay)
+                    .FirstOrDefault(pdv => pdv.MaPhieuDatVe == maPhieuDatVe && pdv.MaKhachHang == maKhachHang);
+
+                if (phieuDatVe == null)
+                {
+                    TempData["ErrorMessage"] = "Không tìm thấy thông tin vé!";
+                    return RedirectToAction("QuanLyVe");
+                }
+
+                // Kiểm tra trạng thái vé
+                if (phieuDatVe.TrangThai == 0) // Đã thanh toán
+                {
+                    TempData["ErrorMessage"] = "Không thể hủy vé đã thanh toán!";
+                    return RedirectToAction("QuanLyVe");
+                }
+
+                // Kiểm tra thời gian hủy vé (trước 24h giờ bay)
+                var thoiGianBay = phieuDatVe.VeChuyenBay.LichBay.NgayGioKhoiHanh;
+                var thoiGianHienTai = DateTime.Now;
+                var khoangCach = thoiGianBay - thoiGianHienTai;
+
+                if (khoangCach.TotalHours < 24)
+                {
+                    TempData["ErrorMessage"] = $"Không thể hủy vé trong vòng 24 giờ trước chuyến bay! (Còn {khoangCach.TotalHours:F1} giờ)";
+                    return RedirectToAction("QuanLyVe");
+                }
+
+                // Xóa hóa đơn liên quan nếu có
+                var hoaDon = db.HoaDon.FirstOrDefault(hd => hd.MaPhieuDatVe == maPhieuDatVe);
+                if (hoaDon != null)
+                {
+                    db.HoaDon.Remove(hoaDon);
+                }
+
+                // Cập nhật trạng thái vé về còn trống
+                phieuDatVe.VeChuyenBay.TrangThai = 0;
+
+                // Xóa phiếu đặt vé
+                db.PhieuDatVe.Remove(phieuDatVe);
+                db.SaveChanges();
+
+                TempData["SuccessMessage"] = "Hủy vé thành công!";
+                return RedirectToAction("QuanLyVe");
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorAsync(ex);
+                TempData["ErrorMessage"] = $"Có lỗi xảy ra khi hủy vé: {ex.Message}";
                 return RedirectToAction("QuanLyVe");
             }
         }
