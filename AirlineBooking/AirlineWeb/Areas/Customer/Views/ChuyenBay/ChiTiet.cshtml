@@ -670,6 +670,111 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- #region Sơ đồ ghế máy bay -->
+                        <h5 class="mt-4 mb-3">Sơ đồ ghế máy bay</h5>
+                        <style>
+                            .seat-map {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                            }
+
+                            .seat-row {
+                                display: flex;
+                                margin-bottom: 2px;
+                            }
+
+                            .seat {
+                                width: 32px;
+                                height: 32px;
+                                border: 1px solid #ccc;
+                                margin: 0 2px;
+                                text-align: center;
+                                line-height: 32px;
+                                border-radius: 6px;
+                                font-size: 14px;
+                                cursor: pointer;
+                                background: #fff;
+                            }
+
+                                .seat.booked {
+                                    background: #bbb;
+                                    color: #fff;
+                                    cursor: not-allowed;
+                                }
+
+                                .seat.selected {
+                                    background: #007bff;
+                                    color: #fff;
+                                }
+
+                            .seat-row-label {
+                                width: 24px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-weight: bold;
+                            }
+
+                            .seat-class-label {
+                                font-size: 13px;
+                                color: #007bff;
+                                margin-bottom: 4px;
+                            }
+                        </style>
+                        <form id="seatForm" method="get" action="@Url.Action("DatVe", "ChuyenBay", new { area = "Customer" })">
+                            <div class="seat-map">
+                                <div class="seat-class-label">Mexicana Elite Class</div>
+                                @for (int row = 1; row <= 4; row++)
+                                {
+                                    <div class="seat-row">
+                                        <span class="seat-row-label">@row</span>
+                                        @foreach (var col in new[] { "A", "B", "C", "D" })
+                                        {
+                                            var seatCode = $"{row}{col}";
+                                            var ve = Model.VeChuyenBay.FirstOrDefault(v => v.SoGhe == seatCode);
+                                            var booked = ve != null && ve.TrangThai != 0;
+                                            <label class="seat @(booked ? "booked" : "")">
+                                                <input type="radio" name="maVe" value="@(ve?.MaVe ?? 0)" style="display:none;" @(booked ? "disabled" : "") />@col
+                                            </label>
+                                        }
+                                    </div>
+                                }
+                                <div class="seat-class-label mt-2">Tourist Class</div>
+                                @for (int row = 5; row <= 28; row++)
+                                {
+                                    <div class="seat-row">
+                                        <span class="seat-row-label">@row</span>
+                                        @foreach (var col in new[] { "A", "B", "C", "D", "E", "F" })
+                                        {
+                                            var seatCode = $"{row}{col}";
+                                            var ve = Model.VeChuyenBay.FirstOrDefault(v => v.SoGhe == seatCode);
+                                            var booked = ve != null && ve.TrangThai != 0;
+                                            <label class="seat @(booked ? "booked" : "")">
+                                                <input type="radio" name="maVe" value="@(ve?.MaVe ?? 0)" style="display:none;" @(booked ? "disabled" : "") />@col
+                                            </label>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Đặt Vé</button>
+                        </form>
+                        <script>
+                            // Highlight ghế đang chọn
+                            document.querySelectorAll('.seat input[type=radio]').forEach(function (radio) {
+                                radio.addEventListener('change', function () {
+                                    document.querySelectorAll('.seat').forEach(function (seat) {
+                                        seat.classList.remove('selected');
+                                    });
+                                    if (this.checked) {
+                                        this.parentElement.classList.add('selected');
+                                    }
+                                });
+                            });
+                        </script>
+                        <!-- #endregion Sơ đồ ghế máy bay -->
+
                         <!-- #region Câu hỏi thường gặp -->
                         <div class="accordion-item mb-4 border-0">
                             <div class="accordion-header">
@@ -740,6 +845,7 @@
                         </div>
                     </div>
                     <!-- #endregion Câu hỏi thường gặp -->
+
                 </div>
                 <div class="col-xl-4 theiaStickySidebar">
                     <div class="card shadow-none">
