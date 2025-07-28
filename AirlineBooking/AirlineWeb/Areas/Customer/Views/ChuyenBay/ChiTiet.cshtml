@@ -683,6 +683,7 @@
                                 box-shadow: 0 2px 16px rgba(0,0,0,0.08);
                                 padding-bottom: 16px;
                             }
+
                             .plane-nose {
                                 width: 100%;
                                 height: 60px;
@@ -693,6 +694,7 @@
                                 left: 0;
                                 z-index: 2;
                             }
+
                             .plane-tail {
                                 width: 100%;
                                 height: 40px;
@@ -703,14 +705,17 @@
                                 left: 0;
                                 z-index: 2;
                             }
+
                             .plane-wings {
                                 position: absolute;
-                                left: 0; right: 0;
+                                left: 0;
+                                right: 0;
                                 top: 340px; /* khoảng vị trí giữa máy bay, chỉnh lại nếu cần */
                                 height: 80px;
                                 pointer-events: none;
                                 z-index: 1;
                             }
+
                             .plane-wing-left, .plane-wing-right {
                                 position: absolute;
                                 top: 0;
@@ -720,8 +725,17 @@
                                 opacity: 0.18;
                                 border-radius: 60% 80% 60% 80%/80% 100% 60% 80%;
                             }
-                            .plane-wing-left { left: -90px; transform: rotate(-8deg); }
-                            .plane-wing-right { right: -90px; transform: scaleX(-1) rotate(-8deg); }
+
+                            .plane-wing-left {
+                                left: -90px;
+                                transform: rotate(-8deg);
+                            }
+
+                            .plane-wing-right {
+                                right: -90px;
+                                transform: scaleX(-1) rotate(-8deg);
+                            }
+
                             .plane-wc {
                                 width: 100%;
                                 height: 36px;
@@ -734,31 +748,107 @@
                                 justify-content: center;
                                 z-index: 2;
                             }
+
                             .plane-wc-icon {
-                                width: 24px; height: 24px; margin: 0 8px;
+                                width: 24px;
+                                height: 24px;
+                                margin: 0 8px;
                                 background: url('https://cdn-icons-png.flaticon.com/512/61/61088.png') no-repeat center/contain;
                                 display: inline-block;
                                 opacity: 0.7;
                             }
-                            .seat-map { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 2; }
-                            .seat-row { display: flex; margin-bottom: 2px; position: relative; z-index: 2; }
-                            .seat { width: 32px; height: 32px; border: 1px solid #ccc; margin: 0 2px; text-align: center; line-height: 32px; border-radius: 6px; font-size: 14px; cursor: pointer; background: #fff; }
-                            .seat.booked { background: #bbb; color: #fff; cursor: not-allowed; }
-                            .seat.selected { background: #007bff; color: #fff; }
-                            .seat-row-label { width: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-                            .seat-class-label { font-size: 13px; color: #007bff; margin-bottom: 4px; }
+
+                            .seat-map {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                position: relative;
+                                z-index: 2;
+                            }
+
+                            .seat-row {
+                                display: flex;
+                                margin-bottom: 2px;
+                                position: relative;
+                                z-index: 2;
+                            }
+
+                            .seat {
+                                width: 32px;
+                                height: 32px;
+                                border: 1px solid #ccc;
+                                margin: 0 2px;
+                                text-align: center;
+                                line-height: 32px;
+                                border-radius: 6px;
+                                font-size: 14px;
+                                cursor: pointer;
+                                background: #fff;
+                            }
+
+                                .seat.booked {
+                                    background: #bbb;
+                                    color: #fff;
+                                    cursor: not-allowed;
+                                }
+
+                                .seat.selected {
+                                    background: #007bff;
+                                    color: #fff;
+                                }
+
+                            .seat-row-label {
+                                width: 24px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-weight: bold;
+                            }
+
+                            .seat-class-label {
+                                font-size: 13px;
+                                color: #007bff;
+                                margin-bottom: 4px;
+                            }
+
                             .wing-left, .wing-right {
-                                width: 28px; height: 32px; background: #4bb3fd; border-radius: 60% 60% 0 0;
-                                display: inline-block; margin: 0 2px;
+                                width: 28px;
+                                height: 32px;
+                                background: #4bb3fd;
+                                border-radius: 60% 60% 0 0;
+                                display: inline-block;
+                                margin: 0 2px;
                                 position: relative;
                                 top: 0;
                             }
-                            .wing-left { margin-right: 6px; }
-                            .wing-right { margin-left: 6px; }
+
+                            .wing-left {
+                                margin-right: 6px;
+                            }
+
+                            .wing-right {
+                                margin-left: 6px;
+                            }
+
                             media (max-width: 600px) {
-                                .plane-body { width: 98vw; min-width: 0; }
-                                .seat { width: 22px; height: 22px; font-size: 11px; line-height: 22px; }
-                                .wing-left, .wing-right { width: 18px; height: 22px; }
+                                .plane-body
+
+                            {
+                                width: 98vw;
+                                min-width: 0;
+                            }
+
+                            .seat {
+                                width: 22px;
+                                height: 22px;
+                                font-size: 11px;
+                                line-height: 22px;
+                            }
+
+                            .wing-left, .wing-right {
+                                width: 18px;
+                                height: 22px;
+                            }
                             }
                         </style>
                         <div class="plane-body">
@@ -769,7 +859,7 @@
                             </div>
                             <form id="seatForm" method="get" action="@Url.Action("DatVe", "ChuyenBay", new { area = "Customer" })">
                                 <div class="seat-map">
-                                    <div class="seat-class-label">Mexicana Elite Class</div>
+                                    <div class="seat-class-label">Khoang Hạng Nhât</div>
                                     @for (int row = 1; row <= 4; row++)
                                     {
                                         <div class="seat-row">
@@ -785,15 +875,11 @@
                                             }
                                         </div>
                                     }
-                                    <div class="seat-class-label mt-2">Tourist Class</div>
+                                    <div class="seat-class-label mt-2">Khoang Thương Gia</div>
                                     @for (int row = 5; row <= 28; row++)
                                     {
                                         <div class="seat-row">
                                             <span class="seat-row-label">@row</span>
-                                            @if (row >= 5 && row <= 11)
-                                            {
-                                                <span class="wing-left"></span>
-                                            }
                                             @foreach (var col in new[] { "A", "B", "C", "D", "E", "F" })
                                             {
                                                 var seatCode = $"{row}{col}";
@@ -803,12 +889,10 @@
                                                     <input type="radio" name="maVe" value="@(ve?.MaVe ?? 0)" style="display:none;" @(booked ? "disabled" : "") />@col
                                                 </label>
                                             }
-                                            @if (row >= 5 && row <= 11)
-                                            {
-                                                <span class="wing-right"></span>
-                                            }
                                         </div>
                                     }
+                                    <div class="seat-class-label mt-2">Khoang Phổ Thông Cao Cấp</div>
+                                    <div class="seat-class-label mt-2">Khoang Phổ Thông</div>
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-3">Đặt Vé</button>
                             </form>
@@ -833,7 +917,6 @@
                             });
                         </script>
                         <!-- #endregion Sơ đồ ghế máy bay -->
-
                         <!-- #region Câu hỏi thường gặp -->
                         <div class="accordion-item mb-4 border-0">
                             <div class="accordion-header">
