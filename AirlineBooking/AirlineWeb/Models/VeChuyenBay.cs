@@ -16,7 +16,7 @@ namespace AirlineWeb.Models
         [Key]
         public int MaVe { get; set; }
 
-        public int? MaChuyenBay { get; set; }
+        public int? MaLichBay { get; set; }
 
         [StringLength(10)]
         public string MaHangVe { get; set; }
@@ -28,9 +28,9 @@ namespace AirlineWeb.Models
 
         public decimal? GiaVND { get; set; }
 
-        public virtual ChuyenBay ChuyenBay { get; set; }
-
         public virtual HangVe HangVe { get; set; }
+
+        public virtual LichBay LichBay { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhieuDatVe> PhieuDatVe { get; set; }

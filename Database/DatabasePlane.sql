@@ -208,20 +208,20 @@ GO
 -- Tạo và chèn dữ liệu cho bảng VeChuyenBay
 CREATE TABLE VeChuyenBay (
     MaVe INT IDENTITY(1,1) PRIMARY KEY,
-    MaChuyenBay INT FOREIGN KEY REFERENCES ChuyenBay(MaChuyenBay),
+    MaLichBay INT FOREIGN KEY REFERENCES LichBay(MaLichBay),
     MaHangVe NVARCHAR(10) FOREIGN KEY REFERENCES HangVe(MaHangVe),
     SoGhe NVARCHAR(10),
     TrangThai INT, -- 0: Còn trống, 1: Đang Giữ, 2: Đã Đặt
     GiaVND DECIMAL(10, 2)
 );
 GO
-INSERT INTO VeChuyenBay (MaChuyenBay, MaHangVe, SoGhe, TrangThai, GiaVND) VALUES
+INSERT INTO VeChuyenBay (MaLichBay, MaHangVe, SoGhe, TrangThai, GiaVND) VALUES
 (1, 'HV01', '1A', 2, 4000000),
 (1, 'HV03', '10C', 0, 2000000),
 (2, 'HV04', '2B', 2, 1800000),
 (2, 'HV01', '15D', 0, 800000),
-(3, 'HV02', '1C', 2, 2500000),
-(4, 'HV03', '5A', 2, 1200000);
+(4, 'HV02', '1C', 2, 2500000),
+(3, 'HV03', '5A', 2, 1200000);
 GO
 
 -- Tạo và chèn dữ liệu cho bảng PhieuDatVe

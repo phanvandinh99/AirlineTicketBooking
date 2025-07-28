@@ -11,7 +11,6 @@ namespace AirlineWeb.Models
         public ChuyenBay()
         {
             LichBay = new HashSet<LichBay>();
-            VeChuyenBay = new HashSet<VeChuyenBay>();
         }
 
         [Key]
@@ -39,8 +38,5 @@ namespace AirlineWeb.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LichBay> LichBay { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VeChuyenBay> VeChuyenBay { get; set; }
     }
 }
