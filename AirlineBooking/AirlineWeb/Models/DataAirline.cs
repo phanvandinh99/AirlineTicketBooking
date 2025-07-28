@@ -9,21 +9,21 @@ namespace AirlineWeb.Models
         {
         }
 
-        public virtual DbSet<ChuyenBay> ChuyenBays { get; set; }
-        public virtual DbSet<HangHangKhong> HangHangKhongs { get; set; }
-        public virtual DbSet<HangVe> HangVes { get; set; }
-        public virtual DbSet<HangVeHoaDon> HangVeHoaDons { get; set; }
-        public virtual DbSet<HoaDon> HoaDons { get; set; }
-        public virtual DbSet<KhachHang> KhachHangs { get; set; }
-        public virtual DbSet<LichBay> LichBays { get; set; }
-        public virtual DbSet<LoaiMayBay> LoaiMayBays { get; set; }
-        public virtual DbSet<MayBay> MayBays { get; set; }
-        public virtual DbSet<NhanVien> NhanViens { get; set; }
-        public virtual DbSet<PhieuDatVe> PhieuDatVes { get; set; }
-        public virtual DbSet<SanBay> SanBays { get; set; }
-        public virtual DbSet<ThongKe> ThongKes { get; set; }
-        public virtual DbSet<TuyenBay> TuyenBays { get; set; }
-        public virtual DbSet<VeChuyenBay> VeChuyenBays { get; set; }
+        public virtual DbSet<ChuyenBay> ChuyenBay { get; set; }
+        public virtual DbSet<HangHangKhong> HangHangKhong { get; set; }
+        public virtual DbSet<HangVe> HangVe { get; set; }
+        public virtual DbSet<HangVeHoaDon> HangVeHoaDon { get; set; }
+        public virtual DbSet<HoaDon> HoaDon { get; set; }
+        public virtual DbSet<KhachHang> KhachHang { get; set; }
+        public virtual DbSet<LichBay> LichBay { get; set; }
+        public virtual DbSet<LoaiMayBay> LoaiMayBay { get; set; }
+        public virtual DbSet<MayBay> MayBay { get; set; }
+        public virtual DbSet<NhanVien> NhanVien { get; set; }
+        public virtual DbSet<PhieuDatVe> PhieuDatVe { get; set; }
+        public virtual DbSet<SanBay> SanBay { get; set; }
+        public virtual DbSet<ThongKe> ThongKe { get; set; }
+        public virtual DbSet<TuyenBay> TuyenBay { get; set; }
+        public virtual DbSet<VeChuyenBay> VeChuyenBay { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -40,7 +40,7 @@ namespace AirlineWeb.Models
                 .HasPrecision(10, 2);
 
             modelBuilder.Entity<SanBay>()
-                .HasMany(e => e.TuyenBays)
+                .HasMany(e => e.TuyenBay)
                 .WithOptional(e => e.SanBay)
                 .HasForeignKey(e => e.MaSanBayCatCanh);
 

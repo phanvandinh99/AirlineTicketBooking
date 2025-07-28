@@ -10,7 +10,7 @@ namespace AirlineWeb.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public VeChuyenBay()
         {
-            PhieuDatVes = new HashSet<PhieuDatVe>();
+            PhieuDatVe = new HashSet<PhieuDatVe>();
         }
 
         [Key]
@@ -38,6 +38,6 @@ namespace AirlineWeb.Models
         public virtual HangVe HangVe { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhieuDatVe> PhieuDatVes { get; set; }
+        public virtual ICollection<PhieuDatVe> PhieuDatVe { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace AirlineWeb.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KhachHang()
         {
-            PhieuDatVes = new HashSet<PhieuDatVe>();
+            PhieuDatVe = new HashSet<PhieuDatVe>();
         }
 
         [Key]
@@ -34,6 +34,6 @@ namespace AirlineWeb.Models
         public string Email { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhieuDatVe> PhieuDatVes { get; set; }
+        public virtual ICollection<PhieuDatVe> PhieuDatVe { get; set; }
     }
 }

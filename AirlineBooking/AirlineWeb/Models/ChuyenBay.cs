@@ -10,8 +10,8 @@ namespace AirlineWeb.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ChuyenBay()
         {
-            LichBays = new HashSet<LichBay>();
-            VeChuyenBays = new HashSet<VeChuyenBay>();
+            LichBay = new HashSet<LichBay>();
+            VeChuyenBay = new HashSet<VeChuyenBay>();
         }
 
         [Key]
@@ -41,9 +41,9 @@ namespace AirlineWeb.Models
         public virtual TuyenBay TuyenBay { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LichBay> LichBays { get; set; }
+        public virtual ICollection<LichBay> LichBay { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VeChuyenBay> VeChuyenBays { get; set; }
+        public virtual ICollection<VeChuyenBay> VeChuyenBay { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace AirlineWeb.Areas.Customer.Controllers
             {
                 // Lấy danh sách chuyến bay từ database
                 var danhSachChuyenBay = await Task.Run(() =>
-                    db.ChuyenBays
+                    db.ChuyenBay
                         .Include(cb => cb.HangHangKhong)
                         .Include(cb => cb.MayBay)
                         .Include(cb => cb.MayBay.LoaiMayBay)

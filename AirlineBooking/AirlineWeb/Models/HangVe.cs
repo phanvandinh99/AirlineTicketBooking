@@ -10,8 +10,8 @@ namespace AirlineWeb.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public HangVe()
         {
-            HangVeHoaDons = new HashSet<HangVeHoaDon>();
-            VeChuyenBays = new HashSet<VeChuyenBay>();
+            HangVeHoaDon = new HashSet<HangVeHoaDon>();
+            VeChuyenBay = new HashSet<VeChuyenBay>();
         }
 
         [Key]
@@ -25,9 +25,9 @@ namespace AirlineWeb.Models
         public decimal TyLeGia { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HangVeHoaDon> HangVeHoaDons { get; set; }
+        public virtual ICollection<HangVeHoaDon> HangVeHoaDon { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VeChuyenBay> VeChuyenBays { get; set; }
+        public virtual ICollection<VeChuyenBay> VeChuyenBay { get; set; }
     }
 }

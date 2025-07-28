@@ -19,7 +19,7 @@ namespace AirlineWeb.Areas.Customer.Controllers
             {
                 // Lấy danh sách chuyến bay từ database
                 var danhSachChuyenBay = await Task.Run(() => 
-                    db.ChuyenBays
+                    db.ChuyenBay
                         .Include(cb => cb.HangHangKhong)
                         .Include(cb => cb.MayBay)
                         .Include(cb => cb.MayBay.LoaiMayBay)
@@ -52,7 +52,7 @@ namespace AirlineWeb.Areas.Customer.Controllers
             try
             {
                 var danhSachSanBay = await Task.Run(() => 
-                    db.SanBays
+                    db.SanBay
                         .Where(sb => sb.QuocGia == "Việt Nam" || sb.QuocGia == "Vietnam")
                         .OrderBy(sb => sb.TenSanBay)
                         .Select(sb => new
@@ -80,7 +80,7 @@ namespace AirlineWeb.Areas.Customer.Controllers
             try
             {
                 var danhSachSanBayDen = await Task.Run(() => 
-                    db.SanBays
+                    db.SanBay
                         .Where(sb => sb.QuocGia == "Việt Nam" || sb.QuocGia == "Vietnam")
                         .Where(sb => sb.MaSanBay != maSanBayDi) // Loại bỏ sân bay đi
                         .OrderBy(sb => sb.TenSanBay)

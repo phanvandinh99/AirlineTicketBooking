@@ -10,7 +10,7 @@ namespace AirlineWeb.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SanBay()
         {
-            TuyenBays = new HashSet<TuyenBay>();
+            TuyenBay = new HashSet<TuyenBay>();
             TuyenBays1 = new HashSet<TuyenBay>();
         }
 
@@ -29,7 +29,7 @@ namespace AirlineWeb.Models
         public string QuocGia { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TuyenBay> TuyenBays { get; set; }
+        public virtual ICollection<TuyenBay> TuyenBay { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TuyenBay> TuyenBays1 { get; set; }

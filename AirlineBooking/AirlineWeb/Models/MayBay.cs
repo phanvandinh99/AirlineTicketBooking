@@ -10,7 +10,7 @@ namespace AirlineWeb.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MayBay()
         {
-            ChuyenBays = new HashSet<ChuyenBay>();
+            ChuyenBay = new HashSet<ChuyenBay>();
         }
 
         [Key]
@@ -24,7 +24,7 @@ namespace AirlineWeb.Models
         public string MaHangHangKhong { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChuyenBay> ChuyenBays { get; set; }
+        public virtual ICollection<ChuyenBay> ChuyenBay { get; set; }
 
         public virtual HangHangKhong HangHangKhong { get; set; }
 

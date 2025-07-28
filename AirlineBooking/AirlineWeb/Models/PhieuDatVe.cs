@@ -11,7 +11,7 @@ namespace AirlineWeb.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PhieuDatVe()
         {
-            HoaDons = new HashSet<HoaDon>();
+            HoaDon = new HashSet<HoaDon>();
         }
 
         [Key]
@@ -31,7 +31,7 @@ namespace AirlineWeb.Models
         public string TrangThai { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HoaDon> HoaDons { get; set; }
+        public virtual ICollection<HoaDon> HoaDon { get; set; }
 
         public virtual KhachHang KhachHang { get; set; }
 
