@@ -29,7 +29,12 @@ namespace AirlineWeb.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.MaChuyenBay = new SelectList(db.ChuyenBay, "MaChuyenBay", "MaChuyenBay");
+            ViewBag.MaChuyenBay = new SelectList(
+                db.ChuyenBay.Select(cb => new {
+                    cb.MaChuyenBay,
+                    Display = cb.MaMayBay + " - " + cb.SoHieuChuyenBay
+                }),
+                "MaChuyenBay", "Display");
             return View();
         }
         [HttpPost]
@@ -42,16 +47,26 @@ namespace AirlineWeb.Areas.Admin.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.MaChuyenBay = new SelectList(db.ChuyenBay, "MaChuyenBay", "MaChuyenBay", lichbay.MaChuyenBay);
+            ViewBag.MaChuyenBay = new SelectList(
+                db.ChuyenBay.Select(cb => new {
+                    cb.MaChuyenBay,
+                    Display = cb.MaMayBay + " - " + cb.SoHieuChuyenBay
+                }),
+                "MaChuyenBay", "Display", lichbay.MaChuyenBay);
             return View(lichbay);
         }
 
         public async Task<ActionResult> Edit(int? id)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             var lichbay = await db.LichBay.FindAsync(id);
             if (lichbay == null) return HttpNotFound();
-            ViewBag.MaChuyenBay = new SelectList(db.ChuyenBay, "MaChuyenBay", "MaChuyenBay", lichbay.MaChuyenBay);
+            ViewBag.MaChuyenBay = new SelectList(
+                db.ChuyenBay.Select(cb => new {
+                    cb.MaChuyenBay,
+                    Display = cb.MaMayBay + " - " + cb.SoHieuChuyenBay
+                }),
+                "MaChuyenBay", "Display", lichbay.MaChuyenBay);
             return View(lichbay);
         }
         [HttpPost]
@@ -64,7 +79,12 @@ namespace AirlineWeb.Areas.Admin.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.MaChuyenBay = new SelectList(db.ChuyenBay, "MaChuyenBay", "MaChuyenBay", lichbay.MaChuyenBay);
+            ViewBag.MaChuyenBay = new SelectList(
+                db.ChuyenBay.Select(cb => new {
+                    cb.MaChuyenBay,
+                    Display = cb.MaMayBay + " - " + cb.SoHieuChuyenBay
+                }),
+                "MaChuyenBay", "Display", lichbay.MaChuyenBay);
             return View(lichbay);
         }
 

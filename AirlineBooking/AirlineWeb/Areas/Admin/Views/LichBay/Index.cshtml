@@ -23,7 +23,7 @@
             <li class="item item-list-header">
                 <div class="item-row">
                     <div class="item-col" style="width: 10%"><span>Mã Lịch Bay</span></div>
-                    <div class="item-col" style="width: 15%"><span>Mã Chuyến Bay</span></div>
+                    <div class="item-col" style="width: 15%"><span>Chuyến Bay</span></div>
                     <div class="item-col" style="width: 20%"><span>Khởi Hành</span></div>
                     <div class="item-col" style="width: 20%"><span>Hạ Cánh</span></div>
                     <div class="item-col" style="width: 15%"><span>Ngày Bay</span></div>
@@ -35,9 +35,9 @@
                 <li class="item">
                     <div class="item-row">
                         <div class="item-col" style="width: 10%">@lb.MaLichBay</div>
-                        <div class="item-col" style="width: 15%">@lb.MaChuyenBay</div>
-                        <div class="item-col" style="width: 20%">@lb.NgayGioKhoiHanh.ToString("dd/MM/yyyy HH:mm")</div>
-                        <div class="item-col" style="width: 20%">@lb.NgayGioHaCanh.ToString("dd/MM/yyyy HH:mm")</div>
+                        <div class="item-col" style="width: 15%">@lb.ChuyenBay.MaMayBay - @lb.ChuyenBay.SoHieuChuyenBay</div>
+                        <div class="item-col" style="width: 20%">@lb.NgayGioKhoiHanh.ToString("dd/MM/yyyy HH:mm")<br />[@lb.ChuyenBay.TuyenBay.SanBay.TenSanBay] </div>
+                        <div class="item-col" style="width: 20%">@lb.NgayGioHaCanh.ToString("dd/MM/yyyy HH:mm")<br />[@lb.ChuyenBay.TuyenBay.SanBay1.TenSanBay] </div>
                         <div class="item-col" style="width: 15%">@lb.NgayBay.ToString("dd/MM/yyyy")</div>
                         <div class="item-col" style="width: 20%">
                             <a href="@Url.Action("Details", "LichBay", new { area = "Admin", id = lb.MaLichBay })" class="btn btn-info btn-sm">Chi tiết</a>
