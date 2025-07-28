@@ -1,0 +1,101 @@
+﻿@using AirlineWeb.Models
+@model List<SanBay>
+
+@{
+    ViewBag.Title = "Danh Sách Sân Bay";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Sửa link font Google sang HTTPS -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,800,700,600" rel="stylesheet" type="text/css" />
+<!-- Đảm bảo đường dẫn CSS đúng -->
+<link href="@Url.Content("~/Assets/Admin/css/app.css")" rel="stylesheet" />
+<link href="@Url.Content("~/Assets/Admin/css/vendor.css")" rel="stylesheet" />
+<!-- Đã gỡ bỏ simplePagination.css và các thư viện không liên quan đến phân trang động -->
+<!-- #region Nội Dung -->
+<article class="content items-list-page">
+    <div class="title-search-block">
+        <div class="title-block">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="title">
+                        Danh Sách Sân Bay <a href="/Admin/SanBay/Create" class="btn btn-primary btn-sm rounded-s"> Thêm Mới </a>
+                        <div class="action dropdown">
+                            <button class="btn  btn-sm rounded-s btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Khác...
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <a class="dropdown-item" href="#"><i class="fa fa-pencil-square-o icon"></i>Cập nhật</a>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal"><i class="fa fa-close icon"></i>Xóa</a>
+                            </div>
+                        </div>
+                    </h3>
+                    <p class="title-description"> Danh sách các chuyến bay hiện có ... </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card items">
+        <ul class="item-list striped" id="sanbay-list">
+            <li class="item item-list-header">
+                <div class="item-row">
+                    <div class="item-col item-col-header fixed item-col-img md" style="width: 15%; min-width: 120px;">
+                        <div>
+                            <span>Mã Sân Bay</span>
+                        </div>
+                    </div>
+                    <div class="item-col item-col-header item-col-title" style="width: 25%; min-width: 180px;">
+                        <div>
+                            <span>Tên Sân Bay</span>
+                        </div>
+                    </div>
+                    <div class="item-col item-col-header item-col-title" style="width: 25%; min-width: 180px;">
+                        <div>
+                            <span>Thành Phố</span>
+                        </div>
+                    </div>
+                    <div class="item-col item-col-header item-col-stats" style="width: 20%; min-width: 140px;">
+                        <div class="no-overflow">
+                            <span>Quốc Gia</span>
+                        </div>
+                    </div>
+                    <div class="item-col item-col-header item-col-date" style="width: 15%; min-width: 100px;">
+                        <div>
+                            <span>Thao Tác</span>
+                        </div>
+                    </div>
+                    <div class="item-col item-col-header fixed item-col-actions-dropdown"></div>
+                </div>
+            </li>
+            <!-- #region Hiển thị sanh sách -->
+            @foreach (var sb in Model)
+            {
+                <li class="item">
+                    <div class="item-row">
+                        <div class="item-col fixed item-col-img md" style="width: 15%; min-width: 120px;">
+                            <div>@sb.MaSanBay</div>
+                        </div>
+                        <div class="item-col item-col-title" style="width: 25%; min-width: 180px;">
+                            <div>@sb.TenSanBay</div>
+                        </div>
+                        <div class="item-col item-col-title" style="width: 25%; min-width: 180px;">
+                            <div>@sb.ThanhPho</div>
+                        </div>
+                        <div class="item-col item-col-stats no-overflow" style="width: 20%; min-width: 140px;">
+                            <div>@sb.QuocGia</div>
+                        </div>
+                        <div class="item-col item-col-date" style="width: 15%; min-width: 100px;">
+                            <!-- Thêm các nút thao tác nếu cần -->
+                        </div>
+                        <div class="item-col fixed item-col-actions-dropdown"></div>
+                    </div>
+                </li>
+            }
+            <!-- #endregion Hiển thị sanh sách -->
+        </ul>
+        <!-- Đã gỡ bỏ simplePagination.js và các script liên quan đến phân trang động -->
+    </div>
+</article>
+<!-- jQuery (chỉ 1 lần, đầu tiên) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- #endregion Nội Dung -->

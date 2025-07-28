@@ -739,6 +739,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SanBayController.cs" />
     <Compile Include="Areas\Customer\Controllers\ChuyenBayController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\NotificationController.cs" />
@@ -798,6 +799,7 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SanBay\Index.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
