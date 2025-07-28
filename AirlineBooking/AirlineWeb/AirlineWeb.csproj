@@ -840,6 +840,7 @@
     <Content Include="Areas\Customer\Views\KhachHang\QuanLyVe.cshtml" />
     <Content Include="Areas\Customer\Views\KhachHang\ChiTietVe.cshtml" />
     <Content Include="Areas\Customer\Views\KhachHang\ThongTinCaNhan.cshtml" />
+    <Content Include="Areas\Customer\Views\KhachHang\ThanhToanThanhCong.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

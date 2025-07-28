@@ -230,6 +230,15 @@
                                     var thoiGianBay2 = Model.VeChuyenBay.LichBay.NgayGioKhoiHanh;
                                     var khoangCach = thoiGianBay2 - DateTime.Now;
                                     
+                                    <!-- Nút thanh toán VNPAY -->
+                                    <form method="post" action="@Url.Action("ThanhToanVNPAY", "KhachHang", new { area = "Customer" })" style="display: inline;">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="maPhieuDatVe" value="@Model.MaPhieuDatVe" />
+                                        <button type="submit" class="btn btn-success w-100 mb-2">
+                                            <i class="isax isax-card me-2"></i>Thanh toán VNPAY
+                                        </button>
+                                    </form>
+                                    
                                     if (khoangCach.TotalHours >= 24)
                                     {
                                         <button type="button" class="btn btn-danger w-100 mb-2" 

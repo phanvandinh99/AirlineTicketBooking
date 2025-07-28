@@ -1,0 +1,376 @@
+@model AirlineWeb.Models.PhieuDatVe
+@{
+    ViewBag.Title = "Thanh toán thành công";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutDetailCustomer.cshtml";
+}
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap">
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home", new { area = "Customer" })">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("QuanLyVe", "KhachHang", new { area = "Customer" })">Quản lý vé</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Thanh toán thành công</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Success Header -->
+                <div class="success-header text-center mb-5">
+                    <div class="success-icon mb-4">
+                        <i class="isax isax-tick-circle text-success" style="font-size: 5rem;"></i>
+                    </div>
+                    <h2 class="success-title text-success">Thanh toán thành công!</h2>
+                    <p class="success-subtitle">Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi</p>
+                    <div class="success-details">
+                        <p class="mb-2">
+                            <strong>Mã vé:</strong> #@Model.MaPhieuDatVe
+                        </p>
+                        <p class="mb-2">
+                            <strong>Ngày thanh toán:</strong> @DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                        </p>
+                        <p class="mb-0">
+                            <strong>Phương thức:</strong> VNPAY
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Thông báo -->
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="isax isax-tick-circle me-2"></i>
+                        @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                <!-- Ticket Information -->
+                <div class="card ticket-success-card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="isax isax-airplane me-3"></i>
+                                <div>
+                                    <h4 class="mb-0">@Model.VeChuyenBay.LichBay.ChuyenBay.HangHangKhong.TenHang</h4>
+                                    <small>Chuyến bay @Model.VeChuyenBay.LichBay.ChuyenBay.MaChuyenBay</small>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <div class="ticket-status">Đã thanh toán</div>
+                                <small>@DateTime.Now.ToString("dd/MM/yyyy")</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <!-- Flight Route -->
+                        <div class="flight-route mb-4">
+                            <div class="row align-items-center">
+                                <div class="col-4 text-center">
+                                    <div class="airport-info">
+                                        <div class="airport-code">@Model.VeChuyenBay.LichBay.ChuyenBay.TuyenBay.SanBay.MaSanBay</div>
+                                        <div class="airport-name">@Model.VeChuyenBay.LichBay.ChuyenBay.TuyenBay.SanBay.TenSanBay</div>
+                                        <div class="departure-time">@Model.VeChuyenBay.LichBay.NgayGioKhoiHanh.ToString("HH:mm")</div>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="flight-arrow">
+                                        <i class="isax isax-arrow-right-3 text-success"></i>
+                                        <div class="flight-duration">
+                                            @{
+                                                var thoiGianBay = Model.VeChuyenBay.LichBay.NgayGioKhoiHanh;
+                                                var thoiGianDen = Model.VeChuyenBay.LichBay.NgayGioHaCanh;
+                                                var thoiGianBayTinh = thoiGianDen - thoiGianBay;
+                                            }
+                                            @(thoiGianBayTinh.Hours)h @(thoiGianBayTinh.Minutes)m
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="airport-info">
+                                        <div class="airport-code">@Model.VeChuyenBay.LichBay.ChuyenBay.TuyenBay.SanBay1.MaSanBay</div>
+                                        <div class="airport-name">@Model.VeChuyenBay.LichBay.ChuyenBay.TuyenBay.SanBay1.TenSanBay</div>
+                                        <div class="arrival-time">@Model.VeChuyenBay.LichBay.NgayGioHaCanh.ToString("HH:mm")</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Passenger Info -->
+                        <div class="passenger-info mb-4">
+                            <h5 class="card-title">
+                                <i class="isax isax-user me-2 text-success"></i>Thông tin hành khách
+                            </h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="info-item">
+                                        <span class="label">Họ và tên:</span>
+                                        <span class="value">@Model.HoTenHanhKhach</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-item">
+                                        <span class="label">Số ghế:</span>
+                                        <span class="value seat-number">@Model.VeChuyenBay.SoGhe</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-item">
+                                        <span class="label">Hạng vé:</span>
+                                        <span class="value">@Model.VeChuyenBay.HangVe.TenHangVe</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-item">
+                                        <span class="label">Ngày bay:</span>
+                                        <span class="value">@Model.VeChuyenBay.LichBay.NgayGioKhoiHanh.ToString("dd/MM/yyyy")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Info -->
+                        @if (Model.HoaDon != null && Model.HoaDon.Any())
+                        {
+                            var hoaDon = Model.HoaDon.FirstOrDefault();
+                            <div class="payment-info">
+                                <h5 class="card-title">
+                                    <i class="isax isax-dollar-circle me-2 text-success"></i>Thông tin thanh toán
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="info-item">
+                                            <span class="label">Số tiền:</span>
+                                            <span class="value text-success fw-bold">@(hoaDon.TongTien?.ToString("N0") ?? "0") VNĐ</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="info-item">
+                                            <span class="label">Mã hóa đơn:</span>
+                                            <span class="value">#@hoaDon.MaHoaDon</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="info-item">
+                                            <span class="label">Phương thức:</span>
+                                            <span class="value">VNPAY</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="info-item">
+                                            <span class="label">Ngày thanh toán:</span>
+                                            <span class="value">@hoaDon.NgayLapHoaDon.ToString("dd/MM/yyyy HH:mm")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Important Notice -->
+                <div class="card notice-card mb-4">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start">
+                            <i class="isax isax-info-circle text-primary me-3 mt-1"></i>
+                            <div>
+                                <h6 class="card-title">Lưu ý quan trọng</h6>
+                                <ul class="mb-0">
+                                    <li>Vui lòng đến sân bay sớm ít nhất 2 giờ trước giờ bay</li>
+                                    <li>Mang theo giấy tờ tùy thân gốc khi làm thủ tục check-in</li>
+                                    <li>Kiểm tra lại thông tin hành lý và quy định của hãng bay</li>
+                                    <li>Liên hệ hotline nếu cần hỗ trợ thêm</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons text-center">
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <a href="@Url.Action("ChiTietVe", "KhachHang", new { area = "Customer", maPhieuDatVe = Model.MaPhieuDatVe })" 
+                               class="btn btn-outline-primary w-100">
+                                <i class="isax isax-eye me-2"></i>Xem chi tiết vé
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <a href="@Url.Action("QuanLyVe", "KhachHang", new { area = "Customer" })" 
+                               class="btn btn-outline-secondary w-100">
+                                <i class="isax isax-list me-2"></i>Danh sách vé
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <a href="@Url.Action("Index", "Home", new { area = "Customer" })" 
+                               class="btn btn-primary w-100">
+                                <i class="isax isax-home me-2"></i>Về trang chủ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .success-header {
+        padding: 2rem 0;
+    }
+    
+    .success-icon {
+        animation: bounce-animation 1s ease-in-out;
+    }
+    
+    @@keyframes bounce-animation {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-10px);
+        }
+        60% {
+            transform: translateY(-5px);
+        }
+    }
+    
+    .success-title {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .success-subtitle {
+        color: #6c757d;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .success-details {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+    
+    .ticket-success-card {
+        border: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .ticket-status {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+    
+    .airport-code {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+    
+    .airport-name {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-bottom: 0.5rem;
+    }
+    
+    .departure-time, .arrival-time {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #495057;
+    }
+    
+    .flight-arrow {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .flight-duration {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f8f9fa;
+    }
+    
+    .info-item:last-child {
+        border-bottom: none;
+    }
+    
+    .label {
+        font-weight: 600;
+        color: #495057;
+    }
+    
+    .value {
+        color: #2c3e50;
+    }
+    
+    .seat-number {
+        background: #e3f2fd;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+    
+    .notice-card {
+        border: 1px solid #e3f2fd;
+        background: #f8fbff;
+    }
+    
+    .breadcrumb-area {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+    
+    .breadcrumb {
+        background: transparent;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .breadcrumb-item a {
+        color: rgba(255,255,255,0.8);
+        text-decoration: none;
+    }
+    
+    .breadcrumb-item.active {
+        color: white;
+    }
+    
+    .action-buttons {
+        margin-top: 2rem;
+    }
+</style>
+
+<script>
+    // Auto hide alerts after 5 seconds
+    setTimeout(function() {
+        var alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            var bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        });
+    }, 5000);
+</script> 
