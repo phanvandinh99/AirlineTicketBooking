@@ -24,6 +24,11 @@
                             @Html.ValidationMessageFor(m => m.MaTuyenBay, null, new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
+                            @Html.LabelFor(m => m.MaHangHangKhong, htmlAttributes: new { @class = "form-label" })
+                            @Html.DropDownList("MaHangHangKhong", null, "-- Chọn hãng hàng không --", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.MaHangHangKhong, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
                             @Html.LabelFor(m => m.MaMayBay, htmlAttributes: new { @class = "form-label" })
                             @Html.DropDownList("MaMayBay", null, "-- Chọn máy bay --", new { @class = "form-control", required = "required" })
                             @Html.ValidationMessageFor(m => m.MaMayBay, null, new { @class = "text-danger" })

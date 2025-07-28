@@ -35,6 +35,7 @@ namespace AirlineWeb.Areas.Admin.Controllers
                     Display = "Từ: " + tb.SanBay.TenSanBay + " - Đến: " + tb.SanBay1.TenSanBay
                 }),
                 "MaTuyenBay", "Display");
+            ViewBag.MaHangHangKhong = new SelectList(db.HangHangKhong, "MaHangHangKhong", "TenHang");
             return View();
         }
         [HttpPost]
@@ -54,6 +55,7 @@ namespace AirlineWeb.Areas.Admin.Controllers
                     Display = "Từ: " + tb.SanBay.TenSanBay + " - Đến: " + tb.SanBay1.TenSanBay
                 }),
                 "MaTuyenBay", "Display", chuyenbay.MaTuyenBay);
+            ViewBag.MaHangHangKhong = new SelectList(db.HangHangKhong, "MaHangHangKhong", "TenHang", chuyenbay.MaHangHangKhong);
             return View(chuyenbay);
         }
 
@@ -69,6 +71,7 @@ namespace AirlineWeb.Areas.Admin.Controllers
                     Display = "Từ: " + tb.SanBay.TenSanBay + " - Đến: " + tb.SanBay1.TenSanBay
                 }),
                 "MaTuyenBay", "Display", chuyenbay.MaTuyenBay);
+            ViewBag.MaHangHangKhong = new SelectList(db.HangHangKhong, "MaHangHangKhong", "TenHang", chuyenbay.MaHangHangKhong);
             return View(chuyenbay);
         }
         [HttpPost]
@@ -88,6 +91,7 @@ namespace AirlineWeb.Areas.Admin.Controllers
                     Display = "Từ: " + tb.SanBay.TenSanBay + " - Đến: " + tb.SanBay1.TenSanBay
                 }),
                 "MaTuyenBay", "Display", chuyenbay.MaTuyenBay);
+            ViewBag.MaHangHangKhong = new SelectList(db.HangHangKhong, "MaHangHangKhong", "TenHang", chuyenbay.MaHangHangKhong);
             return View(chuyenbay);
         }
 
