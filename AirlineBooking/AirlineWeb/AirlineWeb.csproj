@@ -811,6 +811,11 @@
     <Content Include="Areas\Admin\Views\HangVe\Create.cshtml" />
     <Content Include="Areas\Admin\Views\HangVe\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\HangVe\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\LichBay\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LichBay\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\LichBay\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\LichBay\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\LichBay\Delete.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -821,7 +826,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\LichBay\" />
     <Folder Include="Areas\Customer\Views\Shared\" />
   </ItemGroup>
   <PropertyGroup>

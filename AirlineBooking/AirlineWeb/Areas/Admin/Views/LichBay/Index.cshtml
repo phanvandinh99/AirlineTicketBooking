@@ -1,0 +1,53 @@
+﻿@using AirlineWeb.Models
+@model List<LichBay>
+
+@{
+    ViewBag.Title = "Danh Sách Lịch Bay";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<article class="content items-list-page">
+    <div class="title-search-block">
+        <div class="title-block">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="title">
+                        Danh Sách Lịch Bay <a href="/Admin/LichBay/Create" class="btn btn-primary btn-sm rounded-s"> Thêm Mới </a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card items">
+        <ul class="item-list striped" id="lichbay-list">
+            <li class="item item-list-header">
+                <div class="item-row">
+                    <div class="item-col" style="width: 10%"><span>Mã Lịch Bay</span></div>
+                    <div class="item-col" style="width: 15%"><span>Mã Chuyến Bay</span></div>
+                    <div class="item-col" style="width: 20%"><span>Khởi Hành</span></div>
+                    <div class="item-col" style="width: 20%"><span>Hạ Cánh</span></div>
+                    <div class="item-col" style="width: 15%"><span>Ngày Bay</span></div>
+                    <div class="item-col" style="width: 20%"><span>Thao Tác</span></div>
+                </div>
+            </li>
+            @foreach (var lb in Model)
+            {
+                <li class="item">
+                    <div class="item-row">
+                        <div class="item-col" style="width: 10%">@lb.MaLichBay</div>
+                        <div class="item-col" style="width: 15%">@lb.MaChuyenBay</div>
+                        <div class="item-col" style="width: 20%">@lb.NgayGioKhoiHanh.ToString("dd/MM/yyyy HH:mm")</div>
+                        <div class="item-col" style="width: 20%">@lb.NgayGioHaCanh.ToString("dd/MM/yyyy HH:mm")</div>
+                        <div class="item-col" style="width: 15%">@lb.NgayBay.ToString("dd/MM/yyyy")</div>
+                        <div class="item-col" style="width: 20%">
+                            <a href="@Url.Action("Details", "LichBay", new { area = "Admin", id = lb.MaLichBay })" class="btn btn-info btn-sm">Chi tiết</a>
+                            <a href="@Url.Action("Edit", "LichBay", new { area = "Admin", id = lb.MaLichBay })" class="btn btn-warning btn-sm">Sửa</a>
+                            <a href="@Url.Action("Delete", "LichBay", new { area = "Admin", id = lb.MaLichBay })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</a>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</article>
+
