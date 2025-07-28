@@ -7,35 +7,39 @@
     var doanhThu = (List<decimal>)ViewBag.DoanhThu;
     string type = ViewBag.Type as string ?? "ngay";
 }
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <div class="card shadow mb-4">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">Thống kê vé bán & doanh thu</h4>
-                    <form method="get" class="d-flex align-items-center" style="gap:10px;">
-                        <label class="mb-0">Thống kê theo:</label>
-                        <select name="type" class="form-select form-select-sm" onchange="this.form.submit()">
-                            <option value="ngay" @(type=="ngay"?"selected":"")>Ngày</option>
-                            <option value="tuan" @(type=="tuan"?"selected":"")>Tuần</option>
-                            <option value="thang" @(type=="thang"?"selected":"")>Tháng</option>
-                            <option value="quy" @(type=="quy"?"selected":"")>Quý</option>
-                            <option value="nam" @(type=="nam"?"selected":"")>Năm</option>
-                        </select>
-                    </form>
-                </div>
-                <div class="card-body">
-                    <div class="mb-4">
-                        <canvas id="veChart" height="80"></canvas>
-                    </div>
-                    <div>
-                        <canvas id="doanhThuChart" height="80"></canvas>
-                    </div>
+<article class="content items-list-page">
+    <div class="title-search-block">
+        <div class="title-block">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Thống kê vé bán & doanh thu</h3>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="card items">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <form method="get" class="d-flex align-items-center" style="gap:10px;">
+                <label class="mb-0">Thống kê theo:</label>
+                <select name="type" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="ngay" @(type=="ngay"?"selected":"")>Ngày</option>
+                    <option value="tuan" @(type=="tuan"?"selected":"")>Tuần</option>
+                    <option value="thang" @(type=="thang"?"selected":"")>Tháng</option>
+                    <option value="quy" @(type=="quy"?"selected":"")>Quý</option>
+                    <option value="nam" @(type=="nam"?"selected":"")>Năm</option>
+                </select>
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="mb-4">
+                <canvas id="veChart" height="80"></canvas>
+            </div>
+            <div>
+                <canvas id="doanhThuChart" height="80"></canvas>
+            </div>
+        </div>
+    </div>
+</article>
 <!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
