@@ -738,6 +738,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChuyenBayController.cs" />
     <Compile Include="Areas\Admin\Controllers\HangVeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LichBayController.cs" />
@@ -816,6 +817,11 @@
     <Content Include="Areas\Admin\Views\LichBay\Create.cshtml" />
     <Content Include="Areas\Admin\Views\LichBay\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\LichBay\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ChuyenBay\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ChuyenBay\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\ChuyenBay\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ChuyenBay\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ChuyenBay\Delete.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
