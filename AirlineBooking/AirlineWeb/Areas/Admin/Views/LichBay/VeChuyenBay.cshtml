@@ -1,0 +1,45 @@
+﻿@model IEnumerable<AirlineWeb.Models.VeChuyenBay>
+@{
+    ViewBag.Title = "Danh sách Vé Chuyến Bay";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<article class="content items-list-page">
+    <div class="title-search-block">
+        <div class="title-block">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 class="title">
+                        Danh sách Vé Chuyến Bay (Lịch Bay #@ViewBag.MaLichBay)
+                        <a href="@Url.Action("Index", "LichBay", new { area = "Admin" })" class="btn btn-secondary btn-sm ms-3">
+                            <i class="fa fa-arrow-left"></i> Quay lại Lịch Bay
+                        </a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card items">
+        <ul class="item-list striped" id="vechuyenbay-list">
+            <li class="item item-list-header">
+                <div class="item-row">
+                    <div class="item-col" style="width: 20%"><span>Số ghế</span></div>
+                    <div class="item-col" style="width: 30%"><span>Hạng vé</span></div>
+                    <div class="item-col" style="width: 25%"><span>Giá (VND)</span></div>
+                    <div class="item-col" style="width: 25%"><span>Trạng thái</span></div>
+                </div>
+            </li>
+            @foreach (var ve in Model)
+            {
+                <li class="item">
+                    <div class="item-row">
+                        <div class="item-col" style="width: 20%">@ve.SoGhe</div>
+                        <div class="item-col" style="width: 30%">@ve.HangVe.TenHangVe</div>
+                        <div class="item-col" style="width: 25%">@string.Format("{0:N0} ₫", ve.GiaVND)</div>
+                        <div class="item-col" style="width: 25%">@(ve.TrangThai == 0 ? "Chưa bán" : ve.TrangThai == 1 ? "Đã bán" : "Khác")</div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</article>
+

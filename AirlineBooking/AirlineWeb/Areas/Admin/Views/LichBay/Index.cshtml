@@ -43,6 +43,7 @@
                             <a href="@Url.Action("Details", "LichBay", new { area = "Admin", id = lb.MaLichBay })" class="btn btn-info btn-sm">Chi tiết</a>
                             <a href="@Url.Action("Edit", "LichBay", new { area = "Admin", id = lb.MaLichBay })" class="btn btn-warning btn-sm">Sửa</a>
                             <a href="@Url.Action("Delete", "LichBay", new { area = "Admin", id = lb.MaLichBay })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</a>
+                            <a href="@Url.Action("VeChuyenBay", "LichBay", new { area = "Admin", id = lb.MaLichBay })" class="btn btn-secondary btn-sm">Vé</a>
                         </div>
                     </div>
                 </li>

@@ -743,7 +743,9 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LichBayController.cs" />
     <Compile Include="Areas\Admin\Controllers\SanBayController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ThongKeController.cs" />
     <Compile Include="Areas\Admin\Controllers\TuyenBayController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VeController.cs" />
     <Compile Include="Areas\Customer\Controllers\ChuyenBayController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\NotificationController.cs" />
@@ -828,6 +830,8 @@
     <Content Include="Areas\Admin\Views\TuyenBay\Create.cshtml" />
     <Content Include="Areas\Admin\Views\TuyenBay\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\TuyenBay\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\LichBay\VeChuyenBay.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\Index.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -839,6 +843,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Default\" />
+    <Folder Include="Areas\Admin\Views\Ve\" />
     <Folder Include="Areas\Customer\Views\Shared\" />
   </ItemGroup>
   <PropertyGroup>

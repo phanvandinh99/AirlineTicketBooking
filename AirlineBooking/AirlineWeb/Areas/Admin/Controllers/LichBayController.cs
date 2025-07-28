@@ -186,6 +186,13 @@ namespace AirlineWeb.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult VeChuyenBay(int id)
+        {
+            var veList = db.VeChuyenBay.Where(v => v.MaLichBay == id).ToList();
+            ViewBag.MaLichBay = id;
+            return View(veList);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
