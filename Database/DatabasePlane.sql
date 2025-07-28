@@ -215,11 +215,12 @@ CREATE TABLE VeChuyenBay (
     GiaVND DECIMAL(10, 2)
 );
 GO
+select * from VeChuyenBay
 INSERT INTO VeChuyenBay (MaLichBay, MaHangVe, SoGhe, TrangThai, GiaVND) VALUES
 (1, 'HV01', '1A', 2, 4000000),
-(1, 'HV03', '10C', 0, 2000000),
+(1, 'HV03', '10C', 2, 2000000),
 (2, 'HV04', '2B', 2, 1800000),
-(2, 'HV01', '15D', 0, 800000),
+(2, 'HV01', '15D', 2, 800000),
 (4, 'HV02', '1C', 2, 2500000),
 (3, 'HV03', '5A', 2, 1200000);
 GO

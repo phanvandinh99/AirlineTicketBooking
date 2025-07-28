@@ -2,6 +2,29 @@
 @{
     var lichList = Model.LichBay != null ? Model.LichBay.ToList() : new List<AirlineWeb.Models.LichBay>();
     var lichSomNhat = lichList.OrderBy(l => l.NgayGioKhoiHanh).FirstOrDefault();
+
+    // Lấy danh sách hạng vé và sắp xếp theo TyLeGia giảm dần
+    var hangVeList = new List<AirlineWeb.Models.HangVe>();
+    if (lichSomNhat != null && lichSomNhat.VeChuyenBay != null)
+    {
+        hangVeList = lichSomNhat.VeChuyenBay
+            .Select(v => v.HangVe)
+            .Where(hv => hv != null)
+            .Distinct()
+            .OrderByDescending(hv => hv.TyLeGia)
+            .ToList();
+    }
+
+    // Định nghĩa số dãy ghế cho từng hạng vé
+    var hangVeConfig = new Dictionary<string, int>
+{
+        { "HangNhat", 1 },      // Hạng nhất: 1 dãy
+        { "ThuongGia", 2 },     // Thương gia: 2 dãy
+        { "PhoThongCaoCap", 4 }, // Phổ thông cao cấp: 4 dãy
+        { "PhoThong", 6 }       // Phổ thông: 6 dãy
+    };
+
+    int currentRow = 1;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -859,40 +882,41 @@
                             </div>
                             <form id="seatForm" method="get" action="@Url.Action("DatVe", "ChuyenBay", new { area = "Customer" })">
                                 <div class="seat-map">
-                                    <div class="seat-class-label">Khoang Hạng Nhât</div>
-                                    @for (int row = 1; row <= 4; row++)
+                                    @foreach (var hangVe in hangVeList)
                                     {
-                                        <div class="seat-row">
-                                            <span class="seat-row-label">@row</span>
-                                            @foreach (var col in new[] { "A", "B", "C", "D" })
-                                            {
-                                                var seatCode = $"{row}{col}";
-                                                var ve = lichSomNhat != null ? lichSomNhat.VeChuyenBay.FirstOrDefault(v => v.SoGhe == seatCode) : null;
-                                                var booked = ve != null && ve.TrangThai != 0;
-                                                <label class="seat @(booked ? "booked" : "")">
-                                                    <input type="radio" name="maVe" value="@(ve?.MaVe ?? 0)" style="display:none;" @(booked ? "disabled" : "") />@col
-                                                </label>
-                                            }
-                                        </div>
+                                        var tenHangVe = hangVe.TenHangVe;
+                                        var soDayGhe = hangVeConfig.ContainsKey(hangVe.MaHangVe) ? hangVeConfig[hangVe.MaHangVe] : 6;
+                                        var soCot = hangVe.MaHangVe == "HangNhat" ? 4 : 6; // Hạng nhất 4 cột, còn lại 6 cột
+
+                                        <div class="seat-class-label">@tenHangVe</div>
+
+                                        for (int row = currentRow; row < currentRow + soDayGhe; row++)
+                                        {
+                                            <div class="seat-row">
+                                                <span class="seat-row-label">@row</span>
+                                                @if (hangVe.MaHangVe != "HangNhat" && row >= 5 && row <= 11)
+                                                {
+                                                    <span class="wing-left"></span>
+                                                }
+                                                @foreach (var col in (hangVe.MaHangVe == "HangNhat" ? new[] { "A", "B", "C", "D" } : new[] { "A", "B", "C", "D", "E", "F" }))
+                                                {
+                                                    var seatCode = $"{row}{col}";
+                                                    var ve = lichSomNhat != null ? lichSomNhat.VeChuyenBay.FirstOrDefault(v => v.SoGhe == seatCode) : null;
+                                                    var booked = ve != null && ve.TrangThai != 0;
+                                                    <label class="seat @(booked ? "booked" : "")">
+                                                        <input type="radio" name="maVe" value="@(ve?.MaVe ?? 0)" style="display:none;" @(booked ? "disabled" : "") />@col
+                                                    </label>
+                                                }
+                                                @if (hangVe.MaHangVe != "HangNhat" && row >= 5 && row <= 11)
+                                                {
+                                                    <span class="wing-right"></span>
+                                                }
+                                            </div>
+                                        }
+                                        {
+                                            currentRow += soDayGhe;
+                                        }
                                     }
-                                    <div class="seat-class-label mt-2">Khoang Thương Gia</div>
-                                    @for (int row = 5; row <= 28; row++)
-                                    {
-                                        <div class="seat-row">
-                                            <span class="seat-row-label">@row</span>
-                                            @foreach (var col in new[] { "A", "B", "C", "D", "E", "F" })
-                                            {
-                                                var seatCode = $"{row}{col}";
-                                                var ve = lichSomNhat != null ? lichSomNhat.VeChuyenBay.FirstOrDefault(v => v.SoGhe == seatCode) : null;
-                                                var booked = ve != null && ve.TrangThai != 0;
-                                                <label class="seat @(booked ? "booked" : "")">
-                                                    <input type="radio" name="maVe" value="@(ve?.MaVe ?? 0)" style="display:none;" @(booked ? "disabled" : "") />@col
-                                                </label>
-                                            }
-                                        </div>
-                                    }
-                                    <div class="seat-class-label mt-2">Khoang Phổ Thông Cao Cấp</div>
-                                    <div class="seat-class-label mt-2">Khoang Phổ Thông</div>
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-3">Đặt Vé</button>
                             </form>
