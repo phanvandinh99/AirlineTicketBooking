@@ -777,7 +777,7 @@
                                             @foreach (var col in new[] { "A", "B", "C", "D" })
                                             {
                                                 var seatCode = $"{row}{col}";
-                                                var ve = Model.VeChuyenBay.FirstOrDefault(v => v.SoGhe == seatCode);
+                                                var ve = lichSomNhat != null ? lichSomNhat.VeChuyenBay.FirstOrDefault(v => v.SoGhe == seatCode) : null;
                                                 var booked = ve != null && ve.TrangThai != 0;
                                                 <label class="seat @(booked ? "booked" : "")">
                                                     <input type="radio" name="maVe" value="@(ve?.MaVe ?? 0)" style="display:none;" @(booked ? "disabled" : "") />@col
@@ -797,7 +797,7 @@
                                             @foreach (var col in new[] { "A", "B", "C", "D", "E", "F" })
                                             {
                                                 var seatCode = $"{row}{col}";
-                                                var ve = Model.VeChuyenBay.FirstOrDefault(v => v.SoGhe == seatCode);
+                                                var ve = lichSomNhat != null ? lichSomNhat.VeChuyenBay.FirstOrDefault(v => v.SoGhe == seatCode) : null;
                                                 var booked = ve != null && ve.TrangThai != 0;
                                                 <label class="seat @(booked ? "booked" : "")">
                                                     <input type="radio" name="maVe" value="@(ve?.MaVe ?? 0)" style="display:none;" @(booked ? "disabled" : "") />@col
