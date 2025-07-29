@@ -230,20 +230,118 @@
     @model List<AirlineWeb.Models.ChuyenBay>
     <section class="section flight-list-section">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-6 col-lg-10 text-center wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="section-header section-header-four mb-4 text-center">
-                        <h2 class="mb-2"><span>Danh Sách</span> Chuyến Bay</h2>
-                        <p class="sub-title">
-                            Khám phá các chuyến bay hiện có với nhiều lựa chọn đa dạng từ các hãng hàng không uy tín.
-                        </p>
+            <!-- Hiển thị thông báo lỗi/thành công -->
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="isax isax-danger me-2"></i>@TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="isax isax-tick-circle me-2"></i>@TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <!-- Hiển thị kết quả search -->
+            @if (ViewBag.SearchMessage != null)
+            {
+                <div class="row justify-content-center mb-4">
+                    <div class="col-xl-8 col-lg-10">
+                        <div class="alert alert-success">
+                            <h5>✅ Tìm kiếm thành công!</h5>
+                            <p>@ViewBag.SearchMessage</p>
+                            <p>Tìm thấy <strong>@ViewBag.SearchCount</strong> chuyến bay phù hợp.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- Hiển thị danh sách chuyến bay tìm được -->
+                if (ViewBag.SearchResults != null && ViewBag.SearchCount > 0)
+                {
+                    <div class="row g-4 mb-4">
+                        <div class="col-12">
+                            <h4 class="mb-3">Chuyến Bay Tìm Được</h4>
+                        </div>
+                        @foreach (var chuyenBay in ViewBag.SearchResults)
+                        {
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="card flight-card border-0 shadow-sm h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <div class="airline-info">
+                                                <h6 class="mb-1">@chuyenBay.HangHangKhong.TenHang</h6>
+                                                <p class="text-muted fs-12 mb-0">@chuyenBay.SoHieuChuyenBay</p>
+                                            </div>
+                                            <div class="flight-status">
+                                                <span class="badge bg-success">@chuyenBay.TrangThai</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="flight-route mb-3">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div class="departure">
+                                                    <h6 class="mb-1">@(chuyenBay.TuyenBay.SanBay.TenSanBay ?? "N/A")</h6>
+                                                    <p class="text-muted fs-12 mb-0">Cất cánh</p>
+                                                </div>
+                                                <div class="flight-arrow text-center">
+                                                    <i class="isax isax-airplane5 text-primary fs-20"></i>
+                                                </div>
+                                                <div class="arrival text-end">
+                                                    <h6 class="mb-1">@(chuyenBay.TuyenBay.SanBay1.TenSanBay ?? "N/A")</h6>
+                                                    <p class="text-muted fs-12 mb-0">Hạ cánh</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flight-details">
+                                            <div class="row text-center">
+                                                <div class="col-6">
+                                                    <p class="fs-12 text-muted mb-1">Máy Bay</p>
+                                                    <h6 class="mb-0">@(chuyenBay.MayBay?.LoaiMayBay?.TenLoaiMayBay ?? chuyenBay.MayBay?.MaMayBay ?? "N/A")</h6>
+                                                </div>
+                                                <div class="col-6">
+                                                    <p class="fs-12 text-muted mb-1">Mã Chuyến</p>
+                                                    <h6 class="mb-0">@chuyenBay.MaChuyenBay</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <a href="@Url.Action("ChiTiet", "ChuyenBay", new { id = chuyenBay.MaChuyenBay, area = "Customer" })" class="btn btn-primary btn-sm w-100">
+                                                <i class="isax isax-ticket me-2"></i>Đặt Vé
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="row justify-content-center">
+                    <div class="col-xl-6 col-lg-10 text-center wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="section-header section-header-four mb-4 text-center">
+                            <h2 class="mb-2"><span>Danh Sách</span> Chuyến Bay</h2>
+                            <p class="sub-title">
+                                Khám phá các chuyến bay hiện có với nhiều lựa chọn đa dạng từ các hãng hàng không uy tín.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
 
             @if (Model != null && Model.Any())
             {
                 <div class="row g-4">
+                    <div class="col-12">
+                        <h4 class="mb-3">Tất cả chuyến bay</h4>
+                    </div>
                     @foreach (var chuyenBay in Model)
                     {
                         <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -359,22 +457,22 @@
                     <div>
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="flight">
-                                <form action="flight-grid.html">
+                                <form method="post" action="@Url.Action("SearchChuyenBay", "Home", new { area = "Customer" })">
                                     <div class="d-flex align-items-center justify-content-between flex-wrap mb-2">
-                                        <div class="d-flex align-items-center">
-                                            <div class="form-check d-flex align-items-center me-3 mb-2">
-                                                <input class="form-check-input mt-0" type="radio" name="Radio" id="oneway" value="oneway" checked="">
-                                                <label class="form-check-label fs-14 ms-2" for="oneway">
-                                                    Một Chiều
-                                                </label>
+                                                                                    <div class="d-flex align-items-center">
+                                                <div class="form-check d-flex align-items-center me-3 mb-2">
+                                                    <input class="form-check-input mt-0" type="radio" name="tripType" id="oneway" value="oneway" checked="">
+                                                    <label class="form-check-label fs-14 ms-2" for="oneway">
+                                                        Một Chiều
+                                                    </label>
+                                                </div>
+                                                <div class="form-check d-flex align-items-center me-3 mb-2">
+                                                    <input class="form-check-input mt-0" type="radio" name="tripType" id="roundtrip" value="roundtrip">
+                                                    <label class="form-check-label fs-14 ms-2" for="roundtrip">
+                                                        Khứ Hồi
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="form-check d-flex align-items-center me-3 mb-2">
-                                                <input class="form-check-input mt-0" type="radio" name="Radio" id="roundtrip" value="roundtrip">
-                                                <label class="form-check-label fs-14 ms-2" for="roundtrip">
-                                                    Khứ Hồi
-                                                </label>
-                                            </div>
-                                        </div>
                                         <h6 class="fw-medium fs-16 mb-2">Nhập thông tin hành trình của bạn</h6>
                                     </div>
                                     <div class="normal-trip">
@@ -383,7 +481,7 @@
                                                 <div class="form-item dropdown">
                                                     <div data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" role="menu">
                                                         <label class="form-label fs-14 text-default mb-1">Bay Từ</label>
-                                                        <select class="form-control" id="from-airport" name="from_airport">
+                                                        <select class="form-control" id="from-airport" name="fromAirport">
                                                             <option value="">Chọn sân bay đi</option>
                                                         </select>
                                                     </div>
@@ -391,19 +489,19 @@
                                                 <div class="form-item dropdown ps-2 ps-sm-3">
                                                     <div data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" role="menu">
                                                         <label class="form-label fs-14 text-default mb-1">Bay Đến</label>
-                                                        <select class="form-control" id="to-airport" name="to_airport" disabled>
+                                                        <select class="form-control" id="to-airport" name="toAirport" disabled>
                                                             <option value="">Chọn sân bay đến</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-item">
                                                     <label class="form-label fs-14 text-default mb-1">Ngày Bay</label>
-                                                    <input type="text" class="form-control datetimepicker" value="21-10-2024">
+                                                    <input type="date" class="form-control" name="departureDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
                                                     <p class="fs-12 mb-0">Monday</p>
                                                 </div>
                                                 <div class="form-item round-drip">
                                                     <label class="form-label fs-14 text-default mb-1">Ngày Về</label>
-                                                    <input type="text" class="form-control datetimepicker" value="23-10-2024">
+                                                    <input type="date" class="form-control" name="returnDate" value="@DateTime.Now.AddDays(2).ToString("yyyy-MM-dd")">
                                                     <p class="fs-12 mb-0">Wednesday</p>
                                                 </div>
                                                 <div class="form-item dropdown">
@@ -2244,7 +2342,7 @@
                 }
             }
             toggleReturnDate();
-            $('input[name="Radio"]').change(function () {
+            $('input[name="tripType"]').change(function () {
                 toggleReturnDate();
             });
             // Xử lý chọn sân bay đi và load sân bay đến
