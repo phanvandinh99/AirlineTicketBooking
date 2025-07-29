@@ -122,10 +122,6 @@ CREATE TABLE KhachHang (
     Email NVARCHAR(50)
 );
 GO
-INSERT INTO KhachHang (MaKhachHang, MatKhau, TenKhachHang, DiaChi, GioiTinh, SoDienThoai, Email) VALUES
-('KH01', 'kh01pass', N'Nguyễn Văn An', N'123 Đường Láng, TP. Hồ Chí Minh', N'Nam', N'0901234567', N'nva@gmail.com'),
-('KH02', 'kh02pass', N'Trần Thị Bình', N'456 Đường Giải Phóng, Hà Nội', N'Nữ', N'0912345678', N'ttb@gmail.com');
-GO
 
 -- Tạo và chèn dữ liệu cho bảng MayBay
 CREATE TABLE MayBay (
@@ -174,6 +170,7 @@ CREATE TABLE ChuyenBay (
     SoHieuChuyenBay NVARCHAR(20) NOT NULL
 );
 GO
+
 INSERT INTO ChuyenBay (MaTuyenBay, MaMayBay, MaHangHangKhong, TrangThai, SoHieuChuyenBay) VALUES
 (1, 'VN-A123', 'VN', 0, 'VN123'),
 (2, 'VJ-A789', 'VJ', 0, 'VJ456'),
@@ -193,8 +190,6 @@ CREATE TABLE LichBay (
 );
 GO
 
-GO
-
 -- Tạo và chèn dữ liệu cho bảng VeChuyenBay
 CREATE TABLE VeChuyenBay (
     MaVe INT IDENTITY(1,1) PRIMARY KEY,
@@ -204,8 +199,6 @@ CREATE TABLE VeChuyenBay (
     TrangThai INT, -- 0: Còn trống, 1: Đang Giữ, 2: Đã Đặt
     GiaVND DECIMAL(10, 2)
 );
-GO
-
 GO
 
 -- Tạo và chèn dữ liệu cho bảng PhieuDatVe
@@ -239,4 +232,3 @@ CREATE TABLE HangVeHoaDon (
     MaHangVe NVARCHAR(10) FOREIGN KEY REFERENCES HangVe(MaHangVe),
     MaHoaDon INT FOREIGN KEY REFERENCES HoaDon(MaHoaDon)
 );
-GO
