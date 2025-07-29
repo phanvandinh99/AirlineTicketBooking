@@ -260,21 +260,6 @@
             document.getElementById('CanCuoc').classList.remove('is-invalid');
         }
 
-        // Validate email (nếu có)
-        if (email.length > 0) {
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                document.getElementById('Email').classList.add('is-invalid');
-                isValid = false;
-            } else if (email.length > 50) {
-                document.getElementById('Email').classList.add('is-invalid');
-                document.getElementById('Email').nextElementSibling.textContent = 'Email không được vượt quá 50 ký tự';
-                isValid = false;
-            } else {
-                document.getElementById('Email').classList.remove('is-invalid');
-            }
-        }
-
         // Validate số điện thoại (nếu có)
         if (soDienThoai.length > 0) {
             if (soDienThoai.length > 15) {

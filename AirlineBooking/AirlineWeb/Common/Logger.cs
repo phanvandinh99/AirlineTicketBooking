@@ -12,7 +12,6 @@ namespace AirlineWeb.Common
         private static readonly StringBuilder _logBuffer = new StringBuilder();
         private static readonly string _logDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
         private static DateTime _lastCleanupDate = DateTime.MinValue;
-        private static readonly Task _completedTask = Task.CompletedTask;
 
         // Cache cho method info để tránh tính toán lại
         private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, string> _methodInfoCache =
@@ -99,6 +98,15 @@ namespace AirlineWeb.Common
             var methodInfo = GetCallingMethodInfo();
             await LogToFileAsync("ERROR", methodInfo, $"{message} - {ex.Message}");
             await LogToFileAsync("ERROR", methodInfo, $"StackTrace: {ex.StackTrace}");
+        }
+
+        /// <summary>
+        /// Log lỗi validation (asynchronous)
+        /// </summary>
+        public static async Task ValidationErrorAsync(string entityName, string propertyName, string errorMessage)
+        {
+            var methodInfo = GetCallingMethodInfo();
+            await LogToFileAsync("VALIDATION_ERROR", methodInfo, $"Entity: {entityName}, Property: {propertyName}, Error: {errorMessage}");
         }
         #endregion
 
@@ -316,118 +324,6 @@ namespace AirlineWeb.Common
                     {
                         FlushLogBufferAsync(DateTime.Now).ConfigureAwait(false);
                     }
-                }
-            });
-        }
-
-        public static async Task ErrorAsync(Exception ex)
-        {
-            await Task.Run(() =>
-            {
-                try
-                {
-                    if (!Directory.Exists(LogDirectory))
-                    {
-                        Directory.CreateDirectory(LogDirectory);
-                    }
-
-                    string logFileName = $"log_{DateTime.Now:yyyy-MM-dd}.txt";
-                    string logFilePath = Path.Combine(LogDirectory, logFileName);
-
-                    string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] ERROR: {ex.Message}\nStackTrace: {ex.StackTrace}\n";
-
-                    lock (LockObject)
-                    {
-                        File.AppendAllText(logFilePath, logMessage);
-                    }
-                }
-                catch
-                {
-                    // Ignore logging errors
-                }
-            });
-        }
-
-        public static async Task ErrorAsync(string message)
-        {
-            await Task.Run(() =>
-            {
-                try
-                {
-                    if (!Directory.Exists(LogDirectory))
-                    {
-                        Directory.CreateDirectory(LogDirectory);
-                    }
-
-                    string logFileName = $"log_{DateTime.Now:yyyy-MM-dd}.txt";
-                    string logFilePath = Path.Combine(LogDirectory, logFileName);
-
-                    string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] ERROR: {message}\n";
-
-                    lock (LockObject)
-                    {
-                        File.AppendAllText(logFilePath, logMessage);
-                    }
-                }
-                catch
-                {
-                    // Ignore logging errors
-                }
-            });
-        }
-
-        public static async Task InfoAsync(string message)
-        {
-            await Task.Run(() =>
-            {
-                try
-                {
-                    if (!Directory.Exists(LogDirectory))
-                    {
-                        Directory.CreateDirectory(LogDirectory);
-                    }
-
-                    string logFileName = $"log_{DateTime.Now:yyyy-MM-dd}.txt";
-                    string logFilePath = Path.Combine(LogDirectory, logFileName);
-
-                    string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] INFO: {message}\n";
-
-                    lock (LockObject)
-                    {
-                        File.AppendAllText(logFilePath, logMessage);
-                    }
-                }
-                catch
-                {
-                    // Ignore logging errors
-                }
-            });
-        }
-
-        public static async Task ValidationErrorAsync(string entityName, string propertyName, string errorMessage)
-        {
-            await Task.Run(() =>
-            {
-                try
-                {
-                    if (!Directory.Exists(LogDirectory))
-                    {
-                        Directory.CreateDirectory(LogDirectory);
-                    }
-
-                    string logFileName = $"validation_log_{DateTime.Now:yyyy-MM-dd}.txt";
-                    string logFilePath = Path.Combine(LogDirectory, logFileName);
-
-                    string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] VALIDATION ERROR - Entity: {entityName}, Property: {propertyName}, Error: {errorMessage}\n";
-
-                    lock (LockObject)
-                    {
-                        File.AppendAllText(logFilePath, logMessage);
-                    }
-                }
-                catch
-                {
-                    // Ignore logging errors
                 }
             });
         }
