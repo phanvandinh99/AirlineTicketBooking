@@ -13,29 +13,29 @@ namespace AirlineWeb.Areas.Customer.Controllers
     {
         private DataAirline db = new DataAirline();
 
-        #region Danh sách chuyến bay
+        #region Danh sách lịch bay
         public async Task<ActionResult> Index()
         {
             try
             {
-                // Lấy danh sách chuyến bay từ database
-                var danhSachChuyenBay = await Task.Run(() =>
-                    db.ChuyenBay
-                        .Include(cb => cb.HangHangKhong)
-                        .Include(cb => cb.MayBay)
-                        .Include(cb => cb.MayBay.LoaiMayBay)
-                        .Include(cb => cb.TuyenBay)
-                        .Include(cb => cb.TuyenBay.SanBay) // Sân bay cất cánh
-                        .Include(cb => cb.TuyenBay.SanBay1) // Sân bay hạ cánh
-                        .Include(cb => cb.LichBay) // Lấy lịch bay
-                        .Where(cb => cb.TrangThai == Const.TrangThai_HoatDong)
-                        .OrderBy(cb => cb.SoHieuChuyenBay)
+                // Lấy danh sách lịch bay từ database
+                var danhSachLichBay = await Task.Run(() =>
+                    db.LichBay
+                        .Include(lb => lb.ChuyenBay)
+                        .Include(lb => lb.ChuyenBay.HangHangKhong)
+                        .Include(lb => lb.ChuyenBay.MayBay)
+                        .Include(lb => lb.ChuyenBay.MayBay.LoaiMayBay)
+                        .Include(lb => lb.ChuyenBay.TuyenBay)
+                        .Include(lb => lb.ChuyenBay.TuyenBay.SanBay) // Sân bay cất cánh
+                        .Include(lb => lb.ChuyenBay.TuyenBay.SanBay1) // Sân bay hạ cánh
+                        .Where(lb => lb.ChuyenBay.TrangThai == Const.TrangThai_HoatDong)
+                        .OrderBy(lb => lb.NgayBay)
+                        .ThenBy(lb => lb.ChuyenBay.SoHieuChuyenBay)
                         .ToList()
                 );
 
-
-                // Truyền danh sách chuyến bay sang view
-                return View(danhSachChuyenBay);
+                // Truyền danh sách lịch bay sang view
+                return View(danhSachLichBay);
             }
             catch (Exception ex)
             {
