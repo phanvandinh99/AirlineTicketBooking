@@ -192,17 +192,7 @@ CREATE TABLE LichBay (
     NgayBay DATE NOT NULL
 );
 GO
-INSERT INTO LichBay (MaChuyenBay, NgayGioKhoiHanh, NgayGioHaCanh, NgayBay) VALUES
-(1, '2025-07-28 07:00:00', '2025-07-28 09:00:00', '2025-07-28'),
-(2, '2025-07-28 10:00:00', '2025-07-28 11:15:00', '2025-07-28'),
-(3, '2025-07-28 14:00:00', '2025-07-28 14:45:00', '2025-07-28'),
-(4, '2025-07-28 16:00:00', '2025-07-28 16:50:00', '2025-07-28'),
-(5, '2025-07-29 08:00:00', '2025-07-29 10:00:00', '2025-07-29'),
-(6, '2025-07-29 09:00:00', '2025-07-29 11:30:00', '2025-07-29'),
-(2, '2025-08-03 09:00:00', '2025-08-03 11:30:00', '2025-08-03'),
-(3, '2025-08-03 09:00:00', '2025-08-03 11:30:00', '2025-08-03'),
-(4, '2025-08-03 09:00:00', '2025-08-03 11:30:00', '2025-08-03'),
-(5, '2025-08-03 09:00:00', '2025-08-03 11:30:00', '2025-08-03');
+
 GO
 
 -- Tạo và chèn dữ liệu cho bảng VeChuyenBay
@@ -216,13 +206,6 @@ CREATE TABLE VeChuyenBay (
 );
 GO
 
-INSERT INTO VeChuyenBay (MaLichBay, MaHangVe, SoGhe, TrangThai, GiaVND) VALUES
-(1, 'HV01', '1A', 2, 4000000),
-(1, 'HV03', '10C', 2, 2000000),
-(2, 'HV04', '2B', 2, 1800000),
-(2, 'HV01', '15D', 2, 800000),
-(4, 'HV02', '1C', 2, 2500000),
-(3, 'HV03', '5A', 2, 1200000);
 GO
 
 -- Tạo và chèn dữ liệu cho bảng PhieuDatVe
@@ -237,11 +220,6 @@ CREATE TABLE PhieuDatVe (
     TrangThai INT -- 0: Đã thanh toán, 1: Chưa thanh toán, 2: Đã đặt cọc
 );
 GO
-INSERT INTO PhieuDatVe (MaKhachHang, MaVe, HoTenHanhKhach, NgaySinh, CanCuoc, NgayDat, TrangThai) VALUES
-('KH01', 1, N'Nguyễn Văn An', '1990-05-15', '123456789012', '2025-07-27', 0),
-('KH02', 3, N'Trần Thị Bình', '1992-08-20', '987654321098', '2025-07-27', 0),
-('KH01', 5, N'Nguyễn Văn An', '1990-05-15', '123456789012', '2025-07-27', 1);
-GO
 
 -- Tạo và chèn dữ liệu cho bảng HoaDon
 CREATE TABLE HoaDon (
@@ -254,10 +232,6 @@ CREATE TABLE HoaDon (
     MaNhanVien NVARCHAR(10) FOREIGN KEY REFERENCES NhanVien(MaNhanVien)
 );
 GO
-INSERT INTO HoaDon (MaPhieuDatVe, NgayLapHoaDon, TraTruoc, TongTien, TrangThaiThanhToan, MaNhanVien) VALUES
-(1, '2025-07-27', 0, 4000000, 0, 'Admin'),
-(2, '2025-07-27', 0, 1800000, 0, 'VNAL');
-GO
 
 -- Tạo và chèn dữ liệu cho bảng HangVeHoaDon
 CREATE TABLE HangVeHoaDon (
@@ -265,8 +239,4 @@ CREATE TABLE HangVeHoaDon (
     MaHangVe NVARCHAR(10) FOREIGN KEY REFERENCES HangVe(MaHangVe),
     MaHoaDon INT FOREIGN KEY REFERENCES HoaDon(MaHoaDon)
 );
-GO
-INSERT INTO HangVeHoaDon (MaHangVe, MaHoaDon) VALUES
-('HV01', 1),
-('HV04', 2);
 GO

@@ -156,15 +156,16 @@ namespace AirlineWeb.Areas.Customer.Controllers
                 }
 
                 // Validate ngày sinh
-                if (!DateTime.TryParse(NgaySinh, out DateTime ngaySinh))
+                DateTime ngaySinhDate;
+                if (!DateTime.TryParse(NgaySinh, out ngaySinhDate))
                 {
                     TempData["ErrorMessage"] = "Ngày sinh không hợp lệ!";
                     return RedirectToAction("DatVe", new { maVe = maVe });
                 }
 
                 // Kiểm tra tuổi (phải từ 1 tuổi trở lên và không quá 120 tuổi)
-                var tuoi = DateTime.Now.Year - ngaySinh.Year;
-                if (ngaySinh > DateTime.Now.AddYears(-tuoi)) tuoi--;
+                var tuoi = DateTime.Now.Year - ngaySinhDate.Year;
+                if (ngaySinhDate > DateTime.Now.AddYears(-tuoi)) tuoi--;
                 
                 if (tuoi < 1 || tuoi > 120)
                 {

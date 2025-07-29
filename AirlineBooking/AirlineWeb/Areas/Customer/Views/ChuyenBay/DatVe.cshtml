@@ -46,7 +46,7 @@
                                 <div class="flight-info">
                                     <h6 class="text-muted mb-2">Hạng vé</h6>
                                     <h5 class="mb-1">@Model.HangVe.TenHangVe</h5>
-                                    <p class="text-success fw-bold mb-0">@Model.GiaVND?.ToString("N0") VNĐ</p>
+                                    <p class="text-success fw-bold mb-0">@(Model.GiaVND?.ToString("N0") ?? "0") VNĐ</p>
                                 </div>
                             </div>
                         </div>
@@ -81,71 +81,64 @@
                         <h4 class="mb-0"><i class="isax isax-user me-2"></i>Thông tin hành khách</h4>
                     </div>
                     <div class="card-body">
-                        @using (Html.BeginForm("DatVe", "ChuyenBay", new { area = "Customer", maVe = Model.MaVe }, FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate", id = "bookingForm" }))
+                        @if (TempData["ErrorMessage"] != null)
                         {
+                            <div class="alert alert-danger">
+                                <i class="isax isax-danger me-2"></i>@TempData["ErrorMessage"]
+                            </div>
+                        }
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success">
+                                <i class="isax isax-tick-circle me-2"></i>@TempData["SuccessMessage"]
+                            </div>
+                        }
+
+                        <form method="post" action="/Customer/ChuyenBay/DatVe">
                             @Html.AntiForgeryToken()
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="HoTenHanhKhach" class="form-label">Họ và tên hành khách <span class="text-danger">*</span></label>
-                                    <input type="text" name="HoTenHanhKhach" id="HoTenHanhKhach" class="form-control" required="required" maxlength="50" placeholder="Nhập họ và tên" />
-                                    <div class="invalid-feedback">
-                                        Vui lòng nhập họ và tên hành khách.
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="NgaySinh" class="form-label">Ngày sinh <span class="text-danger">*</span></label>
-                                    <input type="date" name="NgaySinh" id="NgaySinh" class="form-control" required="required" />
-                                    <div class="invalid-feedback">
-                                        Vui lòng chọn ngày sinh hợp lệ.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="CanCuoc" class="form-label">Số căn cước công dân <span class="text-danger">*</span></label>
-                                    <input type="text" name="CanCuoc" id="CanCuoc" class="form-control" required="required" maxlength="20" placeholder="Nhập số căn cước" />
-                                    <div class="invalid-feedback">
-                                        Vui lòng nhập số căn cước công dân.
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="SoDienThoai" class="form-label">Số điện thoại</label>
-                                    <input type="tel" name="SoDienThoai" id="SoDienThoai" class="form-control" maxlength="15" placeholder="Nhập số điện thoại" />
-                                    <div class="invalid-feedback">
-                                        Vui lòng nhập số điện thoại hợp lệ.
-                                    </div>
-                                </div>
-                            </div>
-
+                            <input type="hidden" name="maVe" value="@Model.MaVe" />
+                            
                             <div class="mb-3">
-                                <label for="Email" class="form-label">Email</label>
-                                <input type="email" name="Email" id="Email" class="form-control" maxlength="50" placeholder="Nhập email" />
-                                <div class="invalid-feedback">
-                                    Vui lòng nhập email hợp lệ.
-                                </div>
+                                <label>Họ và tên hành khách:</label>
+                                <input type="text" name="HoTenHanhKhach" class="form-control" placeholder="Nhập họ và tên" />
                             </div>
-
+                            
+                            <div class="mb-3">
+                                <label>Ngày sinh:</label>
+                                <input type="date" name="NgaySinh" class="form-control" />
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label>Số căn cước công dân:</label>
+                                <input type="text" name="CanCuoc" class="form-control" placeholder="Nhập số căn cước" />
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label>Email:</label>
+                                <input type="email" name="Email" class="form-control" placeholder="Nhập email" />
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label>Số điện thoại:</label>
+                                <input type="text" name="SoDienThoai" class="form-control" placeholder="Nhập số điện thoại" />
+                            </div>
+                            
                             <div class="alert alert-info">
-                                <i class="isax isax-info-circle me-2"></i>
-                                <strong>Lưu ý:</strong> 
-                                <ul class="mb-0 mt-2">
-                                    <li>Số căn cước công dân sẽ được sử dụng làm tài khoản đăng nhập</li>
-                                    <li>Mật khẩu mặc định là số căn cước của bạn</li>
-                                    <li>Sau khi đặt vé thành công, bạn cần thanh toán trong vòng 24 giờ</li>
-                                </ul>
+                                <strong>Lưu ý:</strong> Số căn cước sẽ được sử dụng làm tài khoản đăng nhập
                             </div>
-
+                            
                             <div class="d-flex justify-content-between">
                                 <a href="@Url.Action("ChiTiet", "ChuyenBay", new { area = "Customer", id = Model.LichBay.ChuyenBay.MaChuyenBay })" class="btn btn-secondary">
                                     <i class="isax isax-arrow-left me-2"></i>Quay lại
                                 </a>
-                                <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <button type="submit" class="btn btn-primary">
                                     <i class="isax isax-ticket me-2"></i>Xác nhận đặt vé
                                 </button>
                             </div>
-                        }
+                        </form>
+
+
+
                     </div>
                 </div>
             </div>
@@ -159,7 +152,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-2">
                             <span>Giá vé:</span>
-                            <span>@Model.GiaVND?.ToString("N0") VNĐ</span>
+                            <span>@(Model.GiaVND?.ToString("N0") ?? "0") VNĐ</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Thuế và phí:</span>
@@ -168,7 +161,7 @@
                         <hr>
                         <div class="d-flex justify-content-between fw-bold">
                             <span>Tổng cộng:</span>
-                            <span class="text-success">@Model.GiaVND?.ToString("N0") VNĐ</span>
+                            <span class="text-success">@(Model.GiaVND?.ToString("N0") ?? "0") VNĐ</span>
                         </div>
                     </div>
                 </div>
@@ -189,98 +182,5 @@
     </div>
 </div>
 
-<script>
-    // Form validation
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            var forms = document.getElementsByClassName('needs-validation');
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
 
-    // Custom validation
-    document.getElementById('bookingForm').addEventListener('submit', function(e) {
-        var hoTen = document.getElementById('HoTenHanhKhach').value.trim();
-        var ngaySinh = document.getElementById('NgaySinh').value;
-        var canCuoc = document.getElementById('CanCuoc').value.trim();
-        var email = document.getElementById('Email').value.trim();
-        var soDienThoai = document.getElementById('SoDienThoai').value.trim();
-
-        var isValid = true;
-
-        // Validate họ tên
-        if (hoTen.length === 0) {
-            document.getElementById('HoTenHanhKhach').classList.add('is-invalid');
-            isValid = false;
-        } else if (hoTen.length > 50) {
-            document.getElementById('HoTenHanhKhach').classList.add('is-invalid');
-            document.getElementById('HoTenHanhKhach').nextElementSibling.textContent = 'Họ tên không được vượt quá 50 ký tự';
-            isValid = false;
-        } else {
-            document.getElementById('HoTenHanhKhach').classList.remove('is-invalid');
-        }
-
-        // Validate ngày sinh
-        if (ngaySinh.length === 0) {
-            document.getElementById('NgaySinh').classList.add('is-invalid');
-            isValid = false;
-        } else {
-            var ngaySinhDate = new Date(ngaySinh);
-            var today = new Date();
-            var age = today.getFullYear() - ngaySinhDate.getFullYear();
-            if (ngaySinhDate > today.setFullYear(today.getFullYear() - age)) age--;
-            
-            if (age < 1 || age > 120) {
-                document.getElementById('NgaySinh').classList.add('is-invalid');
-                document.getElementById('NgaySinh').nextElementSibling.textContent = 'Tuổi không hợp lệ (phải từ 1-120 tuổi)';
-                isValid = false;
-            } else {
-                document.getElementById('NgaySinh').classList.remove('is-invalid');
-            }
-        }
-
-        // Validate căn cước
-        if (canCuoc.length === 0) {
-            document.getElementById('CanCuoc').classList.add('is-invalid');
-            isValid = false;
-        } else if (canCuoc.length > 20) {
-            document.getElementById('CanCuoc').classList.add('is-invalid');
-            document.getElementById('CanCuoc').nextElementSibling.textContent = 'Số căn cước không được vượt quá 20 ký tự';
-            isValid = false;
-        } else {
-            document.getElementById('CanCuoc').classList.remove('is-invalid');
-        }
-
-        // Validate số điện thoại (nếu có)
-        if (soDienThoai.length > 0) {
-            if (soDienThoai.length > 15) {
-                document.getElementById('SoDienThoai').classList.add('is-invalid');
-                document.getElementById('SoDienThoai').nextElementSibling.textContent = 'Số điện thoại không được vượt quá 15 ký tự';
-                isValid = false;
-            } else {
-                document.getElementById('SoDienThoai').classList.remove('is-invalid');
-            }
-        }
-
-        if (!isValid) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-    });
-
-    // Disable submit button after click to prevent double submission
-    document.getElementById('submitBtn').addEventListener('click', function() {
-        this.disabled = true;
-        this.innerHTML = '<i class="isax isax-loading me-2"></i>Đang xử lý...';
-    });
-</script>
 
