@@ -17,20 +17,20 @@ namespace AirlineWeb.Models
         [Key]
         public int MaPhieuDatVe { get; set; }
 
-        [StringLength(10)]
+        [StringLength(20)] // Phù hợp với database NVARCHAR(20)
         public string MaKhachHang { get; set; }
 
         public int? MaVe { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(100)] // Phù hợp với database NVARCHAR(100)
         public string HoTenHanhKhach { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(20)] // Phù hợp với database VARCHAR(20)
         public string NgaySinh { get; set; }
 
-        [StringLength(20)]
+        [StringLength(20)] // Phù hợp với database VARCHAR(20)
         public string CanCuoc { get; set; }
 
         [Column(TypeName = "date")]

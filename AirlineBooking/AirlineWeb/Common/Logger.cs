@@ -319,5 +319,117 @@ namespace AirlineWeb.Common
                 }
             });
         }
+
+        public static async Task ErrorAsync(Exception ex)
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (!Directory.Exists(LogDirectory))
+                    {
+                        Directory.CreateDirectory(LogDirectory);
+                    }
+
+                    string logFileName = $"log_{DateTime.Now:yyyy-MM-dd}.txt";
+                    string logFilePath = Path.Combine(LogDirectory, logFileName);
+
+                    string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] ERROR: {ex.Message}\nStackTrace: {ex.StackTrace}\n";
+
+                    lock (LockObject)
+                    {
+                        File.AppendAllText(logFilePath, logMessage);
+                    }
+                }
+                catch
+                {
+                    // Ignore logging errors
+                }
+            });
+        }
+
+        public static async Task ErrorAsync(string message)
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (!Directory.Exists(LogDirectory))
+                    {
+                        Directory.CreateDirectory(LogDirectory);
+                    }
+
+                    string logFileName = $"log_{DateTime.Now:yyyy-MM-dd}.txt";
+                    string logFilePath = Path.Combine(LogDirectory, logFileName);
+
+                    string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] ERROR: {message}\n";
+
+                    lock (LockObject)
+                    {
+                        File.AppendAllText(logFilePath, logMessage);
+                    }
+                }
+                catch
+                {
+                    // Ignore logging errors
+                }
+            });
+        }
+
+        public static async Task InfoAsync(string message)
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (!Directory.Exists(LogDirectory))
+                    {
+                        Directory.CreateDirectory(LogDirectory);
+                    }
+
+                    string logFileName = $"log_{DateTime.Now:yyyy-MM-dd}.txt";
+                    string logFilePath = Path.Combine(LogDirectory, logFileName);
+
+                    string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] INFO: {message}\n";
+
+                    lock (LockObject)
+                    {
+                        File.AppendAllText(logFilePath, logMessage);
+                    }
+                }
+                catch
+                {
+                    // Ignore logging errors
+                }
+            });
+        }
+
+        public static async Task ValidationErrorAsync(string entityName, string propertyName, string errorMessage)
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (!Directory.Exists(LogDirectory))
+                    {
+                        Directory.CreateDirectory(LogDirectory);
+                    }
+
+                    string logFileName = $"validation_log_{DateTime.Now:yyyy-MM-dd}.txt";
+                    string logFilePath = Path.Combine(LogDirectory, logFileName);
+
+                    string logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] VALIDATION ERROR - Entity: {entityName}, Property: {propertyName}, Error: {errorMessage}\n";
+
+                    lock (LockObject)
+                    {
+                        File.AppendAllText(logFilePath, logMessage);
+                    }
+                }
+                catch
+                {
+                    // Ignore logging errors
+                }
+            });
+        }
     }
 }

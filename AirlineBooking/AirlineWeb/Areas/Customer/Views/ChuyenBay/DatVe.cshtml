@@ -24,11 +24,11 @@
 </div>
 
 <!-- Đặt vé Section -->
-<div class="booking-section pt-120 pb-120">
+<div class="booking-section pt-100 pb-100">
     <div class="container">
         <div class="row">
-            <!-- Thông tin chuyến bay -->
             <div class="col-lg-8">
+                <!-- Thông tin chuyến bay -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
                         <h4 class="mb-0"><i class="isax isax-airplane me-2"></i>Thông tin chuyến bay</h4>
@@ -37,43 +37,40 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="flight-info">
-                                    <h5 class="text-primary">@Model.LichBay.ChuyenBay.HangHangKhong.TenHang</h5>
-                                    <p class="mb-2"><strong>Chuyến bay:</strong> @Model.LichBay.ChuyenBay.SoHieuChuyenBay</p>
-                                    <p class="mb-2"><strong>Hạng vé:</strong> @Model.HangVe.TenHangVe</p>
-                                    <p class="mb-2"><strong>Số ghế:</strong> @Model.SoGhe</p>
-                                    <p class="mb-2"><strong>Giá vé:</strong> @(Model.GiaVND?.ToString("N0") ?? "0") VNĐ</p>
+                                    <h6 class="text-muted mb-2">Chuyến bay</h6>
+                                    <h5 class="mb-1">@Model.LichBay.ChuyenBay.SoHieuChuyenBay</h5>
+                                    <p class="text-muted mb-0">@Model.LichBay.ChuyenBay.HangHangKhong.TenHang</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="route-info">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="text-center me-3">
-                                            <h6 class="mb-1">@Model.LichBay.ChuyenBay.TuyenBay.SanBay.ThanhPho</h6>
-                                            <small class="text-muted">@Model.LichBay.ChuyenBay.TuyenBay.SanBay.TenSanBay</small>
-                                        </div>
-                                        <div class="flex-grow-1 text-center">
-                                            <i class="isax isax-airplane text-primary"></i>
-                                        </div>
-                                        <div class="text-center ms-3">
-                                            <h6 class="mb-1">@Model.LichBay.ChuyenBay.TuyenBay.SanBay1.ThanhPho</h6>
-                                            <small class="text-muted">@Model.LichBay.ChuyenBay.TuyenBay.SanBay1.TenSanBay</small>
-                                        </div>
-                                    </div>
-                                    <div class="row text-center">
-                                        <div class="col-6">
-                                            <p class="mb-1"><strong>Giờ cất cánh</strong></p>
-                                            <p class="text-primary">@Model.LichBay.NgayGioKhoiHanh.ToString("HH:mm")</p>
-                                        </div>
-                                        <div class="col-6">
-                                            <p class="mb-1"><strong>Giờ hạ cánh</strong></p>
-                                            <p class="text-primary">@Model.LichBay.NgayGioHaCanh.ToString("HH:mm")</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-center mb-0">
-                                        <small class="text-muted">Ngày bay: @Model.LichBay.NgayBay.ToString("dd/MM/yyyy")</small>
-                                    </p>
+                                <div class="flight-info">
+                                    <h6 class="text-muted mb-2">Hạng vé</h6>
+                                    <h5 class="mb-1">@Model.HangVe.TenHangVe</h5>
+                                    <p class="text-success fw-bold mb-0">@Model.GiaVND?.ToString("N0") VNĐ</p>
                                 </div>
                             </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="flight-info">
+                                    <h6 class="text-muted mb-2">Khởi hành</h6>
+                                    <h5 class="mb-1">@Model.LichBay.NgayGioKhoiHanh.ToString("HH:mm")</h5>
+                                    <p class="mb-0">@Model.LichBay.ChuyenBay.TuyenBay.SanBay.TenSanBay</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="flight-info">
+                                    <h6 class="text-muted mb-2">Hạ cánh</h6>
+                                    <h5 class="mb-1">@Model.LichBay.NgayGioHaCanh.ToString("HH:mm")</h5>
+                                    <p class="mb-0">@Model.LichBay.ChuyenBay.TuyenBay.SanBay1.TenSanBay</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <p class="text-center mb-0">
+                                <small class="text-muted">Ngày bay: @Model.LichBay.NgayBay.ToString("dd/MM/yyyy")</small>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -84,36 +81,49 @@
                         <h4 class="mb-0"><i class="isax isax-user me-2"></i>Thông tin hành khách</h4>
                     </div>
                     <div class="card-body">
-                        @using (Html.BeginForm("DatVe", "ChuyenBay", new { area = "Customer", maVe = Model.MaVe }, FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                        @using (Html.BeginForm("DatVe", "ChuyenBay", new { area = "Customer", maVe = Model.MaVe }, FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate", id = "bookingForm" }))
                         {
                             @Html.AntiForgeryToken()
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="HoTenHanhKhach" class="form-label">Họ và tên hành khách <span class="text-danger">*</span></label>
-                                    <input type="text" name="HoTenHanhKhach" class="form-control" required="required" placeholder="Nhập họ và tên" />
+                                    <input type="text" name="HoTenHanhKhach" id="HoTenHanhKhach" class="form-control" required="required" maxlength="50" placeholder="Nhập họ và tên" />
+                                    <div class="invalid-feedback">
+                                        Vui lòng nhập họ và tên hành khách.
+                                    </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="NgaySinh" class="form-label">Ngày sinh <span class="text-danger">*</span></label>
-                                    <input type="date" name="NgaySinh" class="form-control" required="required" />
+                                    <input type="date" name="NgaySinh" id="NgaySinh" class="form-control" required="required" />
+                                    <div class="invalid-feedback">
+                                        Vui lòng chọn ngày sinh hợp lệ.
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="CanCuoc" class="form-label">Căn cước công dân <span class="text-danger">*</span></label>
-                                    <input type="text" name="CanCuoc" class="form-control" placeholder="Nhập số CCCD/CMND" maxlength="12" required="required" />
-                                    <small class="form-text text-muted">Số căn cước sẽ được sử dụng làm tài khoản đăng nhập</small>
+                                    <label for="CanCuoc" class="form-label">Số căn cước công dân <span class="text-danger">*</span></label>
+                                    <input type="text" name="CanCuoc" id="CanCuoc" class="form-control" required="required" maxlength="20" placeholder="Nhập số căn cước" />
+                                    <div class="invalid-feedback">
+                                        Vui lòng nhập số căn cước công dân.
+                                    </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="Email" class="form-label">Email</label>
-                                    <input type="email" name="Email" class="form-control" placeholder="Nhập email" />
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="SoDienThoai" class="form-label">Số điện thoại</label>
-                                    <input type="tel" name="SoDienThoai" class="form-control" placeholder="Nhập số điện thoại" />
+                                    <input type="tel" name="SoDienThoai" id="SoDienThoai" class="form-control" maxlength="15" placeholder="Nhập số điện thoại" />
+                                    <div class="invalid-feedback">
+                                        Vui lòng nhập số điện thoại hợp lệ.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Email" class="form-label">Email</label>
+                                <input type="email" name="Email" id="Email" class="form-control" maxlength="50" placeholder="Nhập email" />
+                                <div class="invalid-feedback">
+                                    Vui lòng nhập email hợp lệ.
                                 </div>
                             </div>
 
@@ -131,7 +141,7 @@
                                 <a href="@Url.Action("ChiTiet", "ChuyenBay", new { area = "Customer", id = Model.LichBay.ChuyenBay.MaChuyenBay })" class="btn btn-secondary">
                                     <i class="isax isax-arrow-left me-2"></i>Quay lại
                                 </a>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" id="submitBtn">
                                     <i class="isax isax-ticket me-2"></i>Xác nhận đặt vé
                                 </button>
                             </div>
@@ -140,49 +150,25 @@
                 </div>
             </div>
 
-            <!-- Thông tin thanh toán -->
             <div class="col-lg-4">
+                <!-- Thông tin giá -->
                 <div class="card shadow-sm">
                     <div class="card-header bg-warning text-dark">
-                        <h5 class="mb-0"><i class="isax isax-card me-2"></i>Tổng thanh toán</h5>
+                        <h6 class="mb-0"><i class="isax isax-dollar-circle me-2"></i>Chi tiết giá</h6>
                     </div>
                     <div class="card-body">
-                        <div class="price-breakdown">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Giá vé cơ bản:</span>
-                                <span>@(Model.GiaVND?.ToString("N0") ?? "0") VNĐ</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Thuế và phí:</span>
-                                <span>0 VNĐ</span>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between mb-3">
-                                <strong>Tổng cộng:</strong>
-                                <strong class="text-primary fs-5">@(Model.GiaVND?.ToString("N0") ?? "0") VNĐ</strong>
-                            </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Giá vé:</span>
+                            <span>@Model.GiaVND?.ToString("N0") VNĐ</span>
                         </div>
-
-                        <div class="payment-methods mt-4">
-                            <h6 class="mb-3">Phương thức thanh toán:</h6>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bank" checked>
-                                <label class="form-check-label" for="bankTransfer">
-                                    <i class="isax isax-bank me-2"></i>Chuyển khoản ngân hàng
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" value="card">
-                                <label class="form-check-label" for="creditCard">
-                                    <i class="isax isax-card me-2"></i>Thẻ tín dụng/ghi nợ
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="cash" value="cash">
-                                <label class="form-check-label" for="cash">
-                                    <i class="isax isax-money me-2"></i>Tiền mặt tại văn phòng
-                                </label>
-                            </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Thuế và phí:</span>
+                            <span>0 VNĐ</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between fw-bold">
+                            <span>Tổng cộng:</span>
+                            <span class="text-success">@Model.GiaVND?.ToString("N0") VNĐ</span>
                         </div>
                     </div>
                 </div>
@@ -203,22 +189,113 @@
     </div>
 </div>
 
-    <script>
-        // Form validation
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-                var forms = document.getElementsByClassName('needs-validation');
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
-    </script>
+<script>
+    // Form validation
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+
+    // Custom validation
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        var hoTen = document.getElementById('HoTenHanhKhach').value.trim();
+        var ngaySinh = document.getElementById('NgaySinh').value;
+        var canCuoc = document.getElementById('CanCuoc').value.trim();
+        var email = document.getElementById('Email').value.trim();
+        var soDienThoai = document.getElementById('SoDienThoai').value.trim();
+
+        var isValid = true;
+
+        // Validate họ tên
+        if (hoTen.length === 0) {
+            document.getElementById('HoTenHanhKhach').classList.add('is-invalid');
+            isValid = false;
+        } else if (hoTen.length > 50) {
+            document.getElementById('HoTenHanhKhach').classList.add('is-invalid');
+            document.getElementById('HoTenHanhKhach').nextElementSibling.textContent = 'Họ tên không được vượt quá 50 ký tự';
+            isValid = false;
+        } else {
+            document.getElementById('HoTenHanhKhach').classList.remove('is-invalid');
+        }
+
+        // Validate ngày sinh
+        if (ngaySinh.length === 0) {
+            document.getElementById('NgaySinh').classList.add('is-invalid');
+            isValid = false;
+        } else {
+            var ngaySinhDate = new Date(ngaySinh);
+            var today = new Date();
+            var age = today.getFullYear() - ngaySinhDate.getFullYear();
+            if (ngaySinhDate > today.setFullYear(today.getFullYear() - age)) age--;
+            
+            if (age < 1 || age > 120) {
+                document.getElementById('NgaySinh').classList.add('is-invalid');
+                document.getElementById('NgaySinh').nextElementSibling.textContent = 'Tuổi không hợp lệ (phải từ 1-120 tuổi)';
+                isValid = false;
+            } else {
+                document.getElementById('NgaySinh').classList.remove('is-invalid');
+            }
+        }
+
+        // Validate căn cước
+        if (canCuoc.length === 0) {
+            document.getElementById('CanCuoc').classList.add('is-invalid');
+            isValid = false;
+        } else if (canCuoc.length > 20) {
+            document.getElementById('CanCuoc').classList.add('is-invalid');
+            document.getElementById('CanCuoc').nextElementSibling.textContent = 'Số căn cước không được vượt quá 20 ký tự';
+            isValid = false;
+        } else {
+            document.getElementById('CanCuoc').classList.remove('is-invalid');
+        }
+
+        // Validate email (nếu có)
+        if (email.length > 0) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('Email').classList.add('is-invalid');
+                isValid = false;
+            } else if (email.length > 50) {
+                document.getElementById('Email').classList.add('is-invalid');
+                document.getElementById('Email').nextElementSibling.textContent = 'Email không được vượt quá 50 ký tự';
+                isValid = false;
+            } else {
+                document.getElementById('Email').classList.remove('is-invalid');
+            }
+        }
+
+        // Validate số điện thoại (nếu có)
+        if (soDienThoai.length > 0) {
+            if (soDienThoai.length > 15) {
+                document.getElementById('SoDienThoai').classList.add('is-invalid');
+                document.getElementById('SoDienThoai').nextElementSibling.textContent = 'Số điện thoại không được vượt quá 15 ký tự';
+                isValid = false;
+            } else {
+                document.getElementById('SoDienThoai').classList.remove('is-invalid');
+            }
+        }
+
+        if (!isValid) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    });
+
+    // Disable submit button after click to prevent double submission
+    document.getElementById('submitBtn').addEventListener('click', function() {
+        this.disabled = true;
+        this.innerHTML = '<i class="isax isax-loading me-2"></i>Đang xử lý...';
+    });
+</script>
 

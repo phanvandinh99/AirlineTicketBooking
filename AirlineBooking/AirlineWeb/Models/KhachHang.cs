@@ -14,27 +14,28 @@ namespace AirlineWeb.Models
         }
 
         [Key]
-        [StringLength(20)] // Tăng độ dài để chứa căn cước
+        [StringLength(20)] // Phù hợp với database NVARCHAR(20)
         public string MaKhachHang { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(20)] // Phù hợp với database VARCHAR(20)
         public string MatKhau { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(50)] // Phù hợp với database NVARCHAR(50)
         public string TenKhachHang { get; set; }
 
-        [StringLength(100)]
+        [StringLength(100)] // Phù hợp với database NVARCHAR(100)
         public string DiaChi { get; set; }
 
-        [StringLength(10)]
+        [StringLength(10)] // Phù hợp với database NVARCHAR(10)
         public string GioiTinh { get; set; }
 
-        [StringLength(15)]
+        [StringLength(15)] // Phù hợp với database NVARCHAR(15)
         public string SoDienThoai { get; set; }
 
-        [StringLength(50)]
+        [StringLength(50)] // Phù hợp với database NVARCHAR(50)
+        [EmailAddress] // Thêm validation email
         public string Email { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

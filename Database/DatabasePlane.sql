@@ -215,7 +215,7 @@ CREATE TABLE VeChuyenBay (
     GiaVND DECIMAL(10, 2)
 );
 GO
-select * from VeChuyenBay
+
 INSERT INTO VeChuyenBay (MaLichBay, MaHangVe, SoGhe, TrangThai, GiaVND) VALUES
 (1, 'HV01', '1A', 2, 4000000),
 (1, 'HV03', '10C', 2, 2000000),
@@ -228,7 +228,7 @@ GO
 -- Tạo và chèn dữ liệu cho bảng PhieuDatVe
 CREATE TABLE PhieuDatVe (
     MaPhieuDatVe INT IDENTITY(1,1) PRIMARY KEY,
-    MaKhachHang NVARCHAR(10) FOREIGN KEY REFERENCES KhachHang(MaKhachHang),
+    MaKhachHang NVARCHAR(20) FOREIGN KEY REFERENCES KhachHang(MaKhachHang),
     MaVe INT FOREIGN KEY REFERENCES VeChuyenBay(MaVe),
     HoTenHanhKhach NVARCHAR(100) NOT NULL,
     NgaySinh VARCHAR(20) NOT NULL,

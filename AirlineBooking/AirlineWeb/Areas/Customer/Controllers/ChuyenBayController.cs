@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Collections.Generic; // Added for List
 
 namespace AirlineWeb.Areas.Customer.Controllers
 {
@@ -129,6 +130,48 @@ namespace AirlineWeb.Areas.Customer.Controllers
                     return RedirectToAction("DatVe", new { maVe = maVe });
                 }
 
+                // Validate độ dài dữ liệu
+                if (HoTenHanhKhach.Length > 50)
+                {
+                    TempData["ErrorMessage"] = "Họ tên hành khách không được vượt quá 50 ký tự!";
+                    return RedirectToAction("DatVe", new { maVe = maVe });
+                }
+
+                if (CanCuoc.Length > 20)
+                {
+                    TempData["ErrorMessage"] = "Số căn cước không được vượt quá 20 ký tự!";
+                    return RedirectToAction("DatVe", new { maVe = maVe });
+                }
+
+                if (!string.IsNullOrEmpty(Email) && Email.Length > 50)
+                {
+                    TempData["ErrorMessage"] = "Email không được vượt quá 50 ký tự!";
+                    return RedirectToAction("DatVe", new { maVe = maVe });
+                }
+
+                if (!string.IsNullOrEmpty(SoDienThoai) && SoDienThoai.Length > 15)
+                {
+                    TempData["ErrorMessage"] = "Số điện thoại không được vượt quá 15 ký tự!";
+                    return RedirectToAction("DatVe", new { maVe = maVe });
+                }
+
+                // Validate ngày sinh
+                if (!DateTime.TryParse(NgaySinh, out DateTime ngaySinh))
+                {
+                    TempData["ErrorMessage"] = "Ngày sinh không hợp lệ!";
+                    return RedirectToAction("DatVe", new { maVe = maVe });
+                }
+
+                // Kiểm tra tuổi (phải từ 1 tuổi trở lên và không quá 120 tuổi)
+                var tuoi = DateTime.Now.Year - ngaySinh.Year;
+                if (ngaySinh > DateTime.Now.AddYears(-tuoi)) tuoi--;
+                
+                if (tuoi < 1 || tuoi > 120)
+                {
+                    TempData["ErrorMessage"] = "Tuổi không hợp lệ!";
+                    return RedirectToAction("DatVe", new { maVe = maVe });
+                }
+
                 // Lấy thông tin vé
                 var ve = await Task.Run(() =>
                     db.VeChuyenBay
@@ -164,10 +207,41 @@ namespace AirlineWeb.Areas.Customer.Controllers
                         SoDienThoai = SoDienThoai
                     };
 
-                    db.KhachHang.Add(khachHang);
-                    await db.SaveChangesAsync();
+                    // Validate khách hàng trước khi thêm
+                    var validationContext = new System.ComponentModel.DataAnnotations.ValidationContext(khachHang, null, null);
+                    var validationResults = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
+                    
+                    if (!System.ComponentModel.DataAnnotations.Validator.TryValidateObject(khachHang, validationContext, validationResults, true))
+                    {
+                        var errorMessages = string.Join("; ", validationResults.Select(v => v.ErrorMessage));
+                        await Logger.ErrorAsync($"Validation failed for KhachHang: {errorMessages}");
+                        TempData["ErrorMessage"] = $"Dữ liệu khách hàng không hợp lệ: {errorMessages}";
+                        return RedirectToAction("DatVe", new { maVe = maVe });
+                    }
 
-                    TempData["SuccessMessage"] = "Tài khoản đã được tạo tự động với mật khẩu là số căn cước của bạn!";
+                    db.KhachHang.Add(khachHang);
+                    
+                    try
+                    {
+                        await db.SaveChangesAsync();
+                        await Logger.InfoAsync($"Created new customer: {CanCuoc}");
+                        TempData["SuccessMessage"] = "Tài khoản đã được tạo tự động với mật khẩu là số căn cước của bạn!";
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                    {
+                        var errorMessages = new List<string>();
+                        foreach (var eve in ex.EntityValidationErrors)
+                        {
+                            foreach (var ve_error in eve.ValidationErrors)
+                            {
+                                errorMessages.Add($"Property: {ve_error.PropertyName} Error: {ve_error.ErrorMessage}");
+                                await Logger.ValidationErrorAsync("KhachHang", ve_error.PropertyName, ve_error.ErrorMessage);
+                            }
+                        }
+                        await Logger.ErrorAsync($"DbEntityValidationException: {string.Join("; ", errorMessages)}");
+                        TempData["ErrorMessage"] = $"Lỗi validation khi tạo khách hàng: {string.Join("; ", errorMessages)}";
+                        return RedirectToAction("DatVe", new { maVe = maVe });
+                    }
                 }
                 else
                 {
@@ -194,19 +268,50 @@ namespace AirlineWeb.Areas.Customer.Controllers
                     TrangThai = 1 // Chưa thanh toán
                 };
 
+                // Validate phiếu đặt vé trước khi thêm
+                var phieuValidationContext = new System.ComponentModel.DataAnnotations.ValidationContext(phieuDatVe, null, null);
+                var phieuValidationResults = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
+                
+                if (!System.ComponentModel.DataAnnotations.Validator.TryValidateObject(phieuDatVe, phieuValidationContext, phieuValidationResults, true))
+                {
+                    var errorMessages = string.Join("; ", phieuValidationResults.Select(v => v.ErrorMessage));
+                    await Logger.ErrorAsync($"Validation failed for PhieuDatVe: {errorMessages}");
+                    TempData["ErrorMessage"] = $"Dữ liệu phiếu đặt vé không hợp lệ: {errorMessages}";
+                    return RedirectToAction("DatVe", new { maVe = maVe });
+                }
+
                 // Cập nhật trạng thái vé
                 ve.TrangThai = 1; // Đang giữ chỗ
 
                 db.PhieuDatVe.Add(phieuDatVe);
-                await db.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = "Đặt vé thành công! Vui lòng thanh toán trong vòng 24 giờ.";
-                return RedirectToAction("ChiTiet", new { id = ve.LichBay.ChuyenBay.MaChuyenBay });
+                
+                try
+                {
+                    await db.SaveChangesAsync();
+                    await Logger.InfoAsync($"Ticket booked successfully: Ve={maVe}, KhachHang={CanCuoc}");
+                    TempData["SuccessMessage"] = "Đặt vé thành công! Vui lòng thanh toán trong vòng 24 giờ.";
+                    return RedirectToAction("ChiTiet", new { id = ve.LichBay.ChuyenBay.MaChuyenBay });
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                {
+                    var errorMessages = new List<string>();
+                    foreach (var eve in ex.EntityValidationErrors)
+                    {
+                        foreach (var ve_error in eve.ValidationErrors)
+                        {
+                            errorMessages.Add($"Property: {ve_error.PropertyName} Error: {ve_error.ErrorMessage}");
+                            await Logger.ValidationErrorAsync("PhieuDatVe", ve_error.PropertyName, ve_error.ErrorMessage);
+                        }
+                    }
+                    await Logger.ErrorAsync($"DbEntityValidationException: {string.Join("; ", errorMessages)}");
+                    TempData["ErrorMessage"] = $"Lỗi validation khi đặt vé: {string.Join("; ", errorMessages)}";
+                    return RedirectToAction("DatVe", new { maVe = maVe });
+                }
             }
             catch (Exception ex)
             {
                 await Logger.ErrorAsync(ex);
-                TempData["ErrorMessage"] = "Có lỗi xảy ra khi đặt vé. Vui lòng thử lại!";
+                TempData["ErrorMessage"] = $"Có lỗi xảy ra khi đặt vé: {ex.Message}";
                 return RedirectToAction("DatVe", new { maVe = maVe });
             }
         }
