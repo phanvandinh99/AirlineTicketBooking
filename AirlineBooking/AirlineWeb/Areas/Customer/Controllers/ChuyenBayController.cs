@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Collections.Generic; // Added for List
+using System.Collections.Generic;
 
 namespace AirlineWeb.Areas.Customer.Controllers
 {

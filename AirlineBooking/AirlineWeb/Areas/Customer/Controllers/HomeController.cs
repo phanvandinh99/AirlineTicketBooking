@@ -1,7 +1,7 @@
 ﻿using AirlineWeb.Common;
 using AirlineWeb.Models;
 using System;
-using System.Collections.Generic; // Added for List
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +19,7 @@ namespace AirlineWeb.Areas.Customer.Controllers
             try
             {
                 // Lấy danh sách chuyến bay từ database
-                var danhSachChuyenBay = await Task.Run(() => 
+                var danhSachChuyenBay = await Task.Run(() =>
                     db.ChuyenBay
                         .Include(cb => cb.HangHangKhong)
                         .Include(cb => cb.MayBay)
@@ -52,7 +52,7 @@ namespace AirlineWeb.Areas.Customer.Controllers
         {
             try
             {
-                var danhSachSanBay = await Task.Run(() => 
+                var danhSachSanBay = await Task.Run(() =>
                     db.SanBay
                         .Where(sb => sb.QuocGia == "Việt Nam" || sb.QuocGia == "Vietnam")
                         .OrderBy(sb => sb.TenSanBay)
@@ -80,7 +80,7 @@ namespace AirlineWeb.Areas.Customer.Controllers
         {
             try
             {
-                var danhSachSanBayDen = await Task.Run(() => 
+                var danhSachSanBayDen = await Task.Run(() =>
                     db.SanBay
                         .Where(sb => sb.QuocGia == "Việt Nam" || sb.QuocGia == "Vietnam")
                         .Where(sb => sb.MaSanBay != maSanBayDi) // Loại bỏ sân bay đi
@@ -107,12 +107,20 @@ namespace AirlineWeb.Areas.Customer.Controllers
 
         #region Search Chuyến Bay
         [HttpPost]
-        public async Task<ActionResult> SearchChuyenBay(string fromAirport, string toAirport, string departureDate, string returnDate = null, string tripType = "oneway")
+        public async Task<ActionResult> SearchChuyenBay(
+            string fromAirport,
+            string toAirport,
+            string departureDate,
+            string returnDate = null,
+            string tripType = "oneway"
+        )
         {
             try
             {
                 // Validate input
-                if (string.IsNullOrEmpty(fromAirport) || string.IsNullOrEmpty(toAirport) || string.IsNullOrEmpty(departureDate))
+                if (string.IsNullOrEmpty(fromAirport) ||
+                    string.IsNullOrEmpty(toAirport) ||
+                    string.IsNullOrEmpty(departureDate))
                 {
                     TempData["ErrorMessage"] = "Vui lòng nhập đầy đủ thông tin tìm kiếm!";
                     return RedirectToAction("Index");
@@ -148,12 +156,12 @@ namespace AirlineWeb.Areas.Customer.Controllers
                     .Where(cb => cb.TrangThai == Const.TrangThai_HoatDong);
 
                 // Filter theo sân bay
-                query = query.Where(cb => 
-                    cb.TuyenBay.SanBay.MaSanBay == fromAirport && 
+                query = query.Where(cb =>
+                    cb.TuyenBay.SanBay.MaSanBay == fromAirport &&
                     cb.TuyenBay.SanBay1.MaSanBay == toAirport);
 
                 // Filter theo ngày bay
-                query = query.Where(cb => 
+                query = query.Where(cb =>
                     cb.LichBay.Any(lb => DbFunctions.TruncateTime(lb.NgayBay) == ngayDi.Date));
 
                 var chuyenBayDi = await Task.Run(() => query
@@ -178,10 +186,10 @@ namespace AirlineWeb.Areas.Customer.Controllers
                         .Include(cb => cb.TuyenBay.SanBay1)
                         .Include(cb => cb.LichBay)
                         .Where(cb => cb.TrangThai == Const.TrangThai_HoatDong)
-                        .Where(cb => 
-                            cb.TuyenBay.SanBay.MaSanBay == toAirport && 
+                        .Where(cb =>
+                            cb.TuyenBay.SanBay.MaSanBay == toAirport &&
                             cb.TuyenBay.SanBay1.MaSanBay == fromAirport)
-                        .Where(cb => 
+                        .Where(cb =>
                             cb.LichBay.Any(lb => DbFunctions.TruncateTime(lb.NgayBay) == ngayVe.Value.Date));
 
                     chuyenBayVe = await Task.Run(() => queryVe.ToList());
@@ -217,12 +225,20 @@ namespace AirlineWeb.Areas.Customer.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> SearchChuyenBayAjax(string fromAirport, string toAirport, string departureDate, string returnDate = null, string tripType = "oneway")
+        public async Task<JsonResult> SearchChuyenBayAjax(
+            string fromAirport,
+            string toAirport,
+            string departureDate,
+            string returnDate = null,
+            string tripType = "oneway"
+        )
         {
             try
             {
                 // Validate input
-                if (string.IsNullOrEmpty(fromAirport) || string.IsNullOrEmpty(toAirport) || string.IsNullOrEmpty(departureDate))
+                if (string.IsNullOrEmpty(fromAirport) ||
+                    string.IsNullOrEmpty(toAirport) ||
+                    string.IsNullOrEmpty(departureDate))
                 {
                     return Json(new { success = false, message = "Vui lòng nhập đầy đủ thông tin tìm kiếm!" }, JsonRequestBehavior.AllowGet);
                 }
@@ -255,15 +271,15 @@ namespace AirlineWeb.Areas.Customer.Controllers
                     .Where(cb => cb.TrangThai == Const.TrangThai_HoatDong);
 
                 // Filter theo sân bay
-                query = query.Where(cb => 
-                    cb.TuyenBay.SanBay.MaSanBay == fromAirport && 
+                query = query.Where(cb =>
+                    cb.TuyenBay.SanBay.MaSanBay == fromAirport &&
                     cb.TuyenBay.SanBay1.MaSanBay == toAirport);
 
                 // Filter theo ngày bay
-                query = query.Where(cb => 
+                query = query.Where(cb =>
                     cb.LichBay.Any(lb => DbFunctions.TruncateTime(lb.NgayBay) == ngayDi.Date));
 
-                var chuyenBayDi = await Task.Run(() => 
+                var chuyenBayDi = await Task.Run(() =>
                     query.Select(cb => new
                     {
                         MaChuyenBay = cb.MaChuyenBay,
@@ -289,13 +305,13 @@ namespace AirlineWeb.Areas.Customer.Controllers
                         .Include(cb => cb.TuyenBay.SanBay1)
                         .Include(cb => cb.LichBay)
                         .Where(cb => cb.TrangThai == Const.TrangThai_HoatDong)
-                        .Where(cb => 
-                            cb.TuyenBay.SanBay.MaSanBay == toAirport && 
+                        .Where(cb =>
+                            cb.TuyenBay.SanBay.MaSanBay == toAirport &&
                             cb.TuyenBay.SanBay1.MaSanBay == fromAirport)
-                        .Where(cb => 
+                        .Where(cb =>
                             cb.LichBay.Any(lb => DbFunctions.TruncateTime(lb.NgayBay) == ngayVe.Value.Date));
 
-                    chuyenBayVe = await Task.Run(() => 
+                    chuyenBayVe = await Task.Run(() =>
                         queryVe.Select(cb => new
                         {
                             MaChuyenBay = cb.MaChuyenBay,
@@ -309,8 +325,9 @@ namespace AirlineWeb.Areas.Customer.Controllers
                     );
                 }
 
-                return Json(new { 
-                    success = true, 
+                return Json(new
+                {
+                    success = true,
                     chuyenBayDi = chuyenBayDi,
                     chuyenBayVe = chuyenBayVe,
                     tripType = tripType

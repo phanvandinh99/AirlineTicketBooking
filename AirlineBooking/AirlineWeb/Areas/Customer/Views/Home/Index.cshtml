@@ -162,20 +162,20 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item d-inline-flex align-items-center rounded fw-medium p-2" 
+                                            <a class="dropdown-item d-inline-flex align-items-center rounded fw-medium p-2"
                                                href="@Url.Action("QuanLyVe", "KhachHang", new { area = "Customer" })">
                                                 <i class="isax isax-list me-2"></i>Quản lý vé
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item d-inline-flex align-items-center rounded fw-medium p-2" 
+                                            <a class="dropdown-item d-inline-flex align-items-center rounded fw-medium p-2"
                                                href="@Url.Action("ThongTinCaNhan", "KhachHang", new { area = "Customer" })">
                                                 <i class="isax isax-user-circle me-2"></i>Thông tin cá nhân
                                             </a>
                                         </li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
-                                            <a class="dropdown-item d-inline-flex align-items-center rounded fw-medium p-2" 
+                                            <a class="dropdown-item d-inline-flex align-items-center rounded fw-medium p-2"
                                                href="@Url.Action("DangXuat", "DangNhap", new { area = "Customer" })"
                                                onclick="return confirm('Bạn có chắc muốn đăng xuất?')">
                                                 <i class="isax isax-logout me-2"></i>Đăng xuất
@@ -226,200 +226,6 @@
         </div>
     </section>
     <!-- #endregion -->
-    <!-- #region Danh Sách Chuyến Bay -->
-    @model List<AirlineWeb.Models.ChuyenBay>
-    <section class="section flight-list-section">
-        <div class="container">
-            <!-- Hiển thị thông báo lỗi/thành công -->
-            @if (TempData["ErrorMessage"] != null)
-            {
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="isax isax-danger me-2"></i>@TempData["ErrorMessage"]
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            }
-            @if (TempData["SuccessMessage"] != null)
-            {
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="isax isax-tick-circle me-2"></i>@TempData["SuccessMessage"]
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            }
-
-            <!-- Hiển thị kết quả search -->
-            @if (ViewBag.SearchMessage != null)
-            {
-                <div class="row justify-content-center mb-4">
-                    <div class="col-xl-8 col-lg-10">
-                        <div class="alert alert-success">
-                            <h5>✅ Tìm kiếm thành công!</h5>
-                            <p>@ViewBag.SearchMessage</p>
-                            <p>Tìm thấy <strong>@ViewBag.SearchCount</strong> chuyến bay phù hợp.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hiển thị danh sách chuyến bay tìm được -->
-                if (ViewBag.SearchResults != null && ViewBag.SearchCount > 0)
-                {
-                    <div class="row g-4 mb-4">
-                        <div class="col-12">
-                            <h4 class="mb-3">Chuyến Bay Tìm Được</h4>
-                        </div>
-                        @foreach (var chuyenBay in ViewBag.SearchResults)
-                        {
-                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                                <div class="card flight-card border-0 shadow-sm h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="airline-info">
-                                                <h6 class="mb-1">@chuyenBay.HangHangKhong.TenHang</h6>
-                                                <p class="text-muted fs-12 mb-0">@chuyenBay.SoHieuChuyenBay</p>
-                                            </div>
-                                            <div class="flight-status">
-                                                <span class="badge bg-success">@chuyenBay.TrangThai</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="flight-route mb-3">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="departure">
-                                                    <h6 class="mb-1">@(chuyenBay.TuyenBay.SanBay.TenSanBay ?? "N/A")</h6>
-                                                    <p class="text-muted fs-12 mb-0">Cất cánh</p>
-                                                </div>
-                                                <div class="flight-arrow text-center">
-                                                    <i class="isax isax-airplane5 text-primary fs-20"></i>
-                                                </div>
-                                                <div class="arrival text-end">
-                                                    <h6 class="mb-1">@(chuyenBay.TuyenBay.SanBay1.TenSanBay ?? "N/A")</h6>
-                                                    <p class="text-muted fs-12 mb-0">Hạ cánh</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="flight-details">
-                                            <div class="row text-center">
-                                                <div class="col-6">
-                                                    <p class="fs-12 text-muted mb-1">Máy Bay</p>
-                                                    <h6 class="mb-0">@(chuyenBay.MayBay?.LoaiMayBay?.TenLoaiMayBay ?? chuyenBay.MayBay?.MaMayBay ?? "N/A")</h6>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class="fs-12 text-muted mb-1">Mã Chuyến</p>
-                                                    <h6 class="mb-0">@chuyenBay.MaChuyenBay</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-3">
-                                            <a href="@Url.Action("ChiTiet", "ChuyenBay", new { id = chuyenBay.MaChuyenBay, area = "Customer" })" class="btn btn-primary btn-sm w-100">
-                                                <i class="isax isax-ticket me-2"></i>Đặt Vé
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                }
-            }
-            else
-            {
-                <div class="row justify-content-center">
-                    <div class="col-xl-6 col-lg-10 text-center wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="section-header section-header-four mb-4 text-center">
-                            <h2 class="mb-2"><span>Danh Sách</span> Chuyến Bay</h2>
-                            <p class="sub-title">
-                                Khám phá các chuyến bay hiện có với nhiều lựa chọn đa dạng từ các hãng hàng không uy tín.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            }
-
-            @if (Model != null && Model.Any())
-            {
-                <div class="row g-4">
-                    <div class="col-12">
-                        <h4 class="mb-3">Tất cả chuyến bay</h4>
-                    </div>
-                    @foreach (var chuyenBay in Model)
-                    {
-                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="card flight-card border-0 shadow-sm h-100">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between mb-3">
-                                        <div class="airline-info">
-                                            <h6 class="mb-1">@(chuyenBay.HangHangKhong?.TenHang ?? "N/A")</h6>
-                                            <p class="text-muted fs-12 mb-0">@chuyenBay.SoHieuChuyenBay</p>
-                                        </div>
-                                        <div class="flight-status">
-                                            <span class="badge bg-success">@chuyenBay.TrangThai</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="flight-route mb-3">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div class="departure">
-                                                <h6 class="mb-1">@(chuyenBay.TuyenBay?.SanBay?.TenSanBay ?? "N/A")</h6>
-                                                <p class="text-muted fs-12 mb-0">Cất cánh</p>
-                                            </div>
-                                            <div class="flight-arrow text-center">
-                                                <i class="isax isax-airplane5 text-primary fs-20"></i>
-                                            </div>
-                                            <div class="arrival text-end">
-                                                <h6 class="mb-1">@(chuyenBay.TuyenBay?.SanBay1?.TenSanBay ?? "N/A")</h6>
-                                                <p class="text-muted fs-12 mb-0">Hạ cánh</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="flight-details">
-                                        <div class="row text-center">
-                                            <div class="col-4">
-                                                <p class="fs-12 text-muted mb-1">Máy Bay</p>
-                                                <h6 class="mb-0">@(chuyenBay.MayBay?.LoaiMayBay?.TenLoaiMayBay ?? chuyenBay.MayBay?.MaMayBay ?? "N/A")</h6>
-                                            </div>
-                                            <div class="col-4">
-                                                <p class="fs-12 text-muted mb-1">Tuyến Bay</p>
-                                                <h6 class="mb-0">@(chuyenBay.TuyenBay.MaTuyenBay)</h6>
-                                            </div>
-                                            <div class="col-4">
-                                                <p class="fs-12 text-muted mb-1">Mã Chuyến</p>
-                                                <h6 class="mb-0">@chuyenBay.MaChuyenBay</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-3">
-                                        <a href="@Url.Action("ChiTiet", "ChuyenBay", new { id = chuyenBay.MaChuyenBay, area = "Customer" })" class="btn btn-primary btn-sm w-100">
-                                            <i class="isax isax-ticket me-2"></i>Đặt Vé
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-
-                <div class="text-center mt-4 wow fadeInUp" data-wow-delay="0.3s">
-                    <a href="@Url.Action("Index", "ChuyenBay", new { area = "Customer" })" class="btn btn-dark">
-                        Xem Tất Cả Chuyến Bay <i class="isax isax-arrow-right-3 ms-2"></i>
-                    </a>
-                </div>
-            }
-            else
-            {
-                <div class="text-center wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="empty-state">
-                        <i class="isax isax-airplane5 text-muted fs-48 mb-3"></i>
-                        <h5 class="mb-2">Chưa có chuyến bay nào</h5>
-                        <p class="text-muted">Hiện tại không có chuyến bay nào trong hệ thống.</p>
-                    </div>
-                </div>
-            }
-        </div>
-    </section>
-    <!-- #endregion -->
     <!-- #region Banner Search -->
     <section class="banner-search-four">
         <div class="container">
@@ -459,20 +265,20 @@
                             <div class="tab-pane fade active show" id="flight">
                                 <form method="post" action="@Url.Action("SearchChuyenBay", "Home", new { area = "Customer" })">
                                     <div class="d-flex align-items-center justify-content-between flex-wrap mb-2">
-                                                                                    <div class="d-flex align-items-center">
-                                                <div class="form-check d-flex align-items-center me-3 mb-2">
-                                                    <input class="form-check-input mt-0" type="radio" name="tripType" id="oneway" value="oneway" checked="">
-                                                    <label class="form-check-label fs-14 ms-2" for="oneway">
-                                                        Một Chiều
-                                                    </label>
-                                                </div>
-                                                <div class="form-check d-flex align-items-center me-3 mb-2">
-                                                    <input class="form-check-input mt-0" type="radio" name="tripType" id="roundtrip" value="roundtrip">
-                                                    <label class="form-check-label fs-14 ms-2" for="roundtrip">
-                                                        Khứ Hồi
-                                                    </label>
-                                                </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="form-check d-flex align-items-center me-3 mb-2">
+                                                <input class="form-check-input mt-0" type="radio" name="tripType" id="oneway" value="oneway" checked="">
+                                                <label class="form-check-label fs-14 ms-2" for="oneway">
+                                                    Một Chiều
+                                                </label>
                                             </div>
+                                            <div class="form-check d-flex align-items-center me-3 mb-2">
+                                                <input class="form-check-input mt-0" type="radio" name="tripType" id="roundtrip" value="roundtrip">
+                                                <label class="form-check-label fs-14 ms-2" for="roundtrip">
+                                                    Khứ Hồi
+                                                </label>
+                                            </div>
+                                        </div>
                                         <h6 class="fw-medium fs-16 mb-2">Nhập thông tin hành trình của bạn</h6>
                                     </div>
                                     <div class="normal-trip">
@@ -1535,7 +1341,201 @@
             </div>
         </div>
     </section>
-    <!-- #endregion -->
+    <!-- #endregion Banner Search-->
+    <!-- #region Danh Sách Chuyến Bay -->
+    @model List<AirlineWeb.Models.ChuyenBay>
+    <section class="section flight-list-section">
+        <div class="container">
+            <!-- Hiển thị thông báo lỗi/thành công -->
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="isax isax-danger me-2"></i>@TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="isax isax-tick-circle me-2"></i>@TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <!-- Hiển thị kết quả search -->
+            @if (ViewBag.SearchMessage != null)
+            {
+                <div class="row justify-content-center mb-4">
+                    <div class="col-xl-8 col-lg-10">
+                        <div class="alert alert-success">
+                            <h5>✅ Tìm kiếm thành công!</h5>
+                            <p>@ViewBag.SearchMessage</p>
+                            <p>Tìm thấy <strong>@ViewBag.SearchCount</strong> chuyến bay phù hợp.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hiển thị danh sách chuyến bay tìm được -->
+                if (ViewBag.SearchResults != null && ViewBag.SearchCount > 0)
+                {
+                    <div class="row g-4 mb-4">
+                        <div class="col-12">
+                            <h4 class="mb-3">Chuyến Bay Tìm Được</h4>
+                        </div>
+                        @foreach (var chuyenBay in ViewBag.SearchResults)
+                        {
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="card flight-card border-0 shadow-sm h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <div class="airline-info">
+                                                <h6 class="mb-1">@chuyenBay.HangHangKhong.TenHang</h6>
+                                                <p class="text-muted fs-12 mb-0">@chuyenBay.SoHieuChuyenBay</p>
+                                            </div>
+                                            <div class="flight-status">
+                                                <span class="badge bg-success">@chuyenBay.TrangThai</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="flight-route mb-3">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div class="departure">
+                                                    <h6 class="mb-1">@(chuyenBay.TuyenBay.SanBay.TenSanBay ?? "N/A")</h6>
+                                                    <p class="text-muted fs-12 mb-0">Cất cánh</p>
+                                                </div>
+                                                <div class="flight-arrow text-center">
+                                                    <i class="isax isax-airplane5 text-primary fs-20"></i>
+                                                </div>
+                                                <div class="arrival text-end">
+                                                    <h6 class="mb-1">@(chuyenBay.TuyenBay.SanBay1.TenSanBay ?? "N/A")</h6>
+                                                    <p class="text-muted fs-12 mb-0">Hạ cánh</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flight-details">
+                                            <div class="row text-center">
+                                                <div class="col-6">
+                                                    <p class="fs-12 text-muted mb-1">Máy Bay</p>
+                                                    <h6 class="mb-0">@(chuyenBay.MayBay?.LoaiMayBay?.TenLoaiMayBay ?? chuyenBay.MayBay?.MaMayBay ?? "N/A")</h6>
+                                                </div>
+                                                <div class="col-6">
+                                                    <p class="fs-12 text-muted mb-1">Mã Chuyến</p>
+                                                    <h6 class="mb-0">@chuyenBay.MaChuyenBay</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <a href="@Url.Action("ChiTiet", "ChuyenBay", new { id = chuyenBay.MaChuyenBay, area = "Customer" })" class="btn btn-primary btn-sm w-100">
+                                                <i class="isax isax-ticket me-2"></i>Đặt Vé
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="row justify-content-center">
+                    <div class="col-xl-6 col-lg-10 text-center wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="section-header section-header-four mb-4 text-center">
+                            <h2 class="mb-2"><span>Danh Sách</span> Chuyến Bay</h2>
+                            <p class="sub-title">
+                                Khám phá các chuyến bay hiện có với nhiều lựa chọn đa dạng từ các hãng hàng không uy tín.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="row g-4">
+                    <div class="col-12">
+                        <h4 class="mb-3">Tất cả chuyến bay</h4>
+                    </div>
+                    @foreach (var chuyenBay in Model)
+                    {
+                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="card flight-card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <div class="airline-info">
+                                            <h6 class="mb-1">@(chuyenBay.HangHangKhong?.TenHang ?? "N/A")</h6>
+                                            <p class="text-muted fs-12 mb-0">@chuyenBay.SoHieuChuyenBay</p>
+                                        </div>
+                                        <div class="flight-status">
+                                            <span class="badge bg-success">@chuyenBay.TrangThai</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flight-route mb-3">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="departure">
+                                                <h6 class="mb-1">@(chuyenBay.TuyenBay?.SanBay?.TenSanBay ?? "N/A")</h6>
+                                                <p class="text-muted fs-12 mb-0">Cất cánh</p>
+                                            </div>
+                                            <div class="flight-arrow text-center">
+                                                <i class="isax isax-airplane5 text-primary fs-20"></i>
+                                            </div>
+                                            <div class="arrival text-end">
+                                                <h6 class="mb-1">@(chuyenBay.TuyenBay?.SanBay1?.TenSanBay ?? "N/A")</h6>
+                                                <p class="text-muted fs-12 mb-0">Hạ cánh</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flight-details">
+                                        <div class="row text-center">
+                                            <div class="col-4">
+                                                <p class="fs-12 text-muted mb-1">Máy Bay</p>
+                                                <h6 class="mb-0">@(chuyenBay.MayBay?.LoaiMayBay?.TenLoaiMayBay ?? chuyenBay.MayBay?.MaMayBay ?? "N/A")</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <p class="fs-12 text-muted mb-1">Tuyến Bay</p>
+                                                <h6 class="mb-0">@(chuyenBay.TuyenBay.MaTuyenBay)</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <p class="fs-12 text-muted mb-1">Mã Chuyến</p>
+                                                <h6 class="mb-0">@chuyenBay.MaChuyenBay</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <a href="@Url.Action("ChiTiet", "ChuyenBay", new { id = chuyenBay.MaChuyenBay, area = "Customer" })" class="btn btn-primary btn-sm w-100">
+                                            <i class="isax isax-ticket me-2"></i>Đặt Vé
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="text-center mt-4 wow fadeInUp" data-wow-delay="0.3s">
+                    <a href="@Url.Action("Index", "ChuyenBay", new { area = "Customer" })" class="btn btn-dark">
+                        Xem thêm <i class="isax isax-arrow-right-3 ms-2"></i>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="text-center wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="empty-state">
+                        <i class="isax isax-airplane5 text-muted fs-48 mb-3"></i>
+                        <h5 class="mb-2">Chưa có chuyến bay nào</h5>
+                        <p class="text-muted">Hiện tại không có chuyến bay nào trong hệ thống.</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+    <!-- #endregion Danh Sách Chuyến Bay -->
     <!-- #region Destination Section -->
     <section class="section destination-section">
         <div class="container">

@@ -20,7 +20,7 @@
             .ToList();
     }
 
-    // Định nghĩa số cột cho từng hạng vé (theo MaHangVe trong CSDL)
+    // Định nghĩa số cột cho từng hạng vé (theo MaHangVe trong Bảng Hạng Vé)
     var hangVeConfig = new Dictionary<string, int>
 {
         { "HV04", 1 },      // Hạng nhất: 1 cột (A)
@@ -28,8 +28,6 @@
         { "HV02", 4 },      // Phổ thông cao cấp: 4 cột (A, B, C, D)
         { "HV01", 6 }       // Phổ thông: 6 cột (A, B, C, D, E, F)
     };
-
-    int currentRow = 1;
 }
 
 <!-- #region Nội dung chính -->
